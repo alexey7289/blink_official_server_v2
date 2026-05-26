@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+	<title>SmartLight</title>
+
+    <link rel="stylesheet" href="./css/m3-theme.css">
+	<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+	<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,250,0..1,-50..200&icon_names=home,settings,terminal_2,tune" />
+
+	<script type="importmap">
+		{
+			"imports": {
+				"@material/web/": "https://esm.run/@material/web/"
+			}
+		}
+	</script>
+    <script type="module">
+        import '@material/web/all.js';
+        import {styles as typescaleStyles} from '@material/web/typography/md-typescale-styles.js';
+
+        document.adoptedStyleSheets.push(typescaleStyles.styleSheet);
+    </script>	
+	
+</head>
+<body>
+	<main class="page-content">
+		<p>Здесь находится ваш контент, который можно скроллить...</p>
+        <div class="m3-card-container" style="padding: 16px; display: flex; justify-content: center;">
+            <!-- Подключаем независимый SVG-компонент -->
+            <object type="image/svg+xml" data="./components/anim1/anim1.svg" width="350" height="175"></object>
+        </div>
+	</main>
+	<nav class="m3-nav-bar">
+		<button class="m3-nav-item m3-nav-item--active">
+			<div class="m3-icon-wrapper">
+				<span class="material-symbols-outlined">home</span>
+			</div>
+			<span class="m3-label">Главная</span>
+		</button>
+		<button class="m3-nav-item">
+			<div class="m3-icon-wrapper">
+				<span class="material-symbols-outlined">tune</span>
+			</div>
+			<span class="m3-label">Настройки</span>
+		</button>
+		<button class="m3-nav-item">
+			<div class="m3-icon-wrapper">
+				<span class="material-symbols-outlined">settings</span>
+			</div>
+			<span class="m3-label">Установки</span>
+		</button>
+		<button class="m3-nav-item">
+			<div class="m3-icon-wrapper">
+				<span class="material-symbols-outlined">terminal_2</span>
+			</div>
+			<span class="m3-label">Консоль</span>
+		</button>
+	</nav>
+	<script>
+	// 1. Находим все кнопки навигации на странице
+	const navItems = document.querySelectorAll('.m3-nav-item');
+
+	// 2. Вешаем обработчик клика на каждую кнопку
+	navItems.forEach(item => {
+		item.addEventListener('click', () => {
+		
+		// 3. Удаляем класс активности у той кнопки, где он сейчас есть
+		document.querySelector('.m3-nav-item--active')?.classList.remove('m3-nav-item--active');
+		
+		// 4. Добавляем класс активности той кнопке, на которую только что кликнули
+		item.classList.add('m3-nav-item--active');
+		
+		});
+	});
+</script>
+</body>
+</html>

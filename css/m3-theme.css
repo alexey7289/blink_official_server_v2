@@ -1,0 +1,61 @@
+/* ИСПРАВЛЕНО: Задаем дефолтные цвета M3 (светлая тема), 
+    так как esm.run не инициализирует их автоматически без Material Theme Builder */
+:root {
+    --md-sys-color-surface-container: #f3edf7;
+    --md-sys-color-on-surface: #1d1b20;
+    --md-sys-color-secondary-container: #e8def8;
+    --md-sys-color-on-secondary-container: #1d192b;
+}
+
+body {
+    margin: 0;
+    font-family: 'Roboto', sans-serif;
+    background-color: #fef7ff;
+}
+
+.page-content {
+    padding: 16px;
+    padding-bottom: 96px; 
+}
+
+.m3-nav-bar{
+    position: fixed;	
+    bottom: 0;			
+    left: 0;			
+    right: 0;			
+    z-index: 1000;		
+    height: 80px; /* ДОБАВЛЕНО: Фиксированная высота по гайдлайнам M3 */
+    background-color: var(--md-sys-color-surface-container);
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+}
+
+.m3-nav-item {
+    background: none;
+    border: none;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 4px;
+    cursor: pointer;
+    color: var(--md-sys-color-on-surface);
+}
+
+.m3-icon-wrapper {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 4px 20px;
+    border-radius: 16px;
+    transition: background-color 0.2s ease; /* Плавное переключение */
+}
+
+.m3-nav-item--active .m3-icon-wrapper {
+    background-color: var(--md-sys-color-secondary-container);
+    color: var(--md-sys-color-on-secondary-container);
+}
+.m3-label {
+    font-size: 12px;
+    font-weight: 500;
+}
