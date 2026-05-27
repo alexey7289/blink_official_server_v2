@@ -1,61 +1,199 @@
-/* ИСПРАВЛЕНО: Задаем дефолтные цвета M3 (светлая тема), 
-    так как esm.run не инициализирует их автоматически без Material Theme Builder */
 :root {
-    --md-sys-color-surface-container: #f3edf7;
-    --md-sys-color-on-surface: #1d1b20;
-    --md-sys-color-secondary-container: #e8def8;
-    --md-sys-color-on-secondary-container: #1d192b;
+	--md-sys-color-surface-container: #f3edf7;
+	--md-sys-color-on-surface: #1d1b20;
+	--md-sys-color-secondary-container: #e8def8;
+	--md-sys-color-on-secondary-container: #1d192b;
 }
 
 body {
-    margin: 0;
-    font-family: 'Roboto', sans-serif;
-    background-color: #fef7ff;
+	margin: 0;
+	font-family: 'Roboto', sans-serif;
+	background-color: #fef7ff;
 }
 
 .page-content {
-    padding: 16px;
-    padding-bottom: 96px; 
+  padding-top: 80px; 
+  padding-left: 16px;
+  padding-right: 16px;
+  padding-bottom: 96px; 
+  box-sizing: border-box; 
+  width: 100%;
 }
 
+
+
+
+
+
+
+
+/*---------------------------------------------------------------------------------------------*/
+/*--------------------------------------  TOP APP BAR  ----------------------------------------*/
+/*---------------------------------------------------------------------------------------------*/
+.m3-top-app-bar {
+position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 64px;
+  background-color: var(--md-sys-color-surface);
+  color: var(--md-sys-color-on-surface);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 12px;
+  border-bottom: 1px solid var(--md-sys-color-outline-variant);
+  z-index: 1000;
+}
+.m3-bar-section {
+  display: flex;
+  align-items: center;
+  flex: 1;
+}
+.m3-bar-section--left   { justify-content: flex-start; }
+.m3-bar-section--center { justify-content: center; }
+.m3-bar-section--right  { justify-content: flex-end; }
+.m3-bar-button {
+  background: none;
+  border: none;
+  color: var(--md-sys-color-on-surface-variant);
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+
+
+
+
+
+
+
+
+/*---------------------------------------------------------------------------------------------*/
+/*------------------------------------  LOGO CONTAINER  ---------------------------------------*/
+/*---------------------------------------------------------------------------------------------*/
+.m3-logo-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;    /* Жесткое выравнивание обеих строк по центру */
+  justify-content: center;
+  line-height: 1.1;
+}
+.m3-logo-main {
+  font-size: 18px;
+  font-weight: 500;
+  letter-spacing: -0.3px;
+  position: relative; 
+  text-shadow: 0 0 10px rgba(0, 245, 212, 0.2);
+}
+.m3-logo-version {
+  position: absolute;
+  left: 100%; 
+  top: -2px;  
+  
+  font-size: 10px;
+  font-weight: 400;
+  color: var(--md-sys-color-on-surface-variant);
+  margin-left: 4px; /* Небольшой аккуратный зазор от буквы 't' */
+  white-space: nowrap; /* Запрещаем перенос версии на другую строку */
+}
+.m3-logo-sub {
+  font-size: 11px;
+  font-weight: 400;
+  letter-spacing: 0.5px;
+  color: var(--md-sys-color-on-surface-variant);
+  margin-top: 3px;
+  opacity: 0.85;
+}
+
+
+
+
+
+
+
+
+.m3-card-container {
+	background-color: var(--md-sys-color-surface-container);
+  	color: var(--md-sys-color-on-surface);
+	border-radius: 16px;
+	border: 1px solid var(--md-sys-color-outline-variant);
+	padding: 20px;
+	max-width: 382px;
+	margin: 0 auto;
+	overflow: hidden;
+	box-sizing: border-box;
+
+}
+
+
+
+
+
+/*---------------------------------------------------------------------------------------------*/
+/*--------------------------------------  Wi-fi Status  ---------------------------------------*/
+/*---------------------------------------------------------------------------------------------*/
+.m3-flat-button {
+	width: 160px;
+	--md-outlined-button-container-height: 32px;
+	--md-outlined-button-container-shape: 16px;
+	--md-outlined-button-label-text-size: 14px;
+}
+.m3-flat-button--disconnected {
+	opacity: 0.7;
+}
+
+
+
+
+
+
+
+
+/*---------------------------------------------------------------------------------------------*/
+/*------------------------------------  NAVIGATION BAR  ---------------------------------------*/
+/*---------------------------------------------------------------------------------------------*/
 .m3-nav-bar{
-    position: fixed;	
-    bottom: 0;			
-    left: 0;			
-    right: 0;			
-    z-index: 1000;		
-    height: 80px; /* ДОБАВЛЕНО: Фиксированная высота по гайдлайнам M3 */
-    background-color: var(--md-sys-color-surface-container);
-    display: flex;
-    justify-content: space-around;
-    align-items: center;
+	position: fixed;	
+	bottom: 0;			
+	left: 0;			
+	right: 0;			
+	z-index: 1000;		
+	height: 80px; /* ДОБАВЛЕНО: Фиксированная высота по гайдлайнам M3 */
+	background-color: var(--md-sys-color-surface-container);
+	display: flex;
+	justify-content: space-around;
+	align-items: center;
 }
-
 .m3-nav-item {
-    background: none;
-    border: none;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 4px;
-    cursor: pointer;
-    color: var(--md-sys-color-on-surface);
+	background: none;
+	border: none;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	gap: 4px;
+	cursor: pointer;
+	color: var(--md-sys-color-on-surface);
 }
-
 .m3-icon-wrapper {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    padding: 4px 20px;
-    border-radius: 16px;
-    transition: background-color 0.2s ease; /* Плавное переключение */
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	padding: 4px 20px;
+	border-radius: 16px;
+	transition: background-color 0.2s ease; /* Плавное переключение */
 }
-
 .m3-nav-item--active .m3-icon-wrapper {
-    background-color: var(--md-sys-color-secondary-container);
-    color: var(--md-sys-color-on-secondary-container);
+	background-color: var(--md-sys-color-secondary-container);
+	color: var(--md-sys-color-on-secondary-container);
 }
 .m3-label {
-    font-size: 12px;
-    font-weight: 500;
+	font-size: 12px;
+	font-weight: 500;
 }

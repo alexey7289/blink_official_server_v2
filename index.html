@@ -6,9 +6,9 @@
 
 	<title>SmartLight</title>
 
-    <link rel="stylesheet" href="./css/m3-theme.css">
+	<link rel="stylesheet" href="./css/m3-theme.css">
 	<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
-	<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,250,0..1,-50..200&icon_names=home,settings,terminal_2,tune" />
+	<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,250,0..1,-50..200&icon_names=android_wifi_3_bar,home,light_off,lightbulb,menu,settings,terminal_2,tune" />
 
 	<script type="importmap">
 		{
@@ -17,21 +17,54 @@
 			}
 		}
 	</script>
-    <script type="module">
-        import '@material/web/all.js';
-        import {styles as typescaleStyles} from '@material/web/typography/md-typescale-styles.js';
+	<script type="module">
+		import '@material/web/all.js';
+		import {styles as typescaleStyles} from '@material/web/typography/md-typescale-styles.js';
 
-        document.adoptedStyleSheets.push(typescaleStyles.styleSheet);
-    </script>	
+		document.adoptedStyleSheets.push(typescaleStyles.styleSheet);
+	</script>	
 	
 </head>
 <body>
+	<header class="m3-top-app-bar">
+		<div class="m3-bar-section m3-bar-section--left">
+			<button class="m3-bar-button">
+				<span class="material-symbols-outlined">menu</span>
+			</button>
+		</div>
+		<div class="m3-bar-section m3-bar-section--center">
+			<div class="m3-logo-container">
+				<div class="m3-logo-main">
+					SmartLight
+					<span class="m3-logo-version" id="logo-version">v2.2</span>
+				</div>
+				<div class="m3-logo-sub">by Krismas</div>
+			</div>
+		</div>
+		<div class="m3-bar-section m3-bar-section--right">
+			<md-icon-button toggle id="power-btn">
+			<md-icon>lightbulb</md-icon>
+			<md-icon slot="selected">light_off</md-icon>
+			</md-icon-button>
+		</div>
+	</header>
 	<main class="page-content">
-		<p>Здесь находится ваш контент, который можно скроллить...</p>
-        <div class="m3-card-container" style="padding: 16px; display: flex; justify-content: center;">
-            <!-- Подключаем независимый SVG-компонент -->
-            <object type="image/svg+xml" data="./components/anim1/anim1.svg" width="350" height="175"></object>
-        </div>
+		
+		<div class="m3-card-container" style="display: flex; justify-content: center; align-items: center;">
+			<md-outlined-button id="wifi-status-btn" class="m3-flat-button">
+				<md-icon slot="icon">android_wifi_3_bar</md-icon>
+				Подключено
+			</md-outlined-button>
+		</div>
+
+
+
+
+		<div class="m3-card-container" style="padding: 16px; display: flex; justify-content: center;">
+			<!-- Подключаем независимый SVG-компонент -->
+			<object type="image/svg+xml" data="./components/anim1/anim1.svg" width="350" height="175"></object>
+		</div>
+
 	</main>
 	<nav class="m3-nav-bar">
 		<button class="m3-nav-item m3-nav-item--active">
