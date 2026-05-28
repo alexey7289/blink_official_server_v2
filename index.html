@@ -8,7 +8,7 @@
 
 	<link rel="stylesheet" href="./css/m3-theme.css">
 	<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
-	<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,250,0..1,-50..200&icon_names=android_wifi_3_bar,android_wifi_3_bar_off,bolt,home,light_off,lightbulb,menu,settings,terminal_2,tune" />
+	<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,250,0..1,-50..200&icon_names=android_wifi_3_bar,android_wifi_3_bar_off,bolt,home,light_off,lightbulb,menu,settings,straighten,terminal_2,tune" />
 
 	<script type="importmap">
 		{
@@ -57,22 +57,46 @@
 			</md-outlined-button>
 		</div>
 
+
+		<!-- Блок выбора напряжения -->
 		<div class="m3-card-container">
 			<div class="m3-voltage-row">
+				<!-- Иконка-->
 				<md-filled-tonal-icon-button>
 					<md-icon>bolt</md-icon>
 				</md-filled-tonal-icon-button>
+				<!-- Текст и подтекст -->
 				<div class="m3-voltage-text-block">
 					<div class="m3-voltage-text-block-title">Напряжение</div>
 					<div class="m3-voltage-text-block-subtitle">Питание 5V или 12V</div>
 				</div>
-				<div id="voltage-toggle-container" style="display: flex; align-items: center;">
-					<div class="m3-voltage-btn">
-						<md-outlined-button>5V</md-outlined-button>
-					</div>
+				<!-- Кнопка переключатель -->
+				<div class="m3-voltage-btn" id="voltage-toggle-container">
+					<md-outlined-button>5V</md-outlined-button>
 				</div>
 			</div>
 		</div>
+
+
+		<!-- Блок выбора шага кластеров -->
+		<div class="m3-card-container">
+			<div class="m3-voltage-row">
+				<!-- Иконка-->
+				<md-filled-tonal-icon-button>
+					<md-icon>straighten</md-icon>
+				</md-filled-tonal-icon-button>
+				<!-- Текст и подтекст -->
+				<div class="m3-voltage-text-block">
+					<div class="m3-voltage-text-block-title">Пиксель</div>
+					<div class="m3-voltage-text-block-subtitle">Шаг резки ленты</div>
+				</div>
+				<!-- Поле ввода -->
+				<div class="m3-cluster-btn" id="voltage-toggle-container">
+					<md-outlined-text-field label="мм" value="5"></md-outlined-text-field>
+				</div>
+			</div>
+		</div>
+
 
 
 		<div class="m3-card-container" style="padding: 16px; display: flex; justify-content: center;">

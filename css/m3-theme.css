@@ -185,13 +185,32 @@ position: fixed;
 	opacity: 0.5;
 }
 .m3-voltage-btn {
-	width: 120px;
+	width: 80px;
 	display: flex;
 	justify-content: flex-end;
 }
 .m3-voltage-btn md-outlined-button,
 .m3-voltage-btn md-filled-button {
   width: 100%;
+  --md-outlined-button-min-width: 120px;
+  --md-filled-button-min-width: 120px;
+}
+
+
+
+
+
+/*---------------------------------------------------------------------------------------------*/
+/*-----------------------------------  Voltage Container  -------------------------------------*/
+/*---------------------------------------------------------------------------------------------*/
+.m3-cluster-btn {
+	width: 80px;
+	display: flex;
+	justify-content: flex-end;
+}
+.m3-cluster-btn md-outlined-text-field {
+	--md-outlined-text-field-container-shape: 8px;
+	--md-outlined-text-field-container-height: 40px;
 }
 
 
