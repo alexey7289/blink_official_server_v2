@@ -1,0 +1,13 @@
+{
+    "power": 0,
+    "is_online": false,
+    "voltage": 5,
+    "brightness": 75,
+    "speed": 23,
+    "effect_id": 5,
+    "ceiling_draw": "Прямоугольник",
+    "ceiling_draw_id": 0,
+    "ceiling_width": 1200,
+    "ceiling_height": 600,
+    "version": "2.3.5"
+}
