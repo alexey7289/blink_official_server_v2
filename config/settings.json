@@ -2,6 +2,7 @@
     "power": 0,
     "is_online": false,
     "voltage": 12,
+    "color_type": "GBR",
     "brightness": 75,
     "speed": 23,
     "effect_id": 5,

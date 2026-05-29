@@ -1,14 +1,28 @@
 :root {
-	--md-sys-color-surface-container: #f3edf7;
-	--md-sys-color-on-surface: #1d1b20;
-	--md-sys-color-secondary-container: #e8def8;
-	--md-sys-color-on-secondary-container: #1d192b;
+	/* Идеально белый фон всей страницы */
+	--md-sys-color-background: #ffffff;
+	/* Цвет шапки (чистый белый, как в Gemini) */
+	--md-sys-color-surface: #ffffff;  
+	/* Мягкий светло-серый цвет для карточек-плашек */
+	--md-sys-color-surface-container: #f0f4f9;  
+	/* Цвет текста (глубокий темно-серый, почти черный) */
+	--md-sys-color-on-surface: #1f1f1f;
+	--md-sys-color-on-surface-variant: #4a4a4a;	
+	/* Цвет разделительной линии под шапкой (очень нежный серый) */
+	--md-sys-color-outline-variant: #e3e3e3;
+	/* Спокойный дымчато-серый контейнер для выделения активной вкладки */
+	--md-sys-color-secondary-container: #e1e3e5;
+	/* Активная иконка становится четкой, глубокой и графитовой */
+	--md-sys-color-on-secondary-container: #1f1f1f;
+	/* Задаем строгий темно-серый цвет для всех Outlined элементов */
+	--md-sys-color-primary: #1f1f1f;
 }
 
 body {
 	margin: 0;
 	font-family: 'Roboto', sans-serif;
-	background-color: #fef7ff;
+	background-color: var(--md-sys-color-background);
+	color: var(--md-sys-color-on-surface);
 }
 
 .page-content {
@@ -32,7 +46,7 @@ body {
 /*--------------------------------------  TOP APP BAR  ----------------------------------------*/
 /*---------------------------------------------------------------------------------------------*/
 .m3-top-app-bar {
-position: fixed;
+	position: fixed;
   top: 0;
   left: 0;
   right: 0;
@@ -67,15 +81,6 @@ position: fixed;
   cursor: pointer;
   transition: background-color 0.2s ease;
 }
-
-
-
-
-
-
-
-
-
 /*---------------------------------------------------------------------------------------------*/
 /*------------------------------------  LOGO CONTAINER  ---------------------------------------*/
 /*---------------------------------------------------------------------------------------------*/
@@ -119,12 +124,13 @@ position: fixed;
 
 
 
-
+/*---------------------------------------------------------------------------------------------*/
+/*------------------------------------  CARD CONTAINER  ---------------------------------------*/
+/*---------------------------------------------------------------------------------------------*/
 .m3-card-container {
 	background-color: var(--md-sys-color-surface-container);
   	color: var(--md-sys-color-on-surface);
 	border-radius: 16px;
-	border: 1px solid var(--md-sys-color-outline-variant);
 	padding: 20px;
 	max-width: 382px;
 	margin: 0 auto;
@@ -135,7 +141,7 @@ position: fixed;
 	gap: 16px;
 	margin-left: auto;
 	margin-right: auto;
-	margin-bottom: 24px; /* Расстояние до следующей карточки */
+	margin-bottom: 16px; /* Расстояние до следующей карточки */
 }
 
 
@@ -251,21 +257,65 @@ position: fixed;
 /*---------------------------------------------------------------------------------------------*/
 /*--------------------------------  Dimensions Input Field  -----------------------------------*/
 /*---------------------------------------------------------------------------------------------*/
-.m3-fields-row {
+.m3-dimensions-fields-row {
 	display: flex;
-    gap: 16px; /* Отступ между полями ввода */
-    align-items: flex-start; /* Выравнивание по верхней границе */
-    width: 100%;
+	gap: 16px; /* Отступ между полями ввода */
+	align-items: flex-start; /* Выравнивание по верхней границе */
+	width: 100%;
 }
-.m3-fields-row md-outlined-text-field {
-    flex: 1; /* Поля будут одинаковой ширины */
-    
-    /* Секретный токен M3: резервирует фиксированное место под ошибку заранее, 
-       благодаря чему рамка поля ввода НИКОГДА не сдвинется */
-    --md-outlined-text-field-bottom-space: 20px; 
+.m3-dimensions-fields-row md-outlined-text-field {
+	flex: 1; /* Поля будут одинаковой ширины */
+	
+	/* Секретный токен M3: резервирует фиксированное место под ошибку заранее, 
+	   благодаря чему рамка поля ввода НИКОГДА не сдвинется */
+	--md-outlined-text-field-bottom-space: 20px; 
+	--md-outlined-text-field-container-shape: 8px;
 }
 
 
+
+
+
+/*---------------------------------------------------------------------------------------------*/
+/*------------------------------------  Plan Selector  ----------------------------------------*/
+/*---------------------------------------------------------------------------------------------*/
+.m3-plan-selector {
+	display: flex;
+	width: 100%;
+	align-items: flex-start;
+}
+.m3-plan-selector md-outlined-select {
+	width: 100%;
+	--md-outlined-select-min-width: 100%;
+	 
+	--md-outlined-field-container-shape-start-start: 8px;
+	--md-outlined-field-container-shape-start-end: 8px;
+	--md-outlined-field-container-shape-end-start: 8px;
+	--md-outlined-field-container-shape-end-end: 8px;
+}
+
+
+
+
+
+
+/*---------------------------------------------------------------------------------------------*/
+/*----------------------------------  Animation Selector  -------------------------------------*/
+/*---------------------------------------------------------------------------------------------*/
+.m3-plan-selector {
+	display: flex;
+	width: 100%;
+	align-items: flex-start;
+}
+.m3-plan-selector md-outlined-select {
+	width: 100%;
+	--md-outlined-select-min-width: 100%;
+	 
+	--md-outlined-field-container-shape-start-start: 8px;
+	--md-outlined-field-container-shape-start-end: 8px;
+	--md-outlined-field-container-shape-end-start: 8px;
+	--md-outlined-field-container-shape-end-end: 8px;
+}
 
 
 
@@ -281,7 +331,8 @@ position: fixed;
 	right: 0;			
 	z-index: 1000;		
 	height: 80px; /* ДОБАВЛЕНО: Фиксированная высота по гайдлайнам M3 */
-	background-color: var(--md-sys-color-surface-container);
+	background-color: var(--md-sys-color-surface);
+	border-top: 1px solid var(--md-sys-color-outline-variant);
 	display: flex;
 	justify-content: space-around;
 	align-items: center;

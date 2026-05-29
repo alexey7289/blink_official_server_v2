@@ -19,6 +19,7 @@ const wifiBtn = document.getElementById('wifi-status');
 const powerBtn = document.getElementById('power-btn');
 const versionSpan = document.getElementById('logo-version');
 const voltageContainer = document.getElementById('voltage-toggle-container');
+const colorType = document.getElementById('rgb-selector');
 
 /**
  * 1. Отправка измененных настроек обратно на контроллер ESP32
@@ -40,9 +41,9 @@ async function saveSettingsToServer() {
   }
 }
 
-/**
+/**-----------------------------------------------------------------------------
  * 2. Функция отслеживания тапа по кнопке напряжения (Железобетонная привязка)
- */
+-----------------------------------------------------------------------------**/
 function attachVoltageListener() {
   // Селектор ищет ЛЮБУЮ кнопку Material Web, которая сейчас создана внутри контейнера
   const currentBtn = voltageContainer.querySelector('md-filled-button, md-outlined-button');
@@ -73,6 +74,11 @@ function attachVoltageListener() {
  */
 function updateUI(settings) {
   console.log("[UI] Начинаю обновление элементов интерфейса...");
+  // --- Обновление порядка каналов ленты ---
+  if (colorType) {
+    colorType.value = settings.color_type;
+    console.log(`[UI] -> Порядок каналов в меню выставлен на: ${settings.color_type}`);
+  }
 
   // --- Обновление текстовой версии в логотипе ---
   if (versionSpan) {
@@ -152,6 +158,20 @@ if (powerBtn) {
     console.log('[User Action] Пользователь нажал на кнопку питания (лампочку).');
     currentSettings.system_power = powerBtn.selected;
     console.log(`[NVS] Локальный слепок памяти обновлен. system_power = ${currentSettings.system_power}`);
+    saveSettingsToServer();
+  });
+}
+
+// Слушаем изменение выпадающего списка порядка каналов
+if (colorType) {
+  colorType.addEventListener('change', () => {
+    console.log('[User Action] Пользователь изменил порядок каналов RGB.');
+    
+    // Записываем строковое значение (например, "BGR") прямо в слепок памяти
+    currentSettings.color_type = colorType.value;
+    console.log(`[NVS] Локальный слепок памяти обновлен. color_order = "${currentSettings.color_type}"`);
+    
+    // Отправляем обновленный JSON на веб-сервер ESP32
     saveSettingsToServer();
   });
 }

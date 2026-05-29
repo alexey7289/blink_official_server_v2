@@ -6,14 +6,14 @@
   
   <!-- Контур всей фигуры (Разжигается строго после исчезновения огоньков) -->
   <path class="full-path-glow" d="M 67.96,12.93 L 279.96,12.93 L 214.79,76.54 L 132.96,76.54 Z" 
-        fill="none" stroke="#000000" stroke-width="3" />
+        fill="none" stroke="#ffffff" stroke-width="3" />
 
   <!-- ЛЕВАЯ ГРУППА ОГОНЬКОВ (Встреча в Точке 4) -->
-  <path class="comet-1to4" d="M 67.96,12.93 L 132.96,76.54" fill="none" stroke="#000000" stroke-width="4.5" />
-  <path class="comet-3to4" d="M 214.79,76.54 L 132.96,76.54" fill="none" stroke="#000000" stroke-width="4.5" />
+  <path class="comet-1to4" d="M 67.96,12.93 L 132.96,76.54" fill="none" stroke="#ffffff" stroke-width="3.5" />
+  <path class="comet-3to4" d="M 214.79,76.54 L 132.96,76.54" fill="none" stroke="#ffffff" stroke-width="3.5" />
 
   <!-- ПРАВАЯ ГРУППА ОГОНЬКОВ (Встреча в Точке 2) -->
-  <path class="comet-1to2" d="M 67.96,12.93 L 279.96,12.93" fill="none" stroke="#000000" stroke-width="4.5" />
-  <path class="comet-3to2" d="M 214.79,76.54 L 279.96,12.93" fill="none" stroke="#000000" stroke-width="4.5" />
+  <path class="comet-1to2" d="M 67.96,12.93 L 279.96,12.93" fill="none" stroke="#ffffff" stroke-width="3.5" />
+  <path class="comet-3to2" d="M 214.79,76.54 L 279.96,12.93" fill="none" stroke="#ffffff" stroke-width="3.5" />
 
 </svg>
