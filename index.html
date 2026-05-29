@@ -8,7 +8,7 @@
 
 	<link rel="stylesheet" href="./css/m3-theme.css">
 	<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
-	<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,250,0..1,-50..200&icon_names=android_wifi_3_bar,android_wifi_3_bar_off,bolt,home,light_off,lightbulb,menu,settings,straighten,terminal_2,tune" />
+	<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,150,0..1,-50..200&icon_names=android_wifi_3_bar,android_wifi_3_bar_off,bolt,help,home,light_off,lightbulb,menu,palette,settings,straighten,terminal_2,tune" />
 
 	<script type="importmap">
 		{
@@ -26,6 +26,8 @@
 	
 </head>
 <body>
+
+	<!-- Header с лого -->
 	<header class="m3-top-app-bar">
 		<div class="m3-bar-section m3-bar-section--left">
 			<button class="m3-bar-button">
@@ -48,8 +50,11 @@
 			</md-icon-button>
 		</div>
 	</header>
+
+	<!-- Main -->
 	<main class="page-content">
 		
+		<!-- Блок статуса Wi-fi -->
 		<div class="m3-card-container" style="display: flex; justify-content: center; align-items: center;">
 			<md-outlined-button id="wifi-status" class="m3-wifi-status">
 				<md-icon slot="icon">android_wifi_3_bar</md-icon>
@@ -60,15 +65,15 @@
 
 		<!-- Блок выбора напряжения -->
 		<div class="m3-card-container">
-			<div class="m3-voltage-row">
+			<div class="m3-card-row">
 				<!-- Иконка-->
 				<md-filled-tonal-icon-button>
 					<md-icon>bolt</md-icon>
 				</md-filled-tonal-icon-button>
 				<!-- Текст и подтекст -->
-				<div class="m3-voltage-text-block">
-					<div class="m3-voltage-text-block-title">Напряжение</div>
-					<div class="m3-voltage-text-block-subtitle">Питание 5V или 12V</div>
+				<div class="m3-card-text-block">
+					<div class="m3-card-text-block-title">Напряжение</div>
+					<div class="m3-card-text-block-subtitle">Питание 5V или 12V</div>
 				</div>
 				<!-- Кнопка переключатель -->
 				<div class="m3-voltage-btn" id="voltage-toggle-container">
@@ -80,19 +85,84 @@
 
 		<!-- Блок выбора шага кластеров -->
 		<div class="m3-card-container">
-			<div class="m3-voltage-row">
+			<div class="m3-card-row">
 				<!-- Иконка-->
 				<md-filled-tonal-icon-button>
 					<md-icon>straighten</md-icon>
 				</md-filled-tonal-icon-button>
 				<!-- Текст и подтекст -->
-				<div class="m3-voltage-text-block">
-					<div class="m3-voltage-text-block-title">Пиксель</div>
-					<div class="m3-voltage-text-block-subtitle">Шаг резки ленты</div>
+				<div class="m3-card-text-block">
+					<div class="m3-card-text-block-title">Пиксель</div>
+					<div class="m3-card-text-block-subtitle">Шаг резки ленты</div>
 				</div>
 				<!-- Поле ввода -->
-				<div class="m3-cluster-btn" id="voltage-toggle-container">
-					<md-outlined-text-field label="мм" value="5"></md-outlined-text-field>
+				<div class="m3-cluster-field" id="cluster-field-container">
+					<md-outlined-text-field
+					error-text="Ошибка"
+					suffix-text="мм"
+					value="5"
+					></md-outlined-text-field>
+				</div>
+			</div>
+		</div>
+
+		<!-- Блок выбора типа ленты -->
+		<div class="m3-card-container">
+			<div class="m3-card-row">
+				<!-- Иконка -->
+				<md-filled-tonal-icon-button>
+					<md-icon>palette</md-icon>
+				</md-filled-tonal-icon-button>
+				<!-- Текст и подтекст -->
+				<div class="m3-card-text-block">
+					<div class="m3-card-text-block-title">Тип кластера</div>
+					<div class="m3-card-text-block-subtitle">Порядок цветов</div>
+				</div>
+				<!-- Поле выбора -->
+				<div class="m3-rgb-selector" id="rgb-selector-container">
+					<md-outlined-select>
+						<md-select-option selected value="RGB">
+							<div slot="headline">RGB</div>
+						</md-select-option>
+						<md-select-option value="RBG">
+							<div slot="headline">RBG</div>
+						</md-select-option>
+					</md-outlined-select>
+				</div>
+			</div>
+		</div>
+
+		<!-- Блок ввода размеров -->
+		<div class="m3-card-container">
+			<div class="m3-card-row">
+				<!-- Иконка -->
+				<md-filled-tonal-icon-button>
+					<md-icon>palette</md-icon>
+				</md-filled-tonal-icon-button>
+				<!-- Текст и подтекст -->
+				<div class="m3-card-text-block">
+					<div class="m3-card-text-block-title">Размер</div>
+					<div class="m3-card-text-block-subtitle">Длина и ширина рисунка</div>
+				</div>
+				<md-icon-button>
+					<md-icon>help</md-icon>
+				</md-icon-button>
+			</div>
+			<div class="m3-card-row">
+				<div class="m3-fields-row">
+					<md-outlined-text-field
+						label="Длина"
+						error-text="Не кратно шагу резки"
+						suffix-text="мм"
+						value="5"
+					></md-outlined-text-field>
+					<md-outlined-text-field
+						error
+						label="Ширина"
+						error-text="Не кратно шагу резки"
+						suffix-text="мм"
+						value="5"
+					></md-outlined-text-field>
 				</div>
 			</div>
 		</div>
@@ -105,6 +175,8 @@
 		</div>
 
 	</main>
+
+	<!-- Navigation -->
 	<nav class="m3-nav-bar">
 		<button class="m3-nav-item m3-nav-item--active">
 			<div class="m3-icon-wrapper">
@@ -131,6 +203,10 @@
 			<span class="m3-label">Консоль</span>
 		</button>
 	</nav>
+
 	<script type="module" src="./js/app.js"></script>
 </body>
 </html>
+<!-- Sources -->
+<!-- Examples		https://material-web.dev -->
+<!-- Icons			https://fonts.google.com/icons -->

@@ -18,6 +18,7 @@ body {
   padding-bottom: 96px; 
   box-sizing: border-box; 
   width: 100%;
+  
 }
 
 
@@ -129,7 +130,12 @@ position: fixed;
 	margin: 0 auto;
 	overflow: hidden;
 	box-sizing: border-box;
-
+	display: flex;
+	flex-direction: column;
+	gap: 16px;
+	margin-left: auto;
+	margin-right: auto;
+	margin-bottom: 24px; /* Расстояние до следующей карточки */
 }
 
 
@@ -155,16 +161,16 @@ position: fixed;
 
 
 /*---------------------------------------------------------------------------------------------*/
-/*-----------------------------------  Voltage Container  -------------------------------------*/
+/*-----------------------------------  Card Row Container  ------------------------------------*/
 /*---------------------------------------------------------------------------------------------*/
-.m3-voltage-row {
+.m3-card-row {
 	display: flex;
 	align-items: center;
 	gap: 16px;
 	width: 100%;
 	box-sizing: border-box;
 }
-.m3-voltage-text-block {
+.m3-card-text-block {
 	display: flex;
 	flex-direction: column;
 	justify-content: center;
@@ -174,16 +180,23 @@ position: fixed;
 	flex-shrink: 1;
 	overflow: hidden;
 }
-.m3-voltage-text-block-title {
+.m3-card-text-block-title {
 	font-size: 16px;
 	font-weight: 400;
 }
-.m3-voltage-text-block-subtitle {
+.m3-card-text-block-subtitle {
 	font-size: 12px;
 	font-weight: 400;
 	letter-spacing: 0.2px;
 	opacity: 0.5;
 }
+
+
+
+
+/*---------------------------------------------------------------------------------------------*/
+/*------------------------------------  Voltage Btn  ------------------------------------------*/
+/*---------------------------------------------------------------------------------------------*/
 .m3-voltage-btn {
 	width: 80px;
 	display: flex;
@@ -201,17 +214,58 @@ position: fixed;
 
 
 /*---------------------------------------------------------------------------------------------*/
-/*-----------------------------------  Voltage Container  -------------------------------------*/
+/*-----------------------------------  Cluster Size Field  ------------------------------------*/
 /*---------------------------------------------------------------------------------------------*/
-.m3-cluster-btn {
-	width: 80px;
+.m3-cluster-field {
+	width: 100px;
 	display: flex;
 	justify-content: flex-end;
 }
-.m3-cluster-btn md-outlined-text-field {
+.m3-cluster-field md-outlined-text-field {
 	--md-outlined-text-field-container-shape: 8px;
 	--md-outlined-text-field-container-height: 40px;
 }
+
+
+
+
+/*---------------------------------------------------------------------------------------------*/
+/*-----------------------------------  RGB Color Selector  ------------------------------------*/
+/*---------------------------------------------------------------------------------------------*/
+.m3-rgb-selector {
+	width: 100px;
+	display: flex;
+	justify-content: flex-end;
+}
+.m3-rgb-selector md-outlined-select {
+	min-width: 100px;
+	width: 100%;
+	--md-outlined-select-text-field-container-shape: 8px;
+	--md-outlined-text-field-container-height: 40px;
+}
+
+
+
+
+
+/*---------------------------------------------------------------------------------------------*/
+/*--------------------------------  Dimensions Input Field  -----------------------------------*/
+/*---------------------------------------------------------------------------------------------*/
+.m3-fields-row {
+	display: flex;
+    gap: 16px; /* Отступ между полями ввода */
+    align-items: flex-start; /* Выравнивание по верхней границе */
+    width: 100%;
+}
+.m3-fields-row md-outlined-text-field {
+    flex: 1; /* Поля будут одинаковой ширины */
+    
+    /* Секретный токен M3: резервирует фиксированное место под ошибку заранее, 
+       благодаря чему рамка поля ввода НИКОГДА не сдвинется */
+    --md-outlined-text-field-bottom-space: 20px; 
+}
+
+
 
 
 
