@@ -17,10 +17,26 @@ document.addEventListener('DOMContentLoaded', () => {
 	// ===========================================================================
 	// 0. БЛОК «ПЕРЕМЕННЫЕ» (Объявляем в самом начале, чтобы их видели все блоки ниже)
 	// ===========================================================================
-	const lengthInput = document.getElementById('length-field'); // Экспорт данных в index.html на id="length-field"
-	const widthInput  = document.getElementById('width-field');  // Экспорт данных в index.html на id="width-field"
-	const stepInput   = document.getElementById('step-field');   // Экспорт данных в index.html на id="step-field"
+	const versionSpan = document.getElementById('logo-version');
+	const powerBtn = document.getElementById('power-btn');
+	const mainContent = document.querySelector('main');
+	const animSlider = document.getElementById('animation-speed-slider');
+	const animValue  = document.getElementById('animation-speed-value');
+	const softSlider = document.getElementById('softstart-speed-slider');
+	const softValue  = document.getElementById('softstart-speed-value');
+	const brightSlider = document.getElementById('max-brightness-slider');
+	const brightValue  = document.getElementById('max-brightness-value');
+	// Корни ID элементов (должны совпадать с именами ключей в settings.json)
+	const m3Sliders = ['animation-speed', 'softstart-speed', 'max-brightness'];
+	// Вспомогательная функция для корректного вывода единиц измерения (мс или %)
+	const getUnit = (id) => id.includes('brightness') ? '%' : ' мс';
+
+	const lengthInput = document.getElementById('length-field');
+	const widthInput  = document.getElementById('width-field');
+	const stepInput   = document.getElementById('step-field');
 	const saveBtn = document.getElementById('save-dimensions-btn');
+	const saveDimensionsBtn = document.getElementById('save-dimensions-btn');
+
 
 
 	// ================================================================
@@ -38,20 +54,44 @@ document.addEventListener('DOMContentLoaded', () => {
 		.then(settings => {
 			console.log('Файл settings.json успешно загружен. Все найденные данные:', settings);
 
+			// Кнопка питания и ее состояние
+			if (powerBtn && settings['power'] !== undefined) {
+				powerBtn.selected = (settings['power'] === 0);
+				console.log(`Кнопка питания инициализирована. Состояние: ${settings['power'] === 0 ? 'ВЫКЛ' : 'ВКЛ'}`);
+				updatePowerBtn();
+			}
+
+			// Обновление текстовой версии в логотипе
+			if (versionSpan) {
+				const formattedVersion = settings.version.startsWith('v') ? settings.version : `v${settings.version}`;
+				versionSpan.textContent = formattedVersion;
+				console.log(`Версия сайта в логотипе обновлена на: ${formattedVersion}`);
+			}
+
+			// Данные о размерах из settings.json файла
 			if (lengthInput) lengthInput.value = settings['length'];
 			if (widthInput)  widthInput.value  = settings['width'];
 			if (stepInput)   stepInput.value   = settings['step'];
 
-			console.log('Данные размеров успешно обновлены из JSON:', lengthInput.value, widthInput.value, stepInput.value);
-			
-			// Функция расчета кратности загружается после загрузки первоначальных данных
+			// Функция расчета кратности
 			if (typeof validateDimensionsAndCheckButton === 'function') {
 				validateDimensionsAndCheckButton();
 			}
 
+			// Данные из сладеров
+			m3Sliders.forEach(id => {
+					const slider = document.getElementById(`${id}-slider`);
+					const valueDisplay = document.getElementById(`${id}-value`);
+
+					// Если слайдер есть на странице и этот ключ есть в JSON от ESP32
+					if (slider && valueDisplay && settings[id] !== undefined) {
+							slider.value = settings[id]; // Двигаем ползунок на нужную позицию
+							valueDisplay.textContent = `${slider.value}${getUnit(id)}`; // Обновляем текст
+					}
+			});
 		})
 		.catch(error => {
-			console.warn('[Считыватель] Файл не найден на ПК. Используем дефолты из HTML:', error.message);
+			console.warn('Файл не найден на ПК. Используем дефолты из HTML:', error.message);
 		});
 
 
@@ -87,6 +127,24 @@ document.addEventListener('DOMContentLoaded', () => {
 			validateDimensionsAndCheckButton();
 		});
 	}
+	// Слушаем слайдер скорости анимации
+	if (animSlider && animValue) {
+		animSlider.addEventListener('input', () => {
+			animValue.textContent = `${animSlider.value} мс`;
+		});
+	}
+	// Слушаем слайдер скорости плавного включения
+	if (softSlider && softValue) {
+		softSlider.addEventListener('input', () => {
+			softValue.textContent = `${softSlider.value} мс`;
+		});
+	}
+	// Слушаем слайдер максимальной яркости
+	if (brightSlider && brightValue) {
+		brightSlider.addEventListener('input', () => {
+			brightValue.textContent = `${brightSlider.value} %`;
+		});
+	}
 
 
 
@@ -96,7 +154,28 @@ document.addEventListener('DOMContentLoaded', () => {
 	// ================================================================
 	// 3. БЛОК «ФУНКЦИИ» (Математика)
 	// ================================================================
-	// Функция расчета коатности размеров шагу ленты
+	// Функция управления питанием
+	function updatePowerBtn() {
+		if (!powerBtn || !mainContent) return;
+		// Проверяем состояние кнопки: если selected === true, значит лампочка перечеркнута (Питание ВЫКЛ)
+		const isPowerOff = powerBtn.selected;
+
+		if (isPowerOff) {
+			// Наш фирменный трюк: делаем весь main полупрозрачным и запрещаем любые клики мышью
+			mainContent.style.opacity = '0.15';
+			mainContent.style.pointerEvents = 'none';
+			mainContent.style.userSelect = 'none';
+			console.log('[UI] -> Интерфейс управления ПОЛНОСТЬЮ ПОГАШЕН (Питание ВЫКЛ)');
+		} else {
+			// Возвращаем интерфейс в яркое и рабочее состояние
+			mainContent.style.opacity = '1';
+			mainContent.style.pointerEvents = 'auto';
+			mainContent.style.userSelect = 'auto';
+			console.log('[UI] -> Интерфейс управления АКТИВИРОВАН (Питание ВКЛ)');
+		}
+	}
+
+	// Функция расчета кратности размеров шагу ленты
 	function validateDimensionsAndCheckButton() {
 		// Считываем числа из полей
 		const length = parseFloat(lengthInput ? lengthInput.value : 0);
@@ -164,11 +243,19 @@ document.addEventListener('DOMContentLoaded', () => {
 	}
 
 
+
+
+
 	// ================================================================
 	// 4. БЛОК «ЭКСПОРТ» (Отправка всех размеров на ESP32 по кнопке)
 	// ================================================================
+	// По клику на кнопке "Питание" вызываем функция гашения/отображение интерфейса
+	if (powerBtn) {
+		powerBtn.addEventListener('click', () => {
+			updatePowerBtn();
+		})
+	}
 	// Отправка количества пикселей в ленте при сохранении по кнопке
-	const saveDimensionsBtn = document.getElementById('save-dimensions-btn');
 	if (saveDimensionsBtn) {
 		saveDimensionsBtn.addEventListener('click', () => {
 			
@@ -185,13 +272,24 @@ document.addEventListener('DOMContentLoaded', () => {
 			console.log(`Данные пикселей в длине: ${lengthPixels} и пикселей в ширине: ${widthPixels} улетели на ESP`);
 		});
 	}
-
-
-
-
-
-
-
+	// Отправка скорости анимации
+	if (animSlider) {
+		animSlider.addEventListener('change', () => {
+			console.log(`Слайдер анимации отпущен. Значение: ${animSlider.value} мс`);
+		})
+	}
+	// Отправка скорости плавного включения
+	if (softSlider) {
+		softSlider.addEventListener('change', () => {
+			console.log(`Слайдер плавного включения отпущен. Значение: ${softSlider.value} мс`);
+		})
+	}
+	// Отправка максимальной яркости
+	if (brightSlider) {
+		brightSlider.addEventListener('change', () => {
+			console.log(`Слайдер максимальной яркости отпущен. Значение: ${brightSlider.value} %`);
+		})
+	}
 
 
 

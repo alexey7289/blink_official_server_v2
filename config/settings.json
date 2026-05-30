@@ -1,16 +1,22 @@
 {
-    "power": 0,
-    "is_online": false,
-    "voltage": 12,
-    "color_type": "GBR",
-    "animation-speed": 1300,
-    "softstart-speed": 500,
-    "max-brightness": 75,
-    "effect_id": 5,
-    "ceiling_draw": "Прямоугольник",
-    "ceiling_draw_id": 0,
+    "power": 1,
+    "version": "2.3.6",
+
     "length": 100,
     "width": 50,
     "step": 10,
-    "version": "2.3.5"
+
+    "animation-speed": 1300,
+    "softstart-speed": 500,
+    "max-brightness": 75,
+    
+    
+    
+    "is_online": false,
+    "voltage": 12,
+    "color_type": "GBR",
+    "effect_id": 5,
+    "ceiling_draw": "Прямоугольник",
+    "ceiling_draw_id": 0
+
 }
