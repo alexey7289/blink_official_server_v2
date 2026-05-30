@@ -20,6 +20,7 @@
 		android_wifi_3_bar_off,
 		animated_images,
 		bolt,
+		contrast,
 		help,
 		home,
 		light_off,
@@ -28,6 +29,7 @@
 		motion_blur,
 		palette,
 		preview,
+		save,
 		settings,
 		speed,
 		straighten,
@@ -162,14 +164,22 @@
 			<div class="m3-card-row">
 				<div class="m3-dimensions-fields-row">
 					<md-outlined-text-field
+						id="length-field"
+						type="text"
+						inputmode="numeric"
+						pattern="[0-9.,]*"
 						label="Длина"
-						error-text="Не кратно шагу резки"
 						suffix-text="мм"
+						supporting-text=" " 
 					></md-outlined-text-field>
 					<md-outlined-text-field
+						id="width-field"
+						type="text"
+						inputmode="numeric"
+						pattern="[0-9.,]*"
 						label="Ширина"
-						error-text="Не кратно шагу резки"
 						suffix-text="мм"
+						supporting-text=" "
 					></md-outlined-text-field>
 				</div>
 			</div>
@@ -190,11 +200,19 @@
 				<!-- Поле ввода -->
 				<div class="m3-cluster-field" id="cluster-field-container">
 					<md-outlined-text-field
+					id="step-field"
+					type="text"
 					label="Шаг"
-					error-text="Ошибка"
 					suffix-text="мм"
+					supporting-text=" "
 					></md-outlined-text-field>
 				</div>
+			</div>
+			<div class="m3-card-row" style="margin-top: 20px; display: flex; justify-content: center;">
+				<md-filled-button id="save-dimensions-btn">
+					<md-icon slot="icon">save</md-icon>
+					Сохранить размеры
+				</md-filled-button>
 			</div>
 		</div>
 
@@ -293,10 +311,8 @@
 			</div>
 		</div>
 
-		<!-- Блок слайдеров -->
+		<!-- Слайдер скорости анимации -->
 		<div class="m3-card-container">
-
-			<!-- Слайдер скорости анимации -->
 			<div class="slider-header">
 				<h2 class="slider-title">Настройки анимации</h2>
 			</div>
@@ -313,12 +329,12 @@
 						<div class="slider-subtitle">
 							Скорость анимации
 						</div>
-						<div class="slider-value">
+						<div class="slider-value" id="animation-speed-value">
 							20 мс
 						</div>
 					</div>
 					<div class="slider-row">
-						<md-slider></md-slider>
+						<md-slider id="animation-speed-slider"min="50" max="2000" value="1000" step="100"></md-slider>
 					</div>
 				</div>
 			</div>
@@ -339,19 +355,46 @@
 						<div class="slider-subtitle">
 							Скорость плавного включения
 						</div>
-						<div class="slider-value">
+						<div class="slider-value" id="softstart-speed-value">
 							20 мс
 						</div>
 					</div>
 					<div class="slider-row">
-						<md-slider></md-slider>
+						<md-slider id="softstart-speed-slider"min="50" max="2000" value="1000" step="100"></md-slider>
 					</div>
 				</div>
 			</div>
 		</div>
 
-
-
+		<!-- Слайдер максимальной яркости -->
+		<div class="m3-card-container">
+			<!-- Слайдер скорости анимации -->
+			<div class="slider-header">
+				<h2 class="slider-title">Яркость</h2>
+			</div>
+			<div class="slider-main">
+				<!-- Иконка -->
+				<div class="slider-speed-icon">
+					<md-filled-tonal-icon-button>
+						<md-icon>contrast</md-icon>
+					</md-filled-tonal-icon-button>
+				</div>
+				<!-- Слайдер с текстом -->
+				<div class="slider-data">
+					<div class="slider-row">
+						<div class="slider-subtitle">
+							Максимальная яркость
+						</div>
+						<div class="slider-value" id="max-brightness-value">
+							20 %
+						</div>
+					</div>
+					<div class="slider-row">
+						<md-slider id="max-brightness-slider"min="0" max="100" value="10" step="5"></md-slider>
+					</div>
+				</div>
+			</div>
+		</div>
 
 	</main>
 

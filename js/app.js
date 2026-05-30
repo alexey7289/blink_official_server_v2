@@ -1,204 +1,200 @@
-// ==========================================================================
-// CENTRAL CONTROL MODULE (SmartLight UI & ESP32 NVS Bridge)
-// ==========================================================================
+/* [Считыватель (Fetch)] ──> Настройки из ESP32 
+								 │
+								 ▼
+						  [Переменные (State)] <── [Слушатели (Events)] ── Действия пользователя
+								 │
+								 ▼
+						  [Функции (Логика)] ──> Расчет пикселей / Валидация
+								 │
+								 ▼
+						  [Экспорт (Output)] ──> Обновление экрана (HTML) / Запросы на ESP32 */
 
-console.log("[System] Модуль app.js успешно инициализирован браузером.");
-
-// Глобальный объект для хранения текущего состояния (слепок NVS)
-let currentSettings = {
-  version: "0.0",
-  is_online: false,
-  system_power: false,
-  brightness: 0,
-  animation_mode: 0,
-  voltage: 5
-};
-
-// Находим интерактивные элементы на странице по ID
-const wifiBtn = document.getElementById('wifi-status');
-const powerBtn = document.getElementById('power-btn');
-const versionSpan = document.getElementById('logo-version');
-const voltageContainer = document.getElementById('voltage-toggle-container');
-const colorType = document.getElementById('rgb-selector');
-
-/**
- * 1. Отправка измененных настроек обратно на контроллер ESP32
- */
-async function saveSettingsToServer() {
-  const url = '/api/save-settings';
-  console.log(`[POST] Подготовка к отправке данных на ESP32. Эндпоинт: ${url}`);
-  console.log('[POST] Отправляемый пакет данных:', JSON.stringify(currentSettings));
-  
-  try {
-    const response = await fetch(url, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(currentSettings)
-    });
-    console.log(`[POST] Ответ сервера на сохранение. Статус: ${response.status}`);
-  } catch (error) {
-    console.warn('[POST] Инфо: Локальный тест. Отправка на ESP32 сымитирована (сервер недоступен). Error:', error.message);
-  }
-}
-
-/**-----------------------------------------------------------------------------
- * 2. Функция отслеживания тапа по кнопке напряжения (Железобетонная привязка)
------------------------------------------------------------------------------**/
-function attachVoltageListener() {
-  // Селектор ищет ЛЮБУЮ кнопку Material Web, которая сейчас создана внутри контейнера
-  const currentBtn = voltageContainer.querySelector('md-filled-button, md-outlined-button');
-  
-  if (currentBtn) {
-    console.log("[System] Найдена кнопка вольтажа в DOM. Привязываю событие клика...");
-    
-    // Навешиваем событие клика
-    currentBtn.addEventListener('click', (event) => {
-      event.preventDefault();
-      console.log('[User Action] Пользователь нажал на переключатель напряжения.');
-      
-      // Логика триггера: меняем 5 на 12, или 12 на 5
-      currentSettings.voltage = (currentSettings.voltage === 5) ? 12 : 5;
-      console.log(`[NVS] Локальный слепок памяти обновлен. voltage = ${currentSettings.voltage}V`);
-      
-      // Сразу вызываем перерисовку интерфейса и отправляем пакет на ESP32
-      updateUI(currentSettings);
-      saveSettingsToServer();
-    });
-  } else {
-    console.error("[System] Критическая ошибка: Кнопка вольтажа не найдена внутри контейнера!");
-  }
-}
-
-/**
- * 3. Функция обновления визуального состояния UI на основе данных настроек
- */
-function updateUI(settings) {
-  console.log("[UI] Начинаю обновление элементов интерфейса...");
-  // --- Обновление порядка каналов ленты ---
-  if (colorType) {
-    colorType.value = settings.color_type;
-    console.log(`[UI] -> Порядок каналов в меню выставлен на: ${settings.color_type}`);
-  }
-
-  // --- Обновление текстовой версии в логотипе ---
-  if (versionSpan) {
-    const formattedVersion = settings.version.startsWith('v') ? settings.version : `v${settings.version}`;
-    versionSpan.textContent = formattedVersion;
-    console.log(`[UI] -> Версия сайта в логотипе обновлена на: ${formattedVersion}`);
-  }
-
-  // --- Обновление индикатора Wi-Fi ---
-  if (wifiBtn) {
-    if (settings.is_online) {
-      wifiBtn.innerHTML = '<md-icon slot="icon">android_wifi_3_bar</md-icon>Подключено';
-      wifiBtn.classList.remove('m3-wifi-status--disconnected');
-      console.log("[UI] -> Индикатор Wi-Fi: ПОДКЛЮЧЕНО (иконка: android_wifi_3_bar)");
-    } else {
-      wifiBtn.innerHTML = '<md-icon slot="icon">android_wifi_3_bar_off</md-icon>Отключено';
-      wifiBtn.classList.add('m3-wifi-status--disconnected');
-      console.log("[UI] -> Индикатор Wi-Fi: ОТКЛЮЧЕНО (иконка: android_wifi_3_bar_off)");
-    }
-  }
-
-  // --- Обновление кнопки питания (лампочки) ---
-  if (powerBtn) {
-    powerBtn.selected = settings.system_power;
-    console.log(`[UI] -> Состояние лампочки (system_power): ${settings.system_power ? 'ВКЛ' : 'ВЫКЛ'}`);
-  }
-
-  // --- Динамическое переключение типа кнопки Напряжения ---
-  if (voltageContainer) {
-    if (settings.voltage === 12) {
-      voltageContainer.innerHTML = '<md-filled-button>12V</md-filled-button>';
-      console.log("[UI] -> Кнопка напряжения отрисована как: ЗАЛИТАЯ (12V)");
-    } else {
-      voltageContainer.innerHTML = '<md-outlined-button>5V</md-outlined-button>';
-      console.log("[UI] -> Кнопка напряжения отрисована как: КОНТУРНАЯ (5V)");
-    }
-    
-    // РЕШЕНИЕ: Даем браузеру микропаузу (10 миллисекунд), чтобы он гарантированно 
-    // успел внедрить новый HTML-код кнопки в память, и только потом вешаем клик!
-    setTimeout(attachVoltageListener, 10);
-
-  } else {
-    console.error("[UI] Ошибка: Контейнер #voltage-toggle-container не найден!");
-  }
-  
-  console.log("[UI] Обновление интерфейса успешно завершено.");
-}
-
-/**
- * 4. Инициализация: Загрузка актуальных настроек (NVS) с сервера ESP32
- */
-async function loadSettingsFromServer() {
-  const url = './config/settings.json';
-  console.log(`[GET] Отправляю запрос на чтение конфигурации: ${url}`);
-  
-  try {
-    const response = await fetch(url);
-    console.log(`[GET] Ответ от сервера получен. Статус: ${response.status} (${response.statusText})`);
-    if (!response.ok) throw new Error(`Ошибка HTTP: ${response.status}`);
-    
-    currentSettings = await response.json();
-    console.log('[NVS] JSON успешно распарсен во внутреннюю память. Текущий слепок:', currentSettings);
-    
-    updateUI(currentSettings);
-  } catch (error) {
-    console.error('[NVS] Критическая ошибка загрузки конфигурации settings.json:', error.message);
-  }
-}
-
-// ==========================================================================
-// ОБРАБОТЧИКИ СОБЫТИЙ (Слушаем действия пользователя)
-// ==========================================================================
-
-// Слушаем лампочку питания в шапке
-if (powerBtn) {
-  powerBtn.addEventListener('change', () => {
-    console.log('[User Action] Пользователь нажал на кнопку питания (лампочку).');
-    currentSettings.system_power = powerBtn.selected;
-    console.log(`[NVS] Локальный слепок памяти обновлен. system_power = ${currentSettings.system_power}`);
-    saveSettingsToServer();
-  });
-}
-
-// Слушаем изменение выпадающего списка порядка каналов
-if (colorType) {
-  colorType.addEventListener('change', () => {
-    console.log('[User Action] Пользователь изменил порядок каналов RGB.');
-    
-    // Записываем строковое значение (например, "BGR") прямо в слепок памяти
-    currentSettings.color_type = colorType.value;
-    console.log(`[NVS] Локальный слепок памяти обновлен. color_order = "${currentSettings.color_type}"`);
-    
-    // Отправляем обновленный JSON на веб-сервер ESP32
-    saveSettingsToServer();
-  });
-}
-
-// Навигация (Нижняя панель m3-nav-bar)
-const navItems = document.querySelectorAll('.m3-nav-item');
-if (navItems.length > 0) {
-  console.log(`[Navigation] Найдено кнопок меню для отслеживания: ${navItems.length}`);
-  navItems.forEach((item, index) => {
-    item.addEventListener('click', () => {
-      const tabLabel = item.querySelector('.m3-label')?.textContent || `Вкладка #${index + 1}`;
-      console.log(`[User Action] Пользователь переключился на вкладку: "${tabLabel}"`);
-      
-      const currentActive = document.querySelector('.m3-nav-item--active');
-      if (currentActive) {
-        currentActive.classList.remove('m3-nav-item--active');
-      }
-      item.classList.add('m3-nav-item--active');
-      console.log(`[UI] Класс активности m3-nav-item--active успешно переключен.`);
-    });
-  });
-} else {
-  console.error("[Navigation] Ошибка: Элементы .m3-nav-item не найдены на странице!");
-}
-
-// Запуск автоматической загрузки данных при старте страницы
+// Ждем полную загрузку HTML-страницы браузером
 document.addEventListener('DOMContentLoaded', () => {
-  console.log("[System] Страница загружена. Запускаю синхронизацию с NVS...");
-  loadSettingsFromServer();
-});
+	console.log('Страница загружена. Инициализация модулей.');
+	
+
+	// ===========================================================================
+	// 0. БЛОК «ПЕРЕМЕННЫЕ» (Объявляем в самом начале, чтобы их видели все блоки ниже)
+	// ===========================================================================
+	const lengthInput = document.getElementById('length-field'); // Экспорт данных в index.html на id="length-field"
+	const widthInput  = document.getElementById('width-field');  // Экспорт данных в index.html на id="width-field"
+	const stepInput   = document.getElementById('step-field');   // Экспорт данных в index.html на id="step-field"
+	const saveBtn = document.getElementById('save-dimensions-btn');
+
+
+	// ================================================================
+	// 1. БЛОК «СЧИТЫВАТЕЛЬ» (Загрузка настроек с ESP32 при старте)
+	// ================================================================
+
+	// Делаем ОДИН общий запрос к файлу конфигурации
+	fetch('/config/settings.json')
+		.then(response => {
+			if (!response.ok) {
+				throw new Error('ESP32 вернул ошибку или файл предустановок не найден');
+			}
+			return response.json();
+		})
+		.then(settings => {
+			console.log('Файл settings.json успешно загружен. Все найденные данные:', settings);
+
+			if (lengthInput) lengthInput.value = settings['length'];
+			if (widthInput)  widthInput.value  = settings['width'];
+			if (stepInput)   stepInput.value   = settings['step'];
+
+			console.log('Данные размеров успешно обновлены из JSON:', lengthInput.value, widthInput.value, stepInput.value);
+			
+			// Функция расчета кратности загружается после загрузки первоначальных данных
+			if (typeof validateDimensionsAndCheckButton === 'function') {
+				validateDimensionsAndCheckButton();
+			}
+
+		})
+		.catch(error => {
+			console.warn('[Считыватель] Файл не найден на ПК. Используем дефолты из HTML:', error.message);
+		});
+
+
+
+
+
+
+
+	// =============================================================================
+	// 2. БЛОК «СЛУШАТЕЛИ» Слушаем страницу html и следим за новыми данными из нее
+	// =============================================================================
+	// Слушаем поле ввода длины
+	if (lengthInput) {
+		lengthInput.addEventListener('input', () => {
+			lengthInput.value = lengthInput.value.replace(',', '.');
+			console.log('User изменил длину:', lengthInput.value);
+			validateDimensionsAndCheckButton(); // Вызов математики для пересчета
+		});
+	}
+	// Слушаем поле вода ширины
+	if (widthInput) {
+		widthInput.addEventListener('input', () => {
+			widthInput.value = widthInput.value.replace(',', '.');
+			console.log('User изменил ширину:', widthInput.value);
+			validateDimensionsAndCheckButton();
+		});
+	}
+	// Слушаем поле ввода шага
+	if (stepInput) {
+		stepInput.addEventListener('input', () => {
+			stepInput.value = stepInput.value.replace(',', '.');
+			console.log('User изменил шаг:', stepInput.value);
+			validateDimensionsAndCheckButton();
+		});
+	}
+
+
+
+
+
+
+	// ================================================================
+	// 3. БЛОК «ФУНКЦИИ» (Математика)
+	// ================================================================
+	// Функция расчета коатности размеров шагу ленты
+	function validateDimensionsAndCheckButton() {
+		// Считываем числа из полей
+		const length = parseFloat(lengthInput ? lengthInput.value : 0);
+		const width  = parseFloat(widthInput ? widthInput.value : 0);
+		const step   = parseFloat(stepInput ? stepInput.value : 0);
+
+		// Флаг, который будет следить, есть ли ошибка хотя бы в одном поле
+		let hasAnyError = false;
+
+		// 1. Проверяем сам Шаг резки ленты
+		if (isNaN(step) || step <= 0) {
+			if (stepInput) {
+				stepInput.error = true;
+				stepInput.errorText = "Ошибка";
+			}
+			hasAnyError = true; // Шаг неверный — это ошибка
+		} else {
+			if (stepInput) {
+				stepInput.error = false;
+				stepInput.supportingText = " ";
+			}
+		}
+
+		// Внутренняя мини-функция для индивидуального расчета Длины и Ширины
+		function checkField(inputElement, value) {
+			if (!inputElement) return;
+
+			// Если поле еще пустое — ошибку не вешаем, но и сохранять пока не разрешаем
+			if (!inputElement.value || isNaN(value)) {
+				inputElement.error = false;
+				inputElement.supportingText = " ";
+				hasAnyError = true; 
+				return;
+			}
+
+			// Если шаг равен нулю, считать деление нельзя
+			if (isNaN(step) || step <= 0) {
+				inputElement.supportingText = " ";
+				return;
+			}
+
+			const remainder = value % step;
+			// Защита от микро-ошибок округления Float в JavaScript (например, 0.0000001)
+			const isValid = Math.abs(remainder) < 0.01 || Math.abs(remainder - step) < 0.01;
+
+			if (isValid) {
+				const pixelsCount = Math.round(value / step);
+				inputElement.error = false;
+				inputElement.supportingText = `ОК. ${pixelsCount} пикселей`;
+			} else {
+				inputElement.error = true;
+				inputElement.errorText = "Не кратно шагу резки";
+				hasAnyError = true; // Найдена ошибка кратности!
+			}
+		}
+
+		// Проверяем оба поля индивидуально
+		checkField(lengthInput, length);
+		checkField(widthInput, width);
+
+		// УПРАВЛЕНИЕ КНОПКОЙ: если есть хоть одна ошибка, вешаем disabled, иначе — снимаем
+		if (saveBtn) {
+			saveBtn.disabled = hasAnyError;
+		}
+	}
+
+
+	// ================================================================
+	// 4. БЛОК «ЭКСПОРТ» (Отправка всех размеров на ESP32 по кнопке)
+	// ================================================================
+	// Отправка количества пикселей в ленте при сохранении по кнопке
+	const saveDimensionsBtn = document.getElementById('save-dimensions-btn');
+	if (saveDimensionsBtn) {
+		saveDimensionsBtn.addEventListener('click', () => {
+			
+			// 1. Считываем миллиметры из полей в момент клика
+			const lenMm = parseFloat(lengthInput ? lengthInput.value : 0);
+			const widMm = parseFloat(widthInput ? widthInput.value : 0);
+			const stepMm = parseFloat(stepInput ? stepInput.value : 0);
+
+			// 2. Вычисляем точное количество пикселей специально для вывода в лог
+			const lengthPixels = Math.round(lenMm / stepMm);
+			const widthPixels  = Math.round(widMm / stepMm);
+
+			// 3. ВАШ ЛОГ: Теперь он сработает строго при клике и выведет правильные цифры
+			console.log(`Данные пикселей в длине: ${lengthPixels} и пикселей в ширине: ${widthPixels} улетели на ESP`);
+		});
+	}
+
+
+
+
+
+
+
+
+
+
+
+
+}); // Конец глобального обработчика DOMContentLoaded

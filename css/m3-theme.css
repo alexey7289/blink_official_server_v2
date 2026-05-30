@@ -260,10 +260,13 @@ body {
 /*--------------------------------  Dimensions Input Field  -----------------------------------*/
 /*---------------------------------------------------------------------------------------------*/
 .m3-dimensions-fields-row {
+	align-items: flex-start;
 	display: flex;
 	gap: 16px; /* Отступ между полями ввода */
 	align-items: flex-start; /* Выравнивание по верхней границе */
 	width: 100%;
+	height: 76px;       /* Жестко задаем высоту строки (высота инпута 56px + 20px под текст) */
+	overflow: visible;
 }
 .m3-dimensions-fields-row md-outlined-text-field {
 	flex: 1; /* Поля будут одинаковой ширины */
@@ -273,6 +276,8 @@ body {
 	--md-outlined-text-field-bottom-space: 20px; 
 	--md-outlined-text-field-container-shape: 8px;
 }
+
+
 
 
 
@@ -328,7 +333,7 @@ body {
 /*----------------------------------------  Sliders  ------------------------------------------*/
 /*---------------------------------------------------------------------------------------------*/
 .slider-header {
-	margin-bottom: 24px;
+	margin-bottom: 8px;
 }
 .slider-title {
 	font-size: 1rem;
