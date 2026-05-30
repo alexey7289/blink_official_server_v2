@@ -148,6 +148,8 @@ body {
 
 
 
+
+
 /*---------------------------------------------------------------------------------------------*/
 /*--------------------------------------  Wi-fi Status  ---------------------------------------*/
 /*---------------------------------------------------------------------------------------------*/
@@ -317,6 +319,65 @@ body {
 	--md-outlined-field-container-shape-end-end: 8px;
 }
 
+
+
+
+
+
+/*---------------------------------------------------------------------------------------------*/
+/*----------------------------------------  Sliders  ------------------------------------------*/
+/*---------------------------------------------------------------------------------------------*/
+.slider-header {
+	margin-bottom: 24px;
+}
+.slider-title {
+	font-size: 1rem;
+	font-weight: 700;
+	color: var(--md-sys-color-on-surface);
+	margin: 0;
+}
+.slider-main{
+	display: flex;
+	align-items: center;
+	gap: 16px;
+}
+.slider-speed-icon {
+	flex-shrink: 0; /* Запрещаем иконке сжиматься */
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}
+.slider-data {
+	flex-grow: 1; /* Занимает всё оставшееся пространство справа */
+	display: flex;
+	flex-direction: column;
+	gap: 4px; /* Отступ между текстовой строкой и слайдером */
+}
+.slider-row {
+	display: flex;
+	width: 100%;
+}
+.slider-data .slider-row:first-child {
+	justify-content: space-between;
+	align-items: center;
+}
+.slider-subtitle {
+	font-size: 0.85rem;
+	font-weight: 200;
+	color: var(--md-sys-color-on-surface);
+}
+.slider-value {
+	font-size: 0.85rem;
+	font-weight: 400;
+	color: var(--md-sys-color-on-surface);
+	opacity: 0.5;
+}
+md-slider {
+	width: calc(100% + 40px);
+	margin-left: -20px;
+	margin-right: -20px;
+	--md-slider-state-layer-size: 24px;
+}
 
 
 

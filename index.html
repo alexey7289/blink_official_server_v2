@@ -25,9 +25,11 @@
 		light_off,
 		lightbulb,
 		menu,
+		motion_blur,
 		palette,
 		preview,
 		settings,
+		speed,
 		straighten,
 		terminal_2,tune" />
 
@@ -103,7 +105,6 @@
 			</div>
 		</div>
 
-
 		<!-- Блок выбора типа ленты -->
 		<div class="m3-card-container">
 			<div class="m3-card-row">
@@ -172,12 +173,10 @@
 					></md-outlined-text-field>
 				</div>
 			</div>
-		<!-- </div> -->
 
-		<md-divider></md-divider>
+			<md-divider></md-divider>
 
-		<!-- Блок выбора шага кластеров -->
-		<!-- <div class="m3-card-container"> -->
+			<!-- Блок выбора шага кластеров -->
 			<div class="m3-card-row">
 				<!-- Иконка-->
 				<md-filled-tonal-icon-button>
@@ -199,8 +198,6 @@
 			</div>
 		</div>
 
-
-		
 		<!-- Блок выбора схемы подсветки -->
 		<div class="m3-card-container">
 			<div class="m3-card-row">
@@ -217,6 +214,7 @@
 					<md-icon>help</md-icon>
 				</md-icon-button>
 			</div>
+
 			<!-- Поле выбора контура геометрии -->
 			<div class="m3-card-row">
 				<div class="m3-plan-selector">
@@ -237,12 +235,9 @@
 				</div>
 			</div>
 				
-		<!-- </div> -->
+			<md-divider></md-divider>
 
-		<md-divider></md-divider>
-
-		<!-- Блок выбора анимации -->
-		<!-- <div class="m3-card-container"> -->
+			<!-- Блок выбора анимации -->
 			<div class="m3-card-row">
 				<!-- Иконка -->
 				<md-filled-tonal-icon-button>
@@ -257,31 +252,30 @@
 					<md-icon>help</md-icon>
 				</md-icon-button>
 			</div>
+
 			<!-- Поле выбора контура геометрии -->
-				<div class="m3-card-row">
-					<div class="m3-plan-selector">
-						<md-outlined-select id="">
-							<md-select-option selected value="anim-01">
-								<div slot="headline">Быстрое включение</div>
-							</md-select-option>
-							<md-select-option value="anim-02">
-								<div slot="headline">Плавный включение</div>
-							</md-select-option>
-							<md-select-option value="anim-03">
-								<div slot="headline">Бегущий кластер</div>
-							</md-select-option>
-							<md-select-option value="anim-04">
-								<div slot="headline">Бегущий кластер с хвостом</div>
-							</md-select-option>
-						</md-outlined-select>
-					</div>
+			<div class="m3-card-row">
+				<div class="m3-plan-selector">
+					<md-outlined-select id="">
+						<md-select-option selected value="anim-01">
+							<div slot="headline">Быстрое включение</div>
+						</md-select-option>
+						<md-select-option value="anim-02">
+							<div slot="headline">Плавный включение</div>
+						</md-select-option>
+						<md-select-option value="anim-03">
+							<div slot="headline">Бегущий кластер</div>
+						</md-select-option>
+						<md-select-option value="anim-04">
+							<div slot="headline">Бегущий кластер с хвостом</div>
+						</md-select-option>
+					</md-outlined-select>
 				</div>
-		<!-- </div> -->
+			</div>
 
-		<md-divider></md-divider>
+			<md-divider></md-divider>
 
-		<!-- Предпросмотр -->
-		<!-- <div class="m3-card-container" style="padding: 16px; display: flex; justify-content: center;"> -->
+			<!-- Предпросмотр -->
 			<div class="m3-card-row">
 				<!-- Иконка -->
 				<md-filled-tonal-icon-button>
@@ -298,6 +292,66 @@
 				<object type="image/svg+xml" data="./components/anim1/anim1.svg"></object>	
 			</div>
 		</div>
+
+		<!-- Блок слайдеров -->
+		<div class="m3-card-container">
+
+			<!-- Слайдер скорости анимации -->
+			<div class="slider-header">
+				<h2 class="slider-title">Настройки анимации</h2>
+			</div>
+			<div class="slider-main">
+				<!-- Иконка -->
+				<div class="slider-speed-icon">
+					<md-filled-tonal-icon-button>
+						<md-icon>motion_blur</md-icon>
+					</md-filled-tonal-icon-button>
+				</div>
+				<!-- Слайдер с текстом -->
+				<div class="slider-data">
+					<div class="slider-row">
+						<div class="slider-subtitle">
+							Скорость анимации
+						</div>
+						<div class="slider-value">
+							20 мс
+						</div>
+					</div>
+					<div class="slider-row">
+						<md-slider></md-slider>
+					</div>
+				</div>
+			</div>
+
+			<md-divider></md-divider>
+
+			<!-- Слайдер скорости плавного включения -->
+			<div class="slider-main">
+				<!-- Иконка -->
+				<div class="slider-speed-icon">
+					<md-filled-tonal-icon-button>
+						<md-icon>speed</md-icon>
+					</md-filled-tonal-icon-button>
+				</div>
+				<!-- Слайдер с текстом -->
+				<div class="slider-data">
+					<div class="slider-row">
+						<div class="slider-subtitle">
+							Скорость плавного включения
+						</div>
+						<div class="slider-value">
+							20 мс
+						</div>
+					</div>
+					<div class="slider-row">
+						<md-slider></md-slider>
+					</div>
+				</div>
+			</div>
+		</div>
+
+
+
 
 	</main>
 
