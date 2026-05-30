@@ -20,6 +20,7 @@ document.addEventListener('DOMContentLoaded', () => {
 	const versionSpan = document.getElementById('logo-version');
 	const powerBtn = document.getElementById('power-btn');
 	const mainContent = document.querySelector('main');
+	const wifiBtn = document.getElementById('wifi-status');
 	const animSlider = document.getElementById('animation-speed-slider');
 	const animValue  = document.getElementById('animation-speed-value');
 	const softSlider = document.getElementById('softstart-speed-slider');
@@ -56,9 +57,11 @@ document.addEventListener('DOMContentLoaded', () => {
 
 			// Кнопка питания и ее состояние
 			if (powerBtn && settings['power'] !== undefined) {
-				powerBtn.selected = (settings['power'] === 0);
-				console.log(`Кнопка питания инициализирована. Состояние: ${settings['power'] === 0 ? 'ВЫКЛ' : 'ВКЛ'}`);
-				updatePowerBtn();
+				powerBtn.selected = !settings['power'];
+				console.log(`Кнопка питания инициализирована. Состояние: ${settings['power'] ? 'ВКЛ' : 'ВЫКЛ'}`);
+				if (typeof updatePowerBtn === 'function') {
+					updatePowerBtn();
+				}
 			}
 
 			// Обновление текстовой версии в логотипе
@@ -67,6 +70,22 @@ document.addEventListener('DOMContentLoaded', () => {
 				versionSpan.textContent = formattedVersion;
 				console.log(`Версия сайта в логотипе обновлена на: ${formattedVersion}`);
 			}
+
+			// Обновление индикатора Wi-fi из JSON
+			if (wifiBtn && settings['is_online'] !== undefined) {
+				if (settings['is_online'] === true) {
+					// Если ESP32 в сети — ставим иконку сигнала и текст "Подключено"
+					wifiBtn.innerHTML = '<md-icon slot="icon">android_wifi_3_bar</md-icon>Подключено';
+					wifiBtn.classList.remove('m3-wifi-status--disconnected');
+					console.log("[UI] -> Индикатор Wi-Fi: ПОДКЛЮЧЕНО (иконка: android_wifi_3_bar)");
+				} else {
+					// Если ESP32 не в сети — ставим перечеркнутую иконку и текст "Отключено"
+					wifiBtn.innerHTML = '<md-icon slot="icon">android_wifi_3_bar_off</md-icon>Отключено';
+					wifiBtn.classList.add('m3-wifi-status--disconnected');
+					console.log("[UI] -> Индикатор Wi-Fi: ОТКЛЮЧЕНО (иконка: android_wifi_3_bar_off)");
+				}
+			}
+
 
 			// Данные о размерах из settings.json файла
 			if (lengthInput) lengthInput.value = settings['length'];
@@ -174,7 +193,6 @@ document.addEventListener('DOMContentLoaded', () => {
 			console.log('[UI] -> Интерфейс управления АКТИВИРОВАН (Питание ВКЛ)');
 		}
 	}
-
 	// Функция расчета кратности размеров шагу ленты
 	function validateDimensionsAndCheckButton() {
 		// Считываем числа из полей

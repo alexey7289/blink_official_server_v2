@@ -1,6 +1,7 @@
 {
-    "power": 1,
+    "power": true,
     "version": "2.3.6",
+    "is_online": true,
 
     "length": 100,
     "width": 50,
@@ -9,10 +10,7 @@
     "animation-speed": 1300,
     "softstart-speed": 500,
     "max-brightness": 75,
-    
-    
-    
-    "is_online": false,
+        
     "voltage": 12,
     "color_type": "GBR",
     "effect_id": 5,
