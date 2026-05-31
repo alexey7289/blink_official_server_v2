@@ -17,10 +17,18 @@ document.addEventListener('DOMContentLoaded', () => {
 	// ===========================================================================
 	// 0. БЛОК «ПЕРЕМЕННЫЕ» (Объявляем в самом начале, чтобы их видели все блоки ниже)
 	// ===========================================================================
+
 	const versionSpan = document.getElementById('logo-version');
 	const powerBtn = document.getElementById('power-btn');
 	const mainContent = document.querySelector('main');
+	// Навигация по табам
+	const navItems = document.querySelectorAll('.m3-nav-item[data-tab]');
+	const pages = document.querySelectorAll('[data-page]');
 	const wifiBtn = document.getElementById('wifi-status');
+	const powerToggle = document.getElementById('power-toggle');
+	const powerToggleText = document.getElementById('power-toggle-text');
+	const rgbSelector = document.getElementById('rgb-selector');
+	const COLOR_TYPE_MAP = ['RGB', 'RBG', 'GRB', 'GBR', 'BRG', 'BGR'];
 	const animSlider = document.getElementById('animation-speed-slider');
 	const animValue  = document.getElementById('animation-speed-value');
 	const softSlider = document.getElementById('softstart-speed-slider');
@@ -86,7 +94,6 @@ document.addEventListener('DOMContentLoaded', () => {
 				}
 			}
 
-
 			// Данные о размерах из settings.json файла
 			if (lengthInput) lengthInput.value = settings['length'];
 			if (widthInput)  widthInput.value  = settings['width'];
@@ -108,6 +115,20 @@ document.addEventListener('DOMContentLoaded', () => {
 							valueDisplay.textContent = `${slider.value}${getUnit(id)}`; // Обновляем текст
 					}
 			});
+
+			// Данные о напряжении питания
+			if (powerToggle && powerToggleText && settings['voltage'] !== undefined) {
+				const is12V = settings['voltage'] === 12;
+				powerToggle.selected = is12V;
+				powerToggleText.textContent = is12V ? '12В' : '5В';
+				console.log(`Напряжение инициализировано: ${powerToggleText.textContent}`);
+			}
+
+			// Инициализация типа светодиодов из settings.json
+			if (rgbSelector && settings['color_type'] !== undefined) {
+				rgbSelector.value = settings['color_type'];
+				console.log(`Тип светодиодов инициализирован: ${settings['color_type']}`);
+			}
 		})
 		.catch(error => {
 			console.warn('Файл не найден на ПК. Используем дефолты из HTML:', error.message);
@@ -122,6 +143,22 @@ document.addEventListener('DOMContentLoaded', () => {
 	// =============================================================================
 	// 2. БЛОК «СЛУШАТЕЛИ» Слушаем страницу html и следим за новыми данными из нее
 	// =============================================================================
+	// Показываем первую страницу при старте
+	document.querySelector('[data-page="home"]').classList.add('page--active');
+	// Навигация по tab
+	navItems.forEach(btn => {
+		btn.addEventListener('click', () => {
+			const target = btn.dataset.tab;
+
+			// Переключаем активную кнопку
+			navItems.forEach(b => b.classList.remove('m3-nav-item--active'));
+			btn.classList.add('m3-nav-item--active');
+
+			// Переключаем страницу
+			pages.forEach(p => p.classList.remove('page--active'));
+			document.querySelector(`[data-page="${target}"]`).classList.add('page--active');
+		});
+	});
 	// Слушаем поле ввода длины
 	if (lengthInput) {
 		lengthInput.addEventListener('input', () => {
@@ -273,6 +310,11 @@ document.addEventListener('DOMContentLoaded', () => {
 			updatePowerBtn();
 		})
 	}
+	// Смена напряжения питания с 5V на 12V
+	powerToggle.addEventListener('change', () => {
+		powerToggleText.textContent = powerToggle.selected ? '12V' : '5V';
+		console.log(`Напряжение изменено на: ${powerToggleText.textContent}`);
+	});
 	// Отправка количества пикселей в ленте при сохранении по кнопке
 	if (saveDimensionsBtn) {
 		saveDimensionsBtn.addEventListener('click', () => {
@@ -308,8 +350,14 @@ document.addEventListener('DOMContentLoaded', () => {
 			console.log(`Слайдер максимальной яркости отпущен. Значение: ${brightSlider.value} %`);
 		})
 	}
-
-
+	// Отправка типа светодиодов на ESP32
+	if (rgbSelector) {
+		rgbSelector.addEventListener('change', () => {
+			const id = COLOR_TYPE_MAP.indexOf(rgbSelector.value);
+			console.log(`Тип светодиодов изменён: ${rgbSelector.value} (ID: ${id})`);
+			// fetch(`/set?color_type_id=${id}`); // раскомментируй когда будешь слать на ESP32
+		});
+	}
 
 
 

@@ -80,346 +80,359 @@
 
 	<!-- Main -->
 	<main class="page-content">
-		
-		<!-- Блок статуса Wi-fi -->
-		<div class="m3-card-container" style="display: flex; justify-content: center; align-items: center;">
-			<md-outlined-button id="wifi-status" class="m3-wifi-status">
-				<md-icon slot="icon">android_wifi_3_bar</md-icon>
-				Подключено
-			</md-outlined-button>
+
+		<div data-page="home">
+			<!-- Блок статуса Wi-fi -->
+			<div class="m3-card-container" style="display: flex; justify-content: center; align-items: center;">
+				<md-outlined-button id="wifi-status" class="m3-wifi-status">
+					<md-icon slot="icon">android_wifi_3_bar</md-icon>
+					Подключено
+				</md-outlined-button>
+			</div>
 		</div>
 
-		<!-- Блок выбора напряжения -->
-		<div class="m3-card-container">
-			<div class="m3-card-row">
-				<!-- Иконка-->
-				<md-filled-tonal-icon-button>
-					<md-icon>bolt</md-icon>
-				</md-filled-tonal-icon-button>
-				<!-- Текст и подтекст -->
-				<div class="m3-card-text-block">
-					<div class="m3-card-text-block-title">Напряжение</div>
-					<div class="m3-card-text-block-subtitle">Питание 5V или 12V</div>
+		<div data-page="tune">
+			<!-- Слайдер скорости анимации -->
+			<div class="m3-card-container">
+				<div class="slider-header">
+					<h2 class="slider-title">Настройки анимации</h2>
 				</div>
-				<!-- Кнопка переключатель -->
-				<div class="m3-voltage-btn" id="voltage-toggle-container">
-					<md-outlined-button>5V</md-outlined-button>
+				<div class="slider-main">
+					<!-- Иконка -->
+					<div class="slider-speed-icon">
+						<md-filled-tonal-icon-button>
+							<md-icon>motion_blur</md-icon>
+						</md-filled-tonal-icon-button>
+					</div>
+					<!-- Слайдер с текстом -->
+					<div class="slider-data">
+						<div class="slider-row">
+							<div class="slider-subtitle">
+								Скорость анимации
+							</div>
+							<div class="slider-value" id="animation-speed-value">
+								20 мс
+							</div>
+						</div>
+						<div class="slider-row">
+							<md-slider id="animation-speed-slider" min="50" max="2000" value="1000" step="100"></md-slider>
+						</div>
+					</div>
+				</div>
+
+				<md-divider></md-divider>
+
+				<!-- Слайдер скорости плавного включения -->
+				<div class="slider-main">
+					<!-- Иконка -->
+					<div class="slider-speed-icon">
+						<md-filled-tonal-icon-button>
+							<md-icon>speed</md-icon>
+						</md-filled-tonal-icon-button>
+					</div>
+					<!-- Слайдер с текстом -->
+					<div class="slider-data">
+						<div class="slider-row">
+							<div class="slider-subtitle">
+								Скорость плавного включения
+							</div>
+							<div class="slider-value" id="softstart-speed-value">
+								20 мс
+							</div>
+						</div>
+						<div class="slider-row">
+							<md-slider id="softstart-speed-slider"min="50" max="2000" value="1000" step="100"></md-slider>
+						</div>
+					</div>
+				</div>
+			</div>
+
+			<!-- Слайдер максимальной яркости -->
+			<div class="m3-card-container">
+				<!-- Слайдер скорости анимации -->
+				<div class="slider-header">
+					<h2 class="slider-title">Яркость</h2>
+				</div>
+				<div class="slider-main">
+					<!-- Иконка -->
+					<div class="slider-speed-icon">
+						<md-filled-tonal-icon-button>
+							<md-icon>contrast</md-icon>
+						</md-filled-tonal-icon-button>
+					</div>
+					<!-- Слайдер с текстом -->
+					<div class="slider-data">
+						<div class="slider-row">
+							<div class="slider-subtitle">
+								Максимальная яркость
+							</div>
+							<div class="slider-value" id="max-brightness-value">
+								20 %
+							</div>
+						</div>
+						<div class="slider-row">
+							<md-slider id="max-brightness-slider"min="0" max="100" value="10" step="5"></md-slider>
+						</div>
+					</div>
 				</div>
 			</div>
 		</div>
 
-		<!-- Блок выбора типа ленты -->
-		<div class="m3-card-container">
-			<div class="m3-card-row">
-				<!-- Иконка -->
-				<md-filled-tonal-icon-button>
-					<md-icon>palette</md-icon>
-				</md-filled-tonal-icon-button>
-				<!-- Текст и подтекст -->
-				<div class="m3-card-text-block">
-					<div class="m3-card-text-block-title">Тип кластера</div>
-					<div class="m3-card-text-block-subtitle">Порядок цветов</div>
-				</div>
-				<!-- Поле выбора -->
-				<div class="m3-rgb-selector">
-					<md-outlined-select id="rgb-selector">
-						<md-select-option selected value="RGB">
-							<div slot="headline">RGB</div>
-						</md-select-option>
-						<md-select-option value="RBG">
-							<div slot="headline">RBG</div>
-						</md-select-option>
-						<md-select-option value="GRB">
-							<div slot="headline">GRB</div>
-						</md-select-option>
-						<md-select-option value="GBR">
-							<div slot="headline">GBR</div>
-						</md-select-option>
-						<md-select-option value="BRG">
-							<div slot="headline">BRG</div>
-						</md-select-option>
-						<md-select-option value="BGR">
-							<div slot="headline">BGR</div>
-						</md-select-option>
-					</md-outlined-select>
+		<div data-page="settings">
+			<!-- Блок выбора напряжения -->
+			<div class="m3-card-container">
+				<div class="m3-card-row">
+					<!-- Иконка-->
+					<md-filled-tonal-icon-button>
+						<md-icon>bolt</md-icon>
+					</md-filled-tonal-icon-button>
+					<!-- Текст и подтекст -->
+					<div class="m3-card-text-block">
+						<div class="m3-card-text-block-title">Напряжение</div>
+						<div class="m3-card-text-block-subtitle">Питание 5V или 12V</div>
+					</div>
+					<!-- Кнопка переключатель -->
+					<div class="m3-voltage-toggle-row">
+						<span class="m3-voltage-toggle-label" id="power-toggle-text">5V</span>
+						<md-switch id="power-toggle"></md-switch>
+					</div>
 				</div>
 			</div>
-		</div>
 
-		<!-- Блок ввода размеров -->
-		<div class="m3-card-container">
-			<div class="m3-card-row" style="margin: 5px;">
-				<!-- Иконка -->
-				<md-filled-tonal-icon-button>
-					<md-icon>activity_zone</md-icon>
-				</md-filled-tonal-icon-button>
-				<!-- Текст и подтекст -->
-				<div class="m3-card-text-block">
-					<div class="m3-card-text-block-title">Размер</div>
-					<div class="m3-card-text-block-subtitle">Длина и ширина рисунка</div>
+			<!-- Блок выбора типа ленты -->
+			<div class="m3-card-container">
+				<div class="m3-card-row">
+					<!-- Иконка -->
+					<md-filled-tonal-icon-button>
+						<md-icon>palette</md-icon>
+					</md-filled-tonal-icon-button>
+					<!-- Текст и подтекст -->
+					<div class="m3-card-text-block">
+						<div class="m3-card-text-block-title">Тип кластера</div>
+						<div class="m3-card-text-block-subtitle">Порядок цветов</div>
+					</div>
+					<!-- Поле выбора -->
+					<div class="m3-rgb-selector">
+						<md-outlined-select id="rgb-selector">
+							<md-select-option selected value="RGB">
+								<div slot="headline">RGB</div>
+							</md-select-option>
+							<md-select-option value="RBG">
+								<div slot="headline">RBG</div>
+							</md-select-option>
+							<md-select-option value="GRB">
+								<div slot="headline">GRB</div>
+							</md-select-option>
+							<md-select-option value="GBR">
+								<div slot="headline">GBR</div>
+							</md-select-option>
+							<md-select-option value="BRG">
+								<div slot="headline">BRG</div>
+							</md-select-option>
+							<md-select-option value="BGR">
+								<div slot="headline">BGR</div>
+							</md-select-option>
+						</md-outlined-select>
+					</div>
 				</div>
-				<md-icon-button href="https://t.me" target="_blank">
-					<md-icon>help</md-icon>
-				</md-icon-button>
 			</div>
-			<div class="m3-card-row">
-				<div class="m3-dimensions-fields-row">
-					<md-outlined-text-field
-						id="length-field"
+
+			<!-- Блок ввода размеров -->
+			<div class="m3-card-container">
+				<div class="m3-card-row" style="margin: 5px;">
+					<!-- Иконка -->
+					<md-filled-tonal-icon-button>
+						<md-icon>activity_zone</md-icon>
+					</md-filled-tonal-icon-button>
+					<!-- Текст и подтекст -->
+					<div class="m3-card-text-block">
+						<div class="m3-card-text-block-title">Размер</div>
+						<div class="m3-card-text-block-subtitle">Длина и ширина рисунка</div>
+					</div>
+					<md-icon-button href="https://t.me" target="_blank">
+						<md-icon>help</md-icon>
+					</md-icon-button>
+				</div>
+				<div class="m3-card-row">
+					<div class="m3-dimensions-fields-row">
+						<md-outlined-text-field
+							id="length-field"
+							type="text"
+							inputmode="numeric"
+							pattern="[0-9.,]*"
+							label="Длина"
+							suffix-text="мм"
+							supporting-text=" " 
+						></md-outlined-text-field>
+						<md-outlined-text-field
+							id="width-field"
+							type="text"
+							inputmode="numeric"
+							pattern="[0-9.,]*"
+							label="Ширина"
+							suffix-text="мм"
+							supporting-text=" "
+						></md-outlined-text-field>
+					</div>
+				</div>
+
+				<md-divider></md-divider>
+
+				<!-- Блок выбора шага кластеров -->
+				<div class="m3-card-row">
+					<!-- Иконка-->
+					<md-filled-tonal-icon-button>
+						<md-icon>straighten</md-icon>
+					</md-filled-tonal-icon-button>
+					<!-- Текст и подтекст -->
+					<div class="m3-card-text-block">
+						<div class="m3-card-text-block-title">Пиксель</div>
+						<div class="m3-card-text-block-subtitle">Шаг резки ленты</div>
+					</div>
+					<!-- Поле ввода -->
+					<div class="m3-cluster-field" id="cluster-field-container">
+						<md-outlined-text-field
+						id="step-field"
 						type="text"
-						inputmode="numeric"
-						pattern="[0-9.,]*"
-						label="Длина"
-						suffix-text="мм"
-						supporting-text=" " 
-					></md-outlined-text-field>
-					<md-outlined-text-field
-						id="width-field"
-						type="text"
-						inputmode="numeric"
-						pattern="[0-9.,]*"
-						label="Ширина"
+						label="Шаг"
 						suffix-text="мм"
 						supporting-text=" "
-					></md-outlined-text-field>
+						></md-outlined-text-field>
+					</div>
+				</div>
+				<div class="m3-card-row" style="margin-top: 20px; display: flex; justify-content: center;">
+					<md-filled-button id="save-dimensions-btn">
+						<md-icon slot="icon">upload</md-icon>
+						Сохранить
+					</md-filled-button>
 				</div>
 			</div>
 
-			<md-divider></md-divider>
-
-			<!-- Блок выбора шага кластеров -->
-			<div class="m3-card-row">
-				<!-- Иконка-->
-				<md-filled-tonal-icon-button>
-					<md-icon>straighten</md-icon>
-				</md-filled-tonal-icon-button>
-				<!-- Текст и подтекст -->
-				<div class="m3-card-text-block">
-					<div class="m3-card-text-block-title">Пиксель</div>
-					<div class="m3-card-text-block-subtitle">Шаг резки ленты</div>
-				</div>
-				<!-- Поле ввода -->
-				<div class="m3-cluster-field" id="cluster-field-container">
-					<md-outlined-text-field
-					id="step-field"
-					type="text"
-					label="Шаг"
-					suffix-text="мм"
-					supporting-text=" "
-					></md-outlined-text-field>
-				</div>
-			</div>
-			<div class="m3-card-row" style="margin-top: 20px; display: flex; justify-content: center;">
-				<md-filled-button id="save-dimensions-btn">
-					<md-icon slot="icon">upload</md-icon>
-					Сохранить
-				</md-filled-button>
-			</div>
-		</div>
-
-		<!-- Блок выбора схемы подсветки -->
-		<div class="m3-card-container">
-			<div class="m3-card-row">
-				<!-- Иконка -->
-				<md-filled-tonal-icon-button>
-					<md-icon>amp_stories</md-icon>
-				</md-filled-tonal-icon-button>
-				<!-- Текст и подтекст -->
-				<div class="m3-card-text-block">
-					<div class="m3-card-text-block-title">Схема</div>
-					<div class="m3-card-text-block-subtitle">Контур геометрии</div>
-				</div>
-				<md-icon-button href="https://t.me" target="_blank">
-					<md-icon>help</md-icon>
-				</md-icon-button>
-			</div>
-
-			<!-- Поле выбора контура геометрии -->
-			<div class="m3-card-row">
-				<div class="m3-plan-selector">
-					<md-outlined-select id="">
-						<md-select-option selected value="geom-01">
-							<div slot="headline">Прямоугольник</div>
-						</md-select-option>
-						<md-select-option value="geom-02">
-							<div slot="headline">Углы</div>
-						</md-select-option>
-						<md-select-option value="geom-03">
-							<div slot="headline">Двойные углы</div>
-						</md-select-option>
-						<md-select-option value="geom-04">
-							<div slot="headline">Ромбы</div>
-						</md-select-option>
-					</md-outlined-select>
-				</div>
-			</div>
-				
-			<md-divider></md-divider>
-
-			<!-- Блок выбора анимации -->
-			<div class="m3-card-row">
-				<!-- Иконка -->
-				<md-filled-tonal-icon-button>
-					<md-icon>animated_images</md-icon>
-				</md-filled-tonal-icon-button>
-				<!-- Текст и подтекст -->
-				<div class="m3-card-text-block">
-					<div class="m3-card-text-block-title">Анимации</div>
-					<div class="m3-card-text-block-subtitle">Световые эффекты</div>
-				</div>
-				<md-icon-button href="https://t.me" target="_blank">
-					<md-icon>help</md-icon>
-				</md-icon-button>
-			</div>
-
-			<!-- Поле выбора контура геометрии -->
-			<div class="m3-card-row">
-				<div class="m3-plan-selector">
-					<md-outlined-select id="">
-						<md-select-option selected value="anim-01">
-							<div slot="headline">Быстрое включение</div>
-						</md-select-option>
-						<md-select-option value="anim-02">
-							<div slot="headline">Плавный включение</div>
-						</md-select-option>
-						<md-select-option value="anim-03">
-							<div slot="headline">Бегущий кластер</div>
-						</md-select-option>
-						<md-select-option value="anim-04">
-							<div slot="headline">Бегущий кластер с хвостом</div>
-						</md-select-option>
-					</md-outlined-select>
-				</div>
-			</div>
-
-			<md-divider></md-divider>
-
-			<!-- Предпросмотр -->
-			<div class="m3-card-row">
-				<!-- Иконка -->
-				<md-filled-tonal-icon-button>
-					<md-icon>preview</md-icon>
-				</md-filled-tonal-icon-button>
-				<!-- Текст и подтекст -->
-				<div class="m3-card-text-block">
-					<div class="m3-card-text-block-title">Предпросмотр</div>
-					<div class="m3-card-text-block-subtitle">Итоговая анимация</div>
-				</div>
-			</div>
-			<div style="background-color: #1f1f1f;">
-				<!-- Подключаем независимый SVG-компонент -->
-				<object type="image/svg+xml" data="./components/anim1/anim1.svg"></object>	
-			</div>
-		</div>
-
-		<!-- Слайдер скорости анимации -->
-		<div class="m3-card-container">
-			<div class="slider-header">
-				<h2 class="slider-title">Настройки анимации</h2>
-			</div>
-			<div class="slider-main">
-				<!-- Иконка -->
-				<div class="slider-speed-icon">
+			<!-- Блок выбора схемы подсветки -->
+			<div class="m3-card-container">
+				<div class="m3-card-row">
+					<!-- Иконка -->
 					<md-filled-tonal-icon-button>
-						<md-icon>motion_blur</md-icon>
+						<md-icon>amp_stories</md-icon>
 					</md-filled-tonal-icon-button>
-				</div>
-				<!-- Слайдер с текстом -->
-				<div class="slider-data">
-					<div class="slider-row">
-						<div class="slider-subtitle">
-							Скорость анимации
-						</div>
-						<div class="slider-value" id="animation-speed-value">
-							20 мс
-						</div>
+					<!-- Текст и подтекст -->
+					<div class="m3-card-text-block">
+						<div class="m3-card-text-block-title">Схема</div>
+						<div class="m3-card-text-block-subtitle">Контур геометрии</div>
 					</div>
-					<div class="slider-row">
-						<md-slider id="animation-speed-slider" min="50" max="2000" value="1000" step="100"></md-slider>
+					<md-icon-button href="https://t.me" target="_blank">
+						<md-icon>help</md-icon>
+					</md-icon-button>
+				</div>
+
+				<!-- Поле выбора контура геометрии -->
+				<div class="m3-card-row">
+					<div class="m3-plan-selector">
+						<md-outlined-select id="">
+							<md-select-option selected value="geom-01">
+								<div slot="headline">Прямоугольник</div>
+							</md-select-option>
+							<md-select-option value="geom-02">
+								<div slot="headline">Углы</div>
+							</md-select-option>
+							<md-select-option value="geom-03">
+								<div slot="headline">Двойные углы</div>
+							</md-select-option>
+							<md-select-option value="geom-04">
+								<div slot="headline">Ромбы</div>
+							</md-select-option>
+						</md-outlined-select>
 					</div>
 				</div>
-			</div>
+					
+				<md-divider></md-divider>
 
-			<md-divider></md-divider>
-
-			<!-- Слайдер скорости плавного включения -->
-			<div class="slider-main">
-				<!-- Иконка -->
-				<div class="slider-speed-icon">
+				<!-- Блок выбора анимации -->
+				<div class="m3-card-row">
+					<!-- Иконка -->
 					<md-filled-tonal-icon-button>
-						<md-icon>speed</md-icon>
+						<md-icon>animated_images</md-icon>
 					</md-filled-tonal-icon-button>
+					<!-- Текст и подтекст -->
+					<div class="m3-card-text-block">
+						<div class="m3-card-text-block-title">Анимации</div>
+						<div class="m3-card-text-block-subtitle">Световые эффекты</div>
+					</div>
+					<md-icon-button href="https://t.me" target="_blank">
+						<md-icon>help</md-icon>
+					</md-icon-button>
 				</div>
-				<!-- Слайдер с текстом -->
-				<div class="slider-data">
-					<div class="slider-row">
-						<div class="slider-subtitle">
-							Скорость плавного включения
-						</div>
-						<div class="slider-value" id="softstart-speed-value">
-							20 мс
-						</div>
+
+				<!-- Поле выбора контура геометрии -->
+				<div class="m3-card-row">
+					<div class="m3-plan-selector">
+						<md-outlined-select id="">
+							<md-select-option selected value="anim-01">
+								<div slot="headline">Быстрое включение</div>
+							</md-select-option>
+							<md-select-option value="anim-02">
+								<div slot="headline">Плавный включение</div>
+							</md-select-option>
+							<md-select-option value="anim-03">
+								<div slot="headline">Бегущий кластер</div>
+							</md-select-option>
+							<md-select-option value="anim-04">
+								<div slot="headline">Бегущий кластер с хвостом</div>
+							</md-select-option>
+						</md-outlined-select>
 					</div>
-					<div class="slider-row">
-						<md-slider id="softstart-speed-slider"min="50" max="2000" value="1000" step="100"></md-slider>
+				</div>
+
+				<md-divider></md-divider>
+
+				<!-- Предпросмотр -->
+				<div class="m3-card-row">
+					<!-- Иконка -->
+					<md-filled-tonal-icon-button>
+						<md-icon>preview</md-icon>
+					</md-filled-tonal-icon-button>
+					<!-- Текст и подтекст -->
+					<div class="m3-card-text-block">
+						<div class="m3-card-text-block-title">Предпросмотр</div>
+						<div class="m3-card-text-block-subtitle">Итоговая анимация</div>
 					</div>
+				</div>
+				<div style="background-color: #1f1f1f;">
+					<!-- Подключаем независимый SVG-компонент -->
+					<object type="image/svg+xml" data="./components/anim1/anim1.svg"></object>	
 				</div>
 			</div>
 		</div>
-
-		<!-- Слайдер максимальной яркости -->
-		<div class="m3-card-container">
-			<!-- Слайдер скорости анимации -->
-			<div class="slider-header">
-				<h2 class="slider-title">Яркость</h2>
-			</div>
-			<div class="slider-main">
-				<!-- Иконка -->
-				<div class="slider-speed-icon">
-					<md-filled-tonal-icon-button>
-						<md-icon>contrast</md-icon>
-					</md-filled-tonal-icon-button>
-				</div>
-				<!-- Слайдер с текстом -->
-				<div class="slider-data">
-					<div class="slider-row">
-						<div class="slider-subtitle">
-							Максимальная яркость
-						</div>
-						<div class="slider-value" id="max-brightness-value">
-							20 %
-						</div>
-					</div>
-					<div class="slider-row">
-						<md-slider id="max-brightness-slider"min="0" max="100" value="10" step="5"></md-slider>
-					</div>
-				</div>
-			</div>
+		
+		<div data-page="console">
+			<h2>Здесь по ничего нет</h2>
 		</div>
+
+
 
 	</main>
 
 	<!-- Navigation -->
 	<nav class="m3-nav-bar">
-		<button class="m3-nav-item m3-nav-item--active">
+		<button class="m3-nav-item m3-nav-item--active" data-tab="home">
 			<div class="m3-icon-wrapper">
 				<span class="material-symbols-outlined">home</span>
 			</div>
 			<span class="m3-label">Главная</span>
 		</button>
-		<button class="m3-nav-item">
+		<button class="m3-nav-item" data-tab="tune">
 			<div class="m3-icon-wrapper">
 				<span class="material-symbols-outlined">tune</span>
 			</div>
 			<span class="m3-label">Настройки</span>
 		</button>
-		<button class="m3-nav-item">
+		<button class="m3-nav-item" data-tab="settings">
 			<div class="m3-icon-wrapper">
 				<span class="material-symbols-outlined">settings</span>
 			</div>
 			<span class="m3-label">Установки</span>
 		</button>
-		<button class="m3-nav-item">
+		<button class="m3-nav-item" data-tab="console">
 			<div class="m3-icon-wrapper">
 				<span class="material-symbols-outlined">terminal_2</span>
 			</div>

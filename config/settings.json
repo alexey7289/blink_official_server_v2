@@ -11,8 +11,8 @@
     "softstart-speed": 500,
     "max-brightness": 75,
         
-    "voltage": 12,
-    "color_type": "GBR",
+    "voltage": 5,
+    "color_type": "GRB",
     "effect_id": 5,
     "ceiling_draw": "Прямоугольник",
     "ceiling_draw_id": 0

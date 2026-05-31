@@ -26,13 +26,21 @@ body {
 }
 
 .page-content {
-  padding-top: 80px; 
-  padding-left: 16px;
-  padding-right: 16px;
-  padding-bottom: 96px; 
-  box-sizing: border-box; 
-  width: 100%;
-  
+	padding-top: 80px; 
+	padding-left: 16px;
+	padding-right: 16px;
+	padding-bottom: 96px; 
+	box-sizing: border-box; 
+	width: 100%;
+}
+
+/* Cкрываем неактивные страницы */
+[data-page] {
+    display: none;
+}
+
+[data-page].page--active {
+    display: block;
 }
 
 
@@ -205,18 +213,25 @@ body {
 /*---------------------------------------------------------------------------------------------*/
 /*------------------------------------  Voltage Btn  ------------------------------------------*/
 /*---------------------------------------------------------------------------------------------*/
-.m3-voltage-btn {
-	width: 80px;
+.m3-voltage-toggle-row {
 	display: flex;
-	justify-content: flex-end;
+	align-items: center;
+	gap: 10px;
+	flex-shrink: 0;
+	cursor: pointer;
 }
-.m3-voltage-btn md-outlined-button,
-.m3-voltage-btn md-filled-button {
-  width: 100%;
-  --md-outlined-button-min-width: 120px;
-  --md-filled-button-min-width: 120px;
+.m3-voltage-toggle-label {
+	font-size: 14px;
+	font-weight: 500;
+	color: var(--md-sys-color-on-surface);
+	user-select: none;
+	min-width: 24px;
+	text-align: right;
+	line-height: 1;
 }
-
+md-switch {
+  --md-switch-track-color: #e1e3e5;
+}
 
 
 
