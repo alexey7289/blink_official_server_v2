@@ -26,12 +26,12 @@ body {
 }
 
 .page-content {
-	padding-top: 80px; 
-	padding-left: 16px;
-	padding-right: 16px;
-	padding-bottom: 96px; 
-	box-sizing: border-box; 
-	width: 100%;
+    padding-top: 80px;
+    padding-left: max(16px, env(safe-area-inset-left));
+    padding-right: max(16px, env(safe-area-inset-right));
+    padding-bottom: 96px;
+    box-sizing: border-box;
+    width: 100%;
 }
 
 /* Cкрываем неактивные страницы */
@@ -140,6 +140,7 @@ body {
   	color: var(--md-sys-color-on-surface);
 	border-radius: 16px;
 	padding: 20px;
+	width: 100%;
 	max-width: 382px;
 	margin: 0 auto;
 	overflow: hidden;
