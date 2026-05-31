@@ -27,13 +27,13 @@ body {
 
 .page-content {
    padding-top: 80px;
-    padding-left: max(4px, env(safe-area-inset-left));
-    padding-right: max(4px, env(safe-area-inset-right));
+    padding-left: max(16px, env(safe-area-inset-left));
+    padding-right: max(16px, env(safe-area-inset-right));
     padding-bottom: 96px;
     box-sizing: border-box;
     width: 100%;
-    max-width: 414px;  /* ← добавь */
-    margin: 0 auto;    /* ← добавь */
+    max-width: 414px;
+    margin: 0 auto;
 }
 
 /* Cкрываем неактивные страницы */
