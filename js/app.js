@@ -53,7 +53,7 @@ document.addEventListener('DOMContentLoaded', () => {
 	// ================================================================
 
 	// Делаем ОДИН общий запрос к файлу конфигурации
-	fetch('/config/settings.json')
+	fetch('./config/settings.json')
 		.then(response => {
 			if (!response.ok) {
 				throw new Error('ESP32 вернул ошибку или файл предустановок не найден');
