@@ -13,7 +13,7 @@
         
     "voltage": 5,
     "color_type": "GRB",
-    "effect_id": 5,
+    "effect_id": 1,
     "ceiling_draw": "Прямоугольник",
     "ceiling_draw_id": 0
 

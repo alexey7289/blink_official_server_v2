@@ -24,6 +24,11 @@ document.addEventListener('DOMContentLoaded', () => {
 	// Навигация по табам
 	const navItems = document.querySelectorAll('.m3-nav-item[data-tab]');
 	const pages = document.querySelectorAll('[data-page]');
+	// Блокировка слайдеров
+	const effectSelector = document.getElementById('effect-selector');
+	const animSpeedContainer = document.getElementById('anim-speed-container');
+	const softstartContainer = document.getElementById('softstart-container');
+	//
 	const wifiBtn = document.getElementById('wifi-status');
 	const powerToggle = document.getElementById('power-toggle');
 	const powerToggleText = document.getElementById('power-toggle-text');
@@ -128,6 +133,14 @@ document.addEventListener('DOMContentLoaded', () => {
 			if (rgbSelector && settings['color_type'] !== undefined) {
 				rgbSelector.value = settings['color_type'];
 				console.log(`Тип светодиодов инициализирован: ${settings['color_type']}`);
+			}
+
+			// Инициализация эффекта из settings.json
+			if (effectSelector && settings['effect_id'] !== undefined) {
+				const effectValue = `anim-0${settings['effect_id']}`;
+				effectSelector.value = effectValue;
+				updateSliderVisibility(settings['effect_id']);
+				console.log(`Эффект инициализирован: ${effectValue}`);
 			}
 		})
 		.catch(error => {
@@ -296,7 +309,24 @@ document.addEventListener('DOMContentLoaded', () => {
 			saveBtn.disabled = hasAnyError;
 		}
 	}
+	// Функция наложения полупрозрачности на слайдеры
+	function updateSliderVisibility(effectId) {
+		const id = parseInt(effectId);
 
+		const showAnim       = id === 3 || id === 4;
+		const showSoftstart  = id === 2 || id === 3 || id === 4;
+
+		const animSlider      = document.getElementById('animation-speed-slider');
+		const softstartSlider = document.getElementById('softstart-speed-slider');
+		const animContainer      = document.getElementById('anim-speed-container');
+		const softstartContainer = document.getElementById('softstart-container');
+
+		if (animSlider) animSlider.disabled = !showAnim;
+		if (softstartSlider) softstartSlider.disabled = !showSoftstart;
+
+		if (animContainer) animContainer.style.opacity = showAnim ? '1' : '0.3';
+		if (softstartContainer) softstartContainer.style.opacity = showSoftstart ? '1' : '0.3';
+	}
 
 
 
@@ -358,6 +388,14 @@ document.addEventListener('DOMContentLoaded', () => {
 			const id = COLOR_TYPE_MAP.indexOf(rgbSelector.value);
 			console.log(`Тип светодиодов изменён: ${rgbSelector.value} (ID: ${id})`);
 			// fetch(`/set?color_type_id=${id}`); // раскомментируй когда будешь слать на ESP32
+		});
+	}
+	// Слушатель изменения поля эффектов
+	if (effectSelector) {
+		effectSelector.addEventListener('change', () => {
+			const id = effectSelector.value.replace('anim-0', '');
+			updateSliderVisibility(id);
+			console.log(`Эффект изменён: ${effectSelector.value} (ID: ${id})`);
 		});
 	}
 

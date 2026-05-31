@@ -90,64 +90,9 @@
 		</div>
 
 		<div data-page="tune">
-			<!-- Слайдер скорости анимации -->
+
 			<div class="m3-card-container">
-				<div class="slider-header">
-					<h2 class="slider-title">Настройки анимации</h2>
-				</div>
-				<div class="slider-main">
-					<!-- Иконка -->
-					<div class="slider-speed-icon">
-						<md-filled-tonal-icon-button>
-							<md-icon>motion_blur</md-icon>
-						</md-filled-tonal-icon-button>
-					</div>
-					<!-- Слайдер с текстом -->
-					<div class="slider-data">
-						<div class="slider-row">
-							<div class="slider-subtitle">
-								Скорость анимации
-							</div>
-							<div class="slider-value" id="animation-speed-value">
-								20 мс
-							</div>
-						</div>
-						<div class="slider-row">
-							<md-slider id="animation-speed-slider" min="50" max="2000" value="1000" step="100"></md-slider>
-						</div>
-					</div>
-				</div>
-
-				<md-divider></md-divider>
-
-				<!-- Слайдер скорости плавного включения -->
-				<div class="slider-main">
-					<!-- Иконка -->
-					<div class="slider-speed-icon">
-						<md-filled-tonal-icon-button>
-							<md-icon>speed</md-icon>
-						</md-filled-tonal-icon-button>
-					</div>
-					<!-- Слайдер с текстом -->
-					<div class="slider-data">
-						<div class="slider-row">
-							<div class="slider-subtitle">
-								Скорость плавного включения
-							</div>
-							<div class="slider-value" id="softstart-speed-value">
-								20 мс
-							</div>
-						</div>
-						<div class="slider-row">
-							<md-slider id="softstart-speed-slider"min="50" max="2000" value="1000" step="100"></md-slider>
-						</div>
-					</div>
-				</div>
-			</div>
-
-			<!-- Слайдер максимальной яркости -->
-			<div class="m3-card-container">
-				<!-- Слайдер скорости анимации -->
+				<!-- Слайдер максимальной яркости -->
 				<div class="slider-header">
 					<h2 class="slider-title">Яркость</h2>
 				</div>
@@ -174,6 +119,62 @@
 					</div>
 				</div>
 			</div>
+			
+			<div class="m3-card-container">
+				<div class="slider-header">
+					<h2 class="slider-title">Настройки анимации</h2>
+				</div>
+				<!-- Слайдер скорости анимации -->
+				<div class="slider-main" id="anim-speed-container">
+					<!-- Иконка -->
+					<div class="slider-speed-icon">
+						<md-filled-tonal-icon-button>
+							<md-icon>motion_blur</md-icon>
+						</md-filled-tonal-icon-button>
+					</div>
+					<!-- Слайдер с текстом -->
+					<div class="slider-data">
+						<div class="slider-row">
+							<div class="slider-subtitle">
+								Скорость анимации
+							</div>
+							<div class="slider-value" id="animation-speed-value">
+								20 мс
+							</div>
+						</div>
+						<div class="slider-row">
+							<md-slider id="animation-speed-slider" min="50" max="2000" value="1000" step="100"></md-slider>
+						</div>
+					</div>
+				</div>
+
+				<md-divider></md-divider>
+
+				<!-- Слайдер скорости плавного включения -->
+				<div class="slider-main" id="softstart-container">
+					<!-- Иконка -->
+					<div class="slider-speed-icon">
+						<md-filled-tonal-icon-button>
+							<md-icon>speed</md-icon>
+						</md-filled-tonal-icon-button>
+					</div>
+					<!-- Слайдер с текстом -->
+					<div class="slider-data">
+						<div class="slider-row">
+							<div class="slider-subtitle">
+								Скорость плавного включения
+							</div>
+							<div class="slider-value" id="softstart-speed-value">
+								20 мс
+							</div>
+						</div>
+						<div class="slider-row">
+							<md-slider id="softstart-speed-slider"min="50" max="2000" value="1000" step="100"></md-slider>
+						</div>
+					</div>
+				</div>
+			</div>
+
 		</div>
 
 		<div data-page="settings">
@@ -361,21 +362,21 @@
 					</md-icon-button>
 				</div>
 
-				<!-- Поле выбора контура геометрии -->
+				<!-- Список анимаций -->
 				<div class="m3-card-row">
 					<div class="m3-plan-selector">
-						<md-outlined-select id="">
+						<md-outlined-select id="effect-selector">
 							<md-select-option selected value="anim-01">
 								<div slot="headline">Быстрое включение</div>
 							</md-select-option>
 							<md-select-option value="anim-02">
-								<div slot="headline">Плавный включение</div>
+								<div slot="headline">Плавное включение</div>
 							</md-select-option>
 							<md-select-option value="anim-03">
-								<div slot="headline">Бегущий кластер</div>
+								<div slot="headline">Бегущий пиксель</div>
 							</md-select-option>
 							<md-select-option value="anim-04">
-								<div slot="headline">Бегущий кластер с хвостом</div>
+								<div slot="headline">Бегущий пиксель с хвостом</div>
 							</md-select-option>
 						</md-outlined-select>
 					</div>
@@ -405,8 +406,6 @@
 		<div data-page="console">
 			<h2>Здесь по ничего нет</h2>
 		</div>
-
-
 
 	</main>
 
