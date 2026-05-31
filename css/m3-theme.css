@@ -26,12 +26,14 @@ body {
 }
 
 .page-content {
-    padding-top: 80px;
+   padding-top: 80px;
     padding-left: max(16px, env(safe-area-inset-left));
     padding-right: max(16px, env(safe-area-inset-right));
     padding-bottom: 96px;
     box-sizing: border-box;
     width: 100%;
+    max-width: 414px;  /* ← добавь */
+    margin: 0 auto;    /* ← добавь */
 }
 
 /* Cкрываем неактивные страницы */
@@ -136,23 +138,19 @@ body {
 /*------------------------------------  CARD CONTAINER  ---------------------------------------*/
 /*---------------------------------------------------------------------------------------------*/
 .m3-card-container {
-	background-color: var(--md-sys-color-surface-container);
-  	color: var(--md-sys-color-on-surface);
-	border-radius: 16px;
-	padding: 20px;
-	width: 100%;
-	max-width: 382px;
-	margin: 0 auto;
-	overflow: hidden;
-	box-sizing: border-box;
-	display: flex;
-	flex-direction: column;
-	gap: 16px;
-	margin-left: auto;
-	margin-right: auto;
-	margin-bottom: 16px; /* Расстояние до следующей карточки */
+    background-color: var(--md-sys-color-surface-container);
+    color: var(--md-sys-color-on-surface);
+    border-radius: 16px;
+    padding: 20px;
+    width: 100%;
+    /* max-width: 382px; ← удали эту строку */
+    overflow: hidden;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    margin-bottom: 16px;
 }
-
 
 
 
