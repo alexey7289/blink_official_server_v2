@@ -311,10 +311,12 @@ document.addEventListener('DOMContentLoaded', () => {
 		})
 	}
 	// Смена напряжения питания с 5V на 12V
-	powerToggle.addEventListener('change', () => {
-		powerToggleText.textContent = powerToggle.selected ? '12V' : '5V';
-		console.log(`Напряжение изменено на: ${powerToggleText.textContent}`);
-	});
+	if (powerToggle && powerToggleText) {
+		powerToggle.addEventListener('change', () => {
+			powerToggleText.textContent = powerToggle.selected ? '12V' : '5V';
+			console.log(`Напряжение изменено на: ${powerToggleText.textContent}`);
+		});
+	}	
 	// Отправка количества пикселей в ленте при сохранении по кнопке
 	if (saveDimensionsBtn) {
 		saveDimensionsBtn.addEventListener('click', () => {
