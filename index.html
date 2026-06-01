@@ -19,6 +19,7 @@
 		animated_images,
 		bolt,
 		contrast,
+		expand_more,
 		help,
 		home,
 		light_off,
@@ -319,9 +320,107 @@
 						<div class="m3-card-text-block-title">Схема</div>
 						<div class="m3-card-text-block-subtitle">Контур геометрии</div>
 					</div>
-					<md-icon-button href="https://t.me" target="_blank">
+					<md-icon-button onclick="document.getElementById('my-alert').show()">
 						<md-icon>help</md-icon>
 					</md-icon-button>
+
+					<!-- Диалог схемы -->
+					<md-dialog id="my-alert" type="alert">
+						<div slot="headline">Схемы:</div>
+						<form slot="content" id="form-id" method="dialog">
+							<md-list class="responsive-md-list">
+							
+								<!-- Элемент 1: Прямоугольник -->
+								<md-list-item class="responsive-list-item">
+									<details class="custom-details" name="schemas">
+										<summary class="details-summary">
+											<span>Прямоугольник</span>
+											<md-icon class="chevron-icon">expand_more</md-icon>
+										</summary>
+										<div class="dialog-svg-container">
+											<svg width="200" height="120" viewBox="0 0 200 120" fill="none" xmlns="http://w3.org">
+												<rect width="200" height="120" fill="transparent"/>
+												<rect x="10" y="10" width="180" height="100" fill="none" stroke="#1d1b20" stroke-width="4" />
+											</svg>
+										</div>
+									</details>
+								</md-list-item>
+
+								<!-- Элемент 2: Углы -->
+								<md-list-item class="responsive-list-item">
+									<details class="custom-details" name="schemas">
+										<summary class="details-summary">
+											<span>Углы</span>
+											<md-icon class="chevron-icon">expand_more</md-icon>
+										</summary>
+										<div class="dialog-svg-container">
+											<svg width="200" height="120" viewBox="0 0 200 120" fill="none" xmlns="http://w3.org" style="display: block;">
+												<rect width="200" height="120" fill="transparent"/>
+												<path d="M 10 40 L 10 10 L 100 10" fill="none" stroke="#1d1b20" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
+												<path d="M 190 80 L 190 110 L 100 110" fill="none" stroke="#1d1b20" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
+											</svg>
+										</div>
+									</details>
+								</md-list-item>
+
+								<!-- Элемент 3: Кресты -->
+								<md-list-item class="responsive-list-item">
+									<details class="custom-details" name="schemas">
+									<summary class="details-summary">
+										<span>Кресты</span>
+										<md-icon class="chevron-icon">expand_more</md-icon>
+									</summary>
+									<div class="dialog-svg-container">
+										<!-- Сюда вставите SVG для Крестов -->
+									</div>
+									</details>
+								</md-list-item>
+
+								<!-- Элемент 4: Двойные кресты -->
+								<md-list-item class="responsive-list-item">
+									<details class="custom-details" name="schemas">
+									<summary class="details-summary">
+										<span>Двойные кресты</span>
+										<md-icon class="chevron-icon">expand_more</md-icon>
+									</summary>
+									<div class="dialog-svg-container">
+										<!-- Сюда вставите SVG для Двойных крестов -->
+									</div>
+									</details>
+								</md-list-item>
+
+								<!-- Элемент 5: Два квадрата -->
+								<md-list-item class="responsive-list-item">
+									<details class="custom-details" name="schemas">
+									<summary class="details-summary">
+										<span>Два квадрата</span>
+										<md-icon class="chevron-icon">expand_more</md-icon>
+									</summary>
+									<div class="dialog-svg-container">
+										<!-- Сюда вставите SVG для Двух квадратов -->
+									</div>
+									</details>
+								</md-list-item>
+
+								<!-- Элемент 6: Три квадрата -->
+								<md-list-item class="responsive-list-item">
+									<details class="custom-details" name="schemas">
+									<summary class="details-summary">
+										<span>Три квадрата</span>
+										<md-icon class="chevron-icon">expand_more</md-icon>
+									</summary>
+									<div class="dialog-svg-container">
+										<!-- Сюда вставите SVG для Трех квадратов -->
+									</div>
+									</details>
+								</md-list-item>
+							</md-list>
+						</form>
+						<div slot="actions">
+							<md-text-button form="form-id" value="ok">OK</md-text-button>
+						</div>
+					</md-dialog>
+
 				</div>
 
 				<!-- Поле выбора контура геометрии -->
@@ -335,10 +434,16 @@
 								<div slot="headline">Углы</div>
 							</md-select-option>
 							<md-select-option value="geom-03">
-								<div slot="headline">Двойные углы</div>
+								<div slot="headline">Кресты</div>
 							</md-select-option>
 							<md-select-option value="geom-04">
-								<div slot="headline">Ромбы</div>
+								<div slot="headline">Двойные кресты</div>
+							</md-select-option>
+							<md-select-option value="geom-05">
+								<div slot="headline">Два квадрата</div>
+							</md-select-option>
+							<md-select-option value="geom-06">
+								<div slot="headline">Три квадрата</div>
 							</md-select-option>
 						</md-outlined-select>
 					</div>

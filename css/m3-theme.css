@@ -46,6 +46,138 @@ body {
 }
 
 
+/* ==========================================================================
+   2. СТИЛИЗАЦИЯ И РАЗМЕРЫ ДИАЛОГА <md-dialog>
+   ========================================================================== */
+#my-alert {
+  width: 85vw;
+  min-width: 300px;
+  max-width: 420px;
+  /* Красим фон самого диалога в чистый белый */
+  --md-dialog-container-color: var(--md-sys-color-surface);
+}
+
+/* Фиксация высоты контента, блокировка прыжков и настройка скроллбара */
+#my-alert [slot="content"] {
+  height: 380px;            
+  max-height: 380px;
+  overflow-y: scroll;       /* Всегда показывает скроллбар, чтобы разметка не прыгала */
+  overflow-x: hidden;       
+  box-sizing: border-box;
+}
+
+/* Раскрашиваем заголовок диалога */
+#my-alert [slot="headline"] {
+  color: var(--md-sys-color-on-surface);
+  font-family: sans-serif;
+}
+
+/* Стилизация полосы прокрутки, чтобы она подходила под нежный дизайн */
+#my-alert [slot="content"]::-webkit-scrollbar {
+  width: 6px;
+}
+#my-alert [slot="content"]::-webkit-scrollbar-track {
+  background: transparent;
+}
+#my-alert [slot="content"]::-webkit-scrollbar-thumb {
+  background: var(--md-sys-color-outline-variant);
+  border-radius: 10px;
+}
+
+/* ==========================================================================
+   3. АДАПТИВНЫЙ СПИСОК <md-list> И <md-list-item>
+   ========================================================================== */
+.responsive-md-list {
+  width: 100% !important;
+  max-width: 100% !important;
+  background: transparent;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+/* Переопределяем цвета текста и разделителей внутри Material List */
+.responsive-list-item {
+  width: 100% !important;
+  max-width: 100% !important;
+  box-sizing: border-box;
+  --md-list-item-label-text-color: var(--md-sys-color-on-surface);
+  /* Тонкая линия между пунктами списка */
+  border-bottom: 1px solid var(--md-sys-color-outline-variant); 
+}
+
+/* Убираем нижнюю линию у последнего пункта списка */
+.responsive-list-item:last-child {
+  border-bottom: none;
+}
+
+/* ==========================================================================
+   4. КОНТЕНТ ВНУТРИ <details> И АНИМАЦИЯ ШЕВРОНА
+   ========================================================================== */
+.custom-details {
+  width: 100%;
+  box-sizing: border-box;
+}
+
+/* Скрываем стандартный маркер-стрелку */
+.custom-details summary {
+  display: flex;
+  list-style: none;
+}
+.custom-details summary::-webkit-details-marker {
+  display: none;
+}
+
+/* Оформление строки при клике */
+.details-summary {
+  cursor: pointer;
+  user-select: none;
+  font-weight: 500;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  color: var(--md-sys-color-on-surface);
+  font-family: sans-serif;
+}
+
+/* Спокойный графитовый шеврон */
+.chevron-icon {
+  font-size: 24px;
+  color: var(--md-sys-color-on-surface-variant);
+  transition: transform 0.2s ease;
+}
+
+/* Вращение шеврона при открытии */
+.custom-details[open] .chevron-icon {
+  transform: rotate(180deg);
+  color: var(--md-sys-color-on-secondary-container); /* Делаем четче при открытии */
+}
+
+/* Контейнер для SVG — красим в мягкий светло-серый (ваша плашка) */
+.dialog-svg-container {
+  display: flex;
+  justify-content: center;
+  padding: 12px 0;
+  margin-top: 8px;
+  background: var(--md-sys-color-surface-container); /* #f0f4f9 */
+  border-radius: 8px;
+  box-sizing: border-box;
+}
+
+/* Сама SVG картинка */
+.dialog-svg-container svg {
+  display: block;
+  outline: 1px solid var(--md-sys-color-outline-variant); /* Нежный серый контур */
+  background: var(--md-sys-color-background);             /* Чистый белый холст */
+  max-width: 100%;
+  height: auto;
+}
+
+/* Перекрашиваем рамку самого рисунка внутри SVG в строгий темно-серый */
+.dialog-svg-container svg rect [stroke] {
+  stroke: var(--md-sys-color-primary) !important; /* #1f1f1f */
+}
+
 
 
 
@@ -106,7 +238,7 @@ body {
   font-weight: 500;
   letter-spacing: -0.3px;
   position: relative; 
-  text-shadow: 0 0 10px rgba(0, 245, 212, 0.2);
+  /*text-shadow: 0 0 10px rgba(0, 245, 212, 0.2);*/
 }
 .m3-logo-version {
   position: absolute;
