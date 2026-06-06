@@ -430,37 +430,16 @@ md-switch {
 
 
 /*---------------------------------------------------------------------------------------------*/
-/*------------------------------------  Plan Selector  ----------------------------------------*/
+/*------------------------------------  Draw Selector  ----------------------------------------*/
 /*---------------------------------------------------------------------------------------------*/
-.m3-plan-selector {
+.m3-anim-selector,
+.m3-draw-selector {
 	display: flex;
 	width: 100%;
 	align-items: flex-start;
 }
-.m3-plan-selector md-outlined-select {
-	width: 100%;
-	--md-outlined-select-min-width: 100%;
-	 
-	--md-outlined-field-container-shape-start-start: 8px;
-	--md-outlined-field-container-shape-start-end: 8px;
-	--md-outlined-field-container-shape-end-start: 8px;
-	--md-outlined-field-container-shape-end-end: 8px;
-}
-
-
-
-
-
-
-/*---------------------------------------------------------------------------------------------*/
-/*----------------------------------  Animation Selector  -------------------------------------*/
-/*---------------------------------------------------------------------------------------------*/
-.m3-plan-selector {
-	display: flex;
-	width: 100%;
-	align-items: flex-start;
-}
-.m3-plan-selector md-outlined-select {
+.m3-anim-selector md-outlined-select,
+.m3-draw-selector md-outlined-select {
 	width: 100%;
 	--md-outlined-select-min-width: 100%;
 	 

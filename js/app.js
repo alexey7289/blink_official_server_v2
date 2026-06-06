@@ -24,8 +24,10 @@ document.addEventListener('DOMContentLoaded', () => {
 	// Навигация по табам
 	const navItems = document.querySelectorAll('.m3-nav-item[data-tab]');
 	const pages = document.querySelectorAll('[data-page]');
-	// Блокировка слайдеров
+	// Поля выбора анимации и эскиза
 	const effectSelector = document.getElementById('effect-selector');
+	const drawSelector = document.getElementById('draw-selector');
+
 	const animSpeedContainer = document.getElementById('anim-speed-container');
 	const softstartContainer = document.getElementById('softstart-container');
 	//
@@ -48,8 +50,8 @@ document.addEventListener('DOMContentLoaded', () => {
 	const lengthInput = document.getElementById('length-field');
 	const widthInput  = document.getElementById('width-field');
 	const stepInput   = document.getElementById('step-field');
-	const saveBtn = document.getElementById('save-dimensions-btn');
 	const saveDimensionsBtn = document.getElementById('save-dimensions-btn');
+	
 
 
 
@@ -72,9 +74,7 @@ document.addEventListener('DOMContentLoaded', () => {
 			if (powerBtn && settings['power'] !== undefined) {
 				powerBtn.selected = !settings['power'];
 				console.log(`Кнопка питания инициализирована. Состояние: ${settings['power'] ? 'ВКЛ' : 'ВЫКЛ'}`);
-				if (typeof updatePowerBtn === 'function') {
-					updatePowerBtn();
-				}
+				updatePowerBtn();
 			}
 
 			// Обновление текстовой версии в логотипе
@@ -125,7 +125,7 @@ document.addEventListener('DOMContentLoaded', () => {
 			if (powerToggle && powerToggleText && settings['voltage'] !== undefined) {
 				const is12V = settings['voltage'] === 12;
 				powerToggle.selected = is12V;
-				powerToggleText.textContent = is12V ? '12В' : '5В';
+				powerToggleText.textContent = is12V ? '12V' : '5V';
 				console.log(`Напряжение инициализировано: ${powerToggleText.textContent}`);
 			}
 
@@ -140,6 +140,7 @@ document.addEventListener('DOMContentLoaded', () => {
 				const effectValue = `anim-0${settings['effect_id']}`;
 				effectSelector.value = effectValue;
 				updateSliderVisibility(settings['effect_id']);
+				sendEffect(settings['effect_id']); // ← теперь сам дождётся загрузки object
 				console.log(`Эффект инициализирован: ${effectValue}`);
 			}
 		})
@@ -172,49 +173,27 @@ document.addEventListener('DOMContentLoaded', () => {
 			document.querySelector(`[data-page="${target}"]`).classList.add('page--active');
 		});
 	});
-	// Слушаем поле ввода длины
-	if (lengthInput) {
-		lengthInput.addEventListener('input', () => {
-			lengthInput.value = lengthInput.value.replace(',', '.');
-			console.log('User изменил длину:', lengthInput.value);
-			validateDimensionsAndCheckButton(); // Вызов математики для пересчета
-		});
-	}
-	// Слушаем поле вода ширины
-	if (widthInput) {
-		widthInput.addEventListener('input', () => {
-			widthInput.value = widthInput.value.replace(',', '.');
-			console.log('User изменил ширину:', widthInput.value);
+	// Слушаем поле ввода длины, ширины и шага
+	[lengthInput, widthInput, stepInput].forEach(input => {
+		if (!input) return;
+		input.addEventListener('input', () => {
+			input.value = input.value.replace(',', '.');
 			validateDimensionsAndCheckButton();
 		});
-	}
-	// Слушаем поле ввода шага
-	if (stepInput) {
-		stepInput.addEventListener('input', () => {
-			stepInput.value = stepInput.value.replace(',', '.');
-			console.log('User изменил шаг:', stepInput.value);
-			validateDimensionsAndCheckButton();
+	});
+	// Слушаем слайдер скорости анимации, слайдер скорости плавного включения, слайдер максимальной яркости
+	m3Sliders.forEach(id => {
+		const slider = document.getElementById(`${id}-slider`);
+		const display = document.getElementById(`${id}-value`);
+		if (!slider || !display) return;
+		slider.addEventListener('input', () => {
+			display.textContent = `${slider.value}${getUnit(id)}`;
 		});
-	}
-	// Слушаем слайдер скорости анимации
-	if (animSlider && animValue) {
-		animSlider.addEventListener('input', () => {
-			animValue.textContent = `${animSlider.value} мс`;
+		slider.addEventListener('change', () => {
+			console.log(`${id}: ${slider.value}${getUnit(id)}`);
+			// fetch(`/set?${id}=${slider.value}`);
 		});
-	}
-	// Слушаем слайдер скорости плавного включения
-	if (softSlider && softValue) {
-		softSlider.addEventListener('input', () => {
-			softValue.textContent = `${softSlider.value} мс`;
-		});
-	}
-	// Слушаем слайдер максимальной яркости
-	if (brightSlider && brightValue) {
-		brightSlider.addEventListener('input', () => {
-			brightValue.textContent = `${brightSlider.value} %`;
-		});
-	}
-
+	});
 
 
 
@@ -305,8 +284,8 @@ document.addEventListener('DOMContentLoaded', () => {
 		checkField(widthInput, width);
 
 		// УПРАВЛЕНИЕ КНОПКОЙ: если есть хоть одна ошибка, вешаем disabled, иначе — снимаем
-		if (saveBtn) {
-			saveBtn.disabled = hasAnyError;
+		if (saveDimensionsBtn) {
+			saveDimensionsBtn.disabled = hasAnyError;
 		}
 	}
 	// Функция наложения полупрозрачности на слайдеры
@@ -326,6 +305,29 @@ document.addEventListener('DOMContentLoaded', () => {
 
 		if (animContainer) animContainer.style.opacity = showAnim ? '1' : '0.3';
 		if (softstartContainer) softstartContainer.style.opacity = showSoftstart ? '1' : '0.3';
+	}
+	// Функция применения анимации к SVG-предпросмотру
+	function sendEffect(id) {
+		const svgObject = document.querySelector('object[data*="anim1.svg"]');
+		if (!svgObject) return;
+
+		function applyClass() {
+			const svg = svgObject.contentDocument && svgObject.contentDocument.querySelector('svg');
+			if (svg) {
+				svg.className.baseVal = `anim-0${id}`;
+				console.log(`Эффект применён к SVG: anim-0${id}`);
+			}
+		}
+
+		// Если object уже загружен — применяем сразу, иначе ждём load
+		if (svgObject.contentDocument && svgObject.contentDocument.querySelector('svg')) {
+			applyClass();
+		} else {
+			svgObject.addEventListener('load', applyClass, { once: true });
+		}
+
+		// fetch(`/set?effect_id=${id}`);
+		console.log(`Эффект отправлен на ESP32: ID=${id}`);
 	}
 
 
@@ -390,13 +392,21 @@ document.addEventListener('DOMContentLoaded', () => {
 			// fetch(`/set?color_type_id=${id}`); // раскомментируй когда будешь слать на ESP32
 		});
 	}
-	// Слушатель изменения поля эффектов
-	if (effectSelector) {
-		effectSelector.addEventListener('change', () => {
-			const id = effectSelector.value.replace('anim-0', '');
-			updateSliderVisibility(id);
-			console.log(`Эффект изменён: ${effectSelector.value} (ID: ${id})`);
+	// Слушатель изменения поля эффектов и отправка его id на ESP32
+	[
+		{ el: effectSelector, prefix: 'anim-', label: 'Эффект', onChange: (id) => { updateSliderVisibility(id); sendEffect(id); } },
+		{ el: drawSelector,   prefix: 'draw-', label: 'Эскиз',  onChange: (id) => sendDraw(id) },
+	].forEach(({ el, prefix, label, onChange }) => {
+		if (!el) return;
+		el.addEventListener('change', () => {
+			const id = parseInt(el.value.replace(prefix, ''));
+			console.log(`${label} изменён: ${el.value} (ID: ${id})`);
+			onChange(id);
 		});
+	});
+	function sendDraw(id) {
+		console.log(`Эскиз отправлен на ESP32: ID=${id}`);
+		// fetch(`/set?draw_id=${id}`);
 	}
 
 

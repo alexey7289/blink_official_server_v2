@@ -338,8 +338,7 @@
 											<md-icon class="chevron-icon">expand_more</md-icon>
 										</summary>
 										<div class="dialog-svg-container">
-											<svg width="200" height="120" viewBox="0 0 200 120" fill="none" xmlns="http://w3.org">
-												<rect width="200" height="120" fill="transparent"/>
+											<svg width="200" height="120" viewBox="0 0 200 120" fill="none" xmlns="http://www.w3.org/2000/svg">
 												<rect x="10" y="10" width="180" height="100" fill="none" stroke="#1d1b20" stroke-width="4" />
 											</svg>
 										</div>
@@ -354,10 +353,9 @@
 											<md-icon class="chevron-icon">expand_more</md-icon>
 										</summary>
 										<div class="dialog-svg-container">
-											<svg width="200" height="120" viewBox="0 0 200 120" fill="none" xmlns="http://w3.org" style="display: block;">
-												<rect width="200" height="120" fill="transparent"/>
-												<path d="M 10 40 L 10 10 L 100 10" fill="none" stroke="#1d1b20" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
-												<path d="M 190 80 L 190 110 L 100 110" fill="none" stroke="#1d1b20" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
+											<svg width="200" height="120" viewBox="0 0 200 120" fill="none" xmlns="http://www.w3.org/2000/svg" style="display: block;">
+												<polyline points="100,10 190,10 190,60" fill="none" stroke="#1d1b20" stroke-width="4"/>
+												<polyline points="100,110 10,110 10,60" fill="none" stroke="#1d1b20" stroke-width="4"/>
 											</svg>
 										</div>
 									</details>
@@ -367,11 +365,22 @@
 								<md-list-item class="responsive-list-item">
 									<details class="custom-details" name="schemas">
 									<summary class="details-summary">
-										<span>Кресты</span>
+										<span>Двойные углы</span>
 										<md-icon class="chevron-icon">expand_more</md-icon>
 									</summary>
 									<div class="dialog-svg-container">
-										<!-- Сюда вставите SVG для Крестов -->
+										<svg width="200" height="120" viewBox="0 0 200 120" xmlns="http://www.w3.org/2000/svg">
+											<!-- Левый низ -->
+											<line x1="15" y1="57.78" x2="15" y2="100" fill="none" stroke="#1d1b20" stroke-width="4" stroke-linecap="round"/>
+											<line x1="25" y1="63.33" x2="25" y2="110" fill="none" stroke="#1d1b20" stroke-width="4" stroke-linecap="round"/>
+											<line x1="20" y1="105" x2="100" y2="105" fill="none" stroke="#1d1b20" stroke-width="4" stroke-linecap="round"/>
+											<line x1="10" y1="95"   x2="82"  y2="95"  fill="none" stroke="#1d1b20" stroke-width="4" stroke-linecap="round"/>
+											<!-- Правый верх -->
+											<line x1="185" y1="62.22" x2="185" y2="20"  fill="none" stroke="#1d1b20" stroke-width="4" stroke-linecap="round"/>
+											<line x1="175" y1="56.67" x2="175" y2="10"  fill="none" stroke="#1d1b20" stroke-width="4" stroke-linecap="round"/>
+											<line x1="180" y1="15"   x2="100" y2="15"  fill="none" stroke="#1d1b20" stroke-width="4" stroke-linecap="round"/>
+											<line x1="190" y1="25"   x2="118" y2="25"  fill="none" stroke="#1d1b20" stroke-width="4" stroke-linecap="round"/>
+										</svg>
 									</div>
 									</details>
 								</md-list-item>
@@ -384,7 +393,10 @@
 										<md-icon class="chevron-icon">expand_more</md-icon>
 									</summary>
 									<div class="dialog-svg-container">
-										<!-- Сюда вставите SVG для Двойных крестов -->
+										<svg width="200" height="120" viewBox="0 0 200 120" xmlns="http://www.w3.org/2000/svg">
+											<polyline points="120,65.49 120,47.5 40,47.5 40,97.5 120,97.5 120,79.5" fill="none" stroke="#1d1b20" stroke-width="4"/>
+											<polyline points="80,54.5 80,72.5 160,72.5 160,22.5 80,22.5 80,40.49" fill="none" stroke="#1d1b20" stroke-width="4"/>
+										</svg>
 									</div>
 									</details>
 								</md-list-item>
@@ -425,24 +437,24 @@
 
 				<!-- Поле выбора контура геометрии -->
 				<div class="m3-card-row">
-					<div class="m3-plan-selector">
-						<md-outlined-select id="">
-							<md-select-option selected value="geom-01">
+					<div class="m3-draw-selector">
+						<md-outlined-select id="draw-selector">
+							<md-select-option selected value="draw-01">
 								<div slot="headline">Прямоугольник</div>
 							</md-select-option>
-							<md-select-option value="geom-02">
+							<md-select-option value="draw-02">
 								<div slot="headline">Углы</div>
 							</md-select-option>
-							<md-select-option value="geom-03">
+							<md-select-option value="draw-03">
 								<div slot="headline">Кресты</div>
 							</md-select-option>
-							<md-select-option value="geom-04">
+							<md-select-option value="draw-04">
 								<div slot="headline">Двойные кресты</div>
 							</md-select-option>
-							<md-select-option value="geom-05">
+							<md-select-option value="draw-05">
 								<div slot="headline">Два квадрата</div>
 							</md-select-option>
-							<md-select-option value="geom-06">
+							<md-select-option value="draw-06">
 								<div slot="headline">Три квадрата</div>
 							</md-select-option>
 						</md-outlined-select>
@@ -469,7 +481,7 @@
 
 				<!-- Список анимаций -->
 				<div class="m3-card-row">
-					<div class="m3-plan-selector">
+					<div class="m3-anim-selector">
 						<md-outlined-select id="effect-selector">
 							<md-select-option selected value="anim-01">
 								<div slot="headline">Быстрое включение</div>

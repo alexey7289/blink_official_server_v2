@@ -1,19 +1,32 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!-- ИСПРАВЛЕНО: Ссылка ведет строго на соседний anim1.css -->
 <?xml-stylesheet type="text/css" href="./anim1.css" ?>
-
 <svg viewBox="0 0 350 175" xmlns="http://www.w3.org/2000/svg">
-  
-  <!-- Контур всей фигуры (Разжигается строго после исчезновения огоньков) -->
-  <path class="full-path-glow" d="M 67.96,12.93 L 279.96,12.93 L 214.79,76.54 L 132.96,76.54 Z" 
-        fill="none" stroke="#ffffff" stroke-width="3" />
 
-  <!-- ЛЕВАЯ ГРУППА ОГОНЬКОВ (Встреча в Точке 4) -->
-  <path class="comet-1to4" d="M 67.96,12.93 L 132.96,76.54" fill="none" stroke="#ffffff" stroke-width="3.5" />
-  <path class="comet-3to4" d="M 214.79,76.54 L 132.96,76.54" fill="none" stroke="#ffffff" stroke-width="3.5" />
+  <!-- Базовый тусклый контур (всегда виден как подсказка) -->
+  <path class="base-path"
+    d="M 67.96,12.93 L 279.96,12.93 L 214.79,76.54 L 132.96,76.54 Z"
+    fill="none" stroke="#ffffff" stroke-width="2" opacity="0.08"/>
 
-  <!-- ПРАВАЯ ГРУППА ОГОНЬКОВ (Встреча в Точке 2) -->
-  <path class="comet-1to2" d="M 67.96,12.93 L 279.96,12.93" fill="none" stroke="#ffffff" stroke-width="3.5" />
-  <path class="comet-3to2" d="M 214.79,76.54 L 279.96,12.93" fill="none" stroke="#ffffff" stroke-width="3.5" />
+  <!-- anim-01 / anim-02: контур целиком -->
+  <path class="full-path"
+    d="M 67.96,12.93 L 279.96,12.93 L 214.79,76.54 L 132.96,76.54 Z"
+    fill="none" stroke="#ffffff" stroke-width="3"/>
+
+  <!-- anim-03 / anim-04: плавный розжиг после пикселя -->
+  <path class="glow-path"
+    d="M 67.96,12.93 L 279.96,12.93 L 214.79,76.54 L 132.96,76.54 Z"
+    fill="none" stroke="#ffffff" stroke-width="3"/>
+
+  <!-- anim-04: хвост от стартовой точки -->
+  <path class="tail-path"
+    d="M 67.96,12.93 L 279.96,12.93 L 214.79,76.54 L 132.96,76.54 Z"
+    fill="none" stroke="#ffffff" stroke-width="3" stroke-linecap="round"
+    stroke-dasharray="0 476" stroke-dashoffset="0"/>
+
+  <!-- anim-03 / anim-04: одиночный пиксель -->
+  <path class="pixel-path"
+    d="M 67.96,12.93 L 279.96,12.93 L 214.79,76.54 L 132.96,76.54 Z"
+    fill="none" stroke="#ffffff" stroke-width="6" stroke-linecap="round"
+    stroke-dasharray="6 476" stroke-dashoffset="0"/>
 
 </svg>

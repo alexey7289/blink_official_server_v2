@@ -1,81 +1,88 @@
 /* ==========================================================================
-	 НЕОНОВЫЕ СВЕЧЕНИЯ ДЛЯ ЭЛЕМЕНТОВ
-	 ========================================================================== */
-.comet-1to2, .comet-3to2, .comet-1to4, .comet-3to4 {
-	filter: drop-shadow(0px 0px 3px #ffffff);
+   ПЕРЕМЕННЫЕ ТАЙМИНГА
+   Периметр фигуры ~490px. Цикл = 2с (1с полёт + 1с розжиг).
+   ========================================================================== */
+
+/* ==========================================================================
+   БАЗОВЫЕ СТИЛИ — скрываем всё по умолчанию
+   ========================================================================== */
+.full-path  { opacity: 0; }
+.glow-path  { opacity: 0; }
+.tail-path  { opacity: 0; }
+.pixel-path { opacity: 0; }
+
+/* ==========================================================================
+   ANIM-01: Быстрое включение
+   Контур мгновенно вспыхивает, горит 2с, гаснет — и снова
+   ========================================================================== */
+.anim-01 .full-path {
+  animation: a01 2.5s steps(1, end) infinite;
 }
-.full-path-glow {
-	filter: drop-shadow(0px 0px 3px #ffffff);
+@keyframes a01 {
+  0%, 5%    { opacity: 1; }
+  6%, 80%   { opacity: 0; }
+  81%, 100% { opacity: 1; }
 }
 
 /* ==========================================================================
-	 НАСТРОЙКА ЦИКЛА И ДЛИНЫ ШЛЕЙФОВ (3 СЕКУНДЫ)
-	 ========================================================================== */
-	 
-/* ПРАВАЯ ГРУППА (Встреча в Точке 2) */
-.comet-1to2 {
-	stroke-linecap: round;
-	stroke-dasharray: 13 230; 
-	animation: run1to2 3s linear infinite;
+   ANIM-02: Плавное включение
+   Контур плавно появляется за 1с и остаётся гореть
+   ========================================================================== */
+.anim-02 .full-path {
+  animation: a02 3s ease-in-out infinite;
 }
-.comet-3to2 {
-	stroke-linecap: round;
-	stroke-dasharray: 7 110;
-	animation: run3to2 3s linear infinite;
-}
-
-/* ЛЕВАЯ ГРУППА (Встреча в Точке 4) */
-.comet-1to4 {
-	stroke-linecap: round;
-	stroke-dasharray: 7 110; 
-	animation: run1to4 3s linear infinite;
-}
-.comet-3to4 {
-	stroke-linecap: round;
-	stroke-dasharray: 9 100;
-	animation: run3to4 3s linear infinite;
-}
-
-/* СТИЛИ ОКОНЧАТЕЛЬНОГО КОНТУРА */
-.full-path-glow {
-	stroke-linejoin: round;
-	animation: ignitePath 3s ease-in-out infinite;
+@keyframes a02 {
+  0%   { opacity: 0; }
+  40%  { opacity: 1; }
+  94%  { opacity: 1; }
+  95%  { opacity: 0; }  /* резкий скачок */
+  100% { opacity: 0; }
 }
 
 /* ==========================================================================
-	 КЛЮЧЕВЫЕ КАДРЫ ПОЛЕТА ИСКР (0% -> 30%)
-	 ========================================================================== */
-@keyframes run1to2 {
-	0%   { stroke-dashoffset: 13; opacity: 1; }
-	29%  { opacity: 1; }
-	30%  { stroke-dashoffset: -212; opacity: 0; }
-	100% { stroke-dashoffset: -212; opacity: 0; }
+   ANIM-03: Бегущий пиксель → темно → розжиг
+   ========================================================================== */
+.anim-03 .pixel-path {
+  animation: px3 2s linear infinite;
 }
-@keyframes run3to2 {
-	0%   { stroke-dashoffset: 7; opacity: 1; }
-	29%  { opacity: 1; }
-	30%  { stroke-dashoffset: -90; opacity: 0; }
-	100% { stroke-dashoffset: -90; opacity: 0; }
+.anim-03 .glow-path {
+  animation: gl3 2s ease-in infinite;
 }
-@keyframes run1to4 {
-	0%   { stroke-dashoffset: 7; opacity: 1; }
-	29%  { opacity: 1; }
-	30%  { stroke-dashoffset: -90; opacity: 0; }
-	100% { stroke-dashoffset: -90; opacity: 0; }
+
+@keyframes px3 {
+  0%        { stroke-dashoffset: 0;    opacity: 1; }
+  48%       { stroke-dashoffset: -476; opacity: 1; }
+  50%, 100% { stroke-dashoffset: -476; opacity: 0; }
 }
-@keyframes run3to4 {
-	0%   { stroke-dashoffset: 9; opacity: 1; }
-	29%  { opacity: 1; }
-	30%  { stroke-dashoffset: -82; opacity: 0; }
-	100% { stroke-dashoffset: -82; opacity: 0; }
+@keyframes gl3 {
+  0%, 50%   { opacity: 0; }
+  100%      { opacity: 1; }
 }
 
 /* ==========================================================================
-	 ФАЗА ПЛАВНОГО РАЗЖИГАНИЯ ВСЕЙ ФИГУРЫ (30% -> 100%)
-	 ========================================================================== */
-@keyframes ignitePath {
-	0%, 30% { opacity: 0; }       /* Контур спит, пока летят все огоньки */
-	60%     { opacity: 1; }       /* Плавно разгорается за 0.9 секунды */
-	90%     { opacity: 1; }       /* Держим стабильное свечение контура */
-	100%    { opacity: 0; }       /* Плавно гасим перед новым стартом */
+   ANIM-04: Пиксель с хвостом → темно → розжиг
+   ========================================================================== */
+.anim-04 .pixel-path {
+  animation: px4 2s linear infinite;
+}
+.anim-04 .tail-path {
+  animation: tail4 2s linear infinite;
+}
+.anim-04 .glow-path {
+  animation: gl4 2s ease-in infinite;
+}
+
+@keyframes px4 {
+  0%        { stroke-dashoffset: 0;    opacity: 1; }
+  48%       { stroke-dashoffset: -476; opacity: 1; }
+  50%, 100% { stroke-dashoffset: -476; opacity: 0; }
+}
+@keyframes tail4 {
+  0%        { stroke-dasharray: 0 476;   opacity: 0.5; }
+  48%       { stroke-dasharray: 476 476; opacity: 0.5; }
+  50%, 100% { stroke-dasharray: 476 476; opacity: 0;   }
+}
+@keyframes gl4 {
+  0%, 50%   { opacity: 0; }
+  100%      { opacity: 1; }
 }
