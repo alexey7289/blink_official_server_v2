@@ -18,6 +18,7 @@
 		android_wifi_3_bar_off,
 		animated_images,
 		bolt,
+		close,
 		contrast,
 		expand_more,
 		help,
@@ -51,6 +52,14 @@
 	
 </head>
 <body>
+	
+	<!-- Экран загрузки -->
+    <div id="app-loader" style="position:fixed;inset:0;background:#ffffff;
+         display:flex;flex-direction:column;align-items:center;justify-content:center;
+         z-index:9999;gap:16px">
+        <md-circular-progress indeterminate></md-circular-progress>
+        <span style="font-size:14px;color:#4a4a4a">Загрузка настроек...</span>
+    </div>
 
 	<!-- Header с лого -->
 	<header class="m3-top-app-bar">
@@ -308,168 +317,36 @@
 				</div>
 			</div>
 
-			<!-- Блок выбора схемы подсветки -->
+			<!-- Блок выбора схемы подсветки + анимации + предпросмотр -->
 			<div class="m3-card-container">
+
+				<!-- Заголовок контура -->
 				<div class="m3-card-row">
-					<!-- Иконка -->
 					<md-filled-tonal-icon-button>
 						<md-icon>amp_stories</md-icon>
 					</md-filled-tonal-icon-button>
-					<!-- Текст и подтекст -->
 					<div class="m3-card-text-block">
-						<div class="m3-card-text-block-title">Схема</div>
-						<div class="m3-card-text-block-subtitle">Контур геометрии</div>
-					</div>
-					<md-icon-button onclick="document.getElementById('my-alert').show()">
-						<md-icon>help</md-icon>
-					</md-icon-button>
-
-					<!-- Диалог схемы -->
-					<md-dialog id="my-alert" type="alert">
-						<div slot="headline">Схемы:</div>
-						<form slot="content" id="form-id" method="dialog">
-							<md-list class="responsive-md-list">
-							
-								<!-- Элемент 1: Прямоугольник -->
-								<md-list-item class="responsive-list-item">
-									<details class="custom-details" name="schemas">
-										<summary class="details-summary">
-											<span>Прямоугольник</span>
-											<md-icon class="chevron-icon">expand_more</md-icon>
-										</summary>
-										<div class="dialog-svg-container">
-											<svg width="200" height="120" viewBox="0 0 200 120" fill="none" xmlns="http://www.w3.org/2000/svg">
-												<rect x="10" y="10" width="180" height="100" fill="none" stroke="#1d1b20" stroke-width="4" />
-											</svg>
-										</div>
-									</details>
-								</md-list-item>
-
-								<!-- Элемент 2: Углы -->
-								<md-list-item class="responsive-list-item">
-									<details class="custom-details" name="schemas">
-										<summary class="details-summary">
-											<span>Углы</span>
-											<md-icon class="chevron-icon">expand_more</md-icon>
-										</summary>
-										<div class="dialog-svg-container">
-											<svg width="200" height="120" viewBox="0 0 200 120" fill="none" xmlns="http://www.w3.org/2000/svg" style="display: block;">
-												<polyline points="100,10 190,10 190,60" fill="none" stroke="#1d1b20" stroke-width="4"/>
-												<polyline points="100,110 10,110 10,60" fill="none" stroke="#1d1b20" stroke-width="4"/>
-											</svg>
-										</div>
-									</details>
-								</md-list-item>
-
-								<!-- Элемент 3: Кресты -->
-								<md-list-item class="responsive-list-item">
-									<details class="custom-details" name="schemas">
-									<summary class="details-summary">
-										<span>Двойные углы</span>
-										<md-icon class="chevron-icon">expand_more</md-icon>
-									</summary>
-									<div class="dialog-svg-container">
-										<svg width="200" height="120" viewBox="0 0 200 120" xmlns="http://www.w3.org/2000/svg">
-											<!-- Левый низ -->
-											<line x1="15" y1="57.78" x2="15" y2="100" fill="none" stroke="#1d1b20" stroke-width="4" stroke-linecap="round"/>
-											<line x1="25" y1="63.33" x2="25" y2="110" fill="none" stroke="#1d1b20" stroke-width="4" stroke-linecap="round"/>
-											<line x1="20" y1="105" x2="100" y2="105" fill="none" stroke="#1d1b20" stroke-width="4" stroke-linecap="round"/>
-											<line x1="10" y1="95"   x2="82"  y2="95"  fill="none" stroke="#1d1b20" stroke-width="4" stroke-linecap="round"/>
-											<!-- Правый верх -->
-											<line x1="185" y1="62.22" x2="185" y2="20"  fill="none" stroke="#1d1b20" stroke-width="4" stroke-linecap="round"/>
-											<line x1="175" y1="56.67" x2="175" y2="10"  fill="none" stroke="#1d1b20" stroke-width="4" stroke-linecap="round"/>
-											<line x1="180" y1="15"   x2="100" y2="15"  fill="none" stroke="#1d1b20" stroke-width="4" stroke-linecap="round"/>
-											<line x1="190" y1="25"   x2="118" y2="25"  fill="none" stroke="#1d1b20" stroke-width="4" stroke-linecap="round"/>
-										</svg>
-									</div>
-									</details>
-								</md-list-item>
-
-								<!-- Элемент 4: Двойные кресты -->
-								<md-list-item class="responsive-list-item">
-									<details class="custom-details" name="schemas">
-									<summary class="details-summary">
-										<span>Двойные кресты</span>
-										<md-icon class="chevron-icon">expand_more</md-icon>
-									</summary>
-									<div class="dialog-svg-container">
-										<svg width="200" height="120" viewBox="0 0 200 120" xmlns="http://www.w3.org/2000/svg">
-											<polyline points="120,65.49 120,47.5 40,47.5 40,97.5 120,97.5 120,79.5" fill="none" stroke="#1d1b20" stroke-width="4"/>
-											<polyline points="80,54.5 80,72.5 160,72.5 160,22.5 80,22.5 80,40.49" fill="none" stroke="#1d1b20" stroke-width="4"/>
-										</svg>
-									</div>
-									</details>
-								</md-list-item>
-
-								<!-- Элемент 5: Два квадрата -->
-								<md-list-item class="responsive-list-item">
-									<details class="custom-details" name="schemas">
-									<summary class="details-summary">
-										<span>Два квадрата</span>
-										<md-icon class="chevron-icon">expand_more</md-icon>
-									</summary>
-									<div class="dialog-svg-container">
-										<!-- Сюда вставите SVG для Двух квадратов -->
-									</div>
-									</details>
-								</md-list-item>
-
-								<!-- Элемент 6: Три квадрата -->
-								<md-list-item class="responsive-list-item">
-									<details class="custom-details" name="schemas">
-									<summary class="details-summary">
-										<span>Три квадрата</span>
-										<md-icon class="chevron-icon">expand_more</md-icon>
-									</summary>
-									<div class="dialog-svg-container">
-										<!-- Сюда вставите SVG для Трех квадратов -->
-									</div>
-									</details>
-								</md-list-item>
-							</md-list>
-						</form>
-						<div slot="actions">
-							<md-text-button form="form-id" value="ok">OK</md-text-button>
-						</div>
-					</md-dialog>
-
-				</div>
-
-				<!-- Поле выбора контура геометрии -->
-				<div class="m3-card-row">
-					<div class="m3-draw-selector">
-						<md-outlined-select id="draw-selector">
-							<md-select-option selected value="draw-01">
-								<div slot="headline">Прямоугольник</div>
-							</md-select-option>
-							<md-select-option value="draw-02">
-								<div slot="headline">Углы</div>
-							</md-select-option>
-							<md-select-option value="draw-03">
-								<div slot="headline">Кресты</div>
-							</md-select-option>
-							<md-select-option value="draw-04">
-								<div slot="headline">Двойные кресты</div>
-							</md-select-option>
-							<md-select-option value="draw-05">
-								<div slot="headline">Два квадрата</div>
-							</md-select-option>
-							<md-select-option value="draw-06">
-								<div slot="headline">Три квадрата</div>
-							</md-select-option>
-						</md-outlined-select>
+						<div class="m3-card-text-block-title">Контур геометрии</div>
+						<div class="m3-card-text-block-subtitle">Схема подсветки потолка</div>
 					</div>
 				</div>
-					
+
+				<!-- Кнопка выбора контура -->
+				<div class="m3-card-row" style="margin-top: 5px; display: flex; justify-content: center;">
+					<md-filled-button id="draw-picker-btn"
+							onclick="document.getElementById('draw-modal').show()">
+						<span id="draw-picker-label">Загрузка...</span>
+						<md-icon slot="icon">expand_more</md-icon>
+					</md-filled-button>
+				</div>
+
 				<md-divider></md-divider>
 
 				<!-- Блок выбора анимации -->
 				<div class="m3-card-row">
-					<!-- Иконка -->
 					<md-filled-tonal-icon-button>
 						<md-icon>animated_images</md-icon>
 					</md-filled-tonal-icon-button>
-					<!-- Текст и подтекст -->
 					<div class="m3-card-text-block">
 						<div class="m3-card-text-block-title">Анимации</div>
 						<div class="m3-card-text-block-subtitle">Световые эффекты</div>
@@ -483,18 +360,7 @@
 				<div class="m3-card-row">
 					<div class="m3-anim-selector">
 						<md-outlined-select id="effect-selector">
-							<md-select-option selected value="anim-01">
-								<div slot="headline">Быстрое включение</div>
-							</md-select-option>
-							<md-select-option value="anim-02">
-								<div slot="headline">Плавное включение</div>
-							</md-select-option>
-							<md-select-option value="anim-03">
-								<div slot="headline">Бегущий пиксель</div>
-							</md-select-option>
-							<md-select-option value="anim-04">
-								<div slot="headline">Бегущий пиксель с хвостом</div>
-							</md-select-option>
+							<!-- опции вставляются динамически из effects-map.json -->
 						</md-outlined-select>
 					</div>
 				</div>
@@ -503,25 +369,24 @@
 
 				<!-- Предпросмотр -->
 				<div class="m3-card-row">
-					<!-- Иконка -->
 					<md-filled-tonal-icon-button>
 						<md-icon>preview</md-icon>
 					</md-filled-tonal-icon-button>
-					<!-- Текст и подтекст -->
 					<div class="m3-card-text-block">
 						<div class="m3-card-text-block-title">Предпросмотр</div>
 						<div class="m3-card-text-block-subtitle">Итоговая анимация</div>
 					</div>
 				</div>
 				<div style="background-color: #1f1f1f;">
-					<!-- Подключаем независимый SVG-компонент -->
-					<object type="image/svg+xml" data="./components/anim1/anim1.svg"></object>	
+					<object type="image/svg+xml" data="./components/anim1/anim1.svg"></object>
 				</div>
+
 			</div>
 		</div>
+
 		
 		<div data-page="console">
-			<h2>Здесь по ничего нет</h2>
+			<h2>Здесь пока ничего нет</h2>
 		</div>
 
 	</main>
@@ -553,8 +418,24 @@
 			<span class="m3-label">Консоль</span>
 		</button>
 	</nav>
+	
+	<!-- Модалка выбора эскиза -->
+	<md-dialog id="draw-modal" type="chooser">
+		<div slot="headline">Выберите контур</div>
+		<form slot="content" id="draw-form" method="dialog" style="padding:0;margin:0">
+			<md-list id="draw-list">
+				<!-- заполняется из draws-map.json -->
+			</md-list>
+		</form>
+		<div slot="actions">
+			<md-text-button form="draw-form" value="cancel">Закрыть</md-text-button>
+		</div>
+	</md-dialog>
 
+	<!-- Скрипт -->
 	<script type="module" src="./js/app.js"></script>
+
+
 </body>
 </html>
 <!-- Sources -->

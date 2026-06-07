@@ -16,6 +16,15 @@
 	--md-sys-color-on-secondary-container: #1f1f1f;
 	/* Задаем строгий темно-серый цвет для всех Outlined элементов */
 	--md-sys-color-primary: #1f1f1f;
+
+	--md-list-container-color: #f0f4f9;
+
+	--md-sys-color-surface-container-low: #f5f5f5;
+	--md-sys-color-outline: #c4c4c4;
+	--md-sys-color-surface-container-high: #e8e8e8;
+	--md-sys-color-primary-container: #e8e8e8;
+	--md-sys-color-on-primary-container: #1f1f1f;
+
 }
 
 body {
@@ -46,139 +55,88 @@ body {
 }
 
 
-/* ==========================================================================
-   2. СТИЛИЗАЦИЯ И РАЗМЕРЫ ДИАЛОГА <md-dialog>
-   ========================================================================== */
-#my-alert {
-  width: 85vw;
-  min-width: 300px;
-  max-width: 420px;
-  /* Красим фон самого диалога в чистый белый */
-  --md-dialog-container-color: var(--md-sys-color-surface);
-}
 
-/* Фиксация высоты контента, блокировка прыжков и настройка скроллбара */
-#my-alert [slot="content"] {
-  height: 380px;            
-  max-height: 380px;
-  overflow-y: scroll;       /* Всегда показывает скроллбар, чтобы разметка не прыгала */
-  overflow-x: hidden;       
-  box-sizing: border-box;
-}
 
-/* Раскрашиваем заголовок диалога */
-#my-alert [slot="headline"] {
-  color: var(--md-sys-color-on-surface);
-  font-family: sans-serif;
-}
 
-/* Стилизация полосы прокрутки, чтобы она подходила под нежный дизайн */
-#my-alert [slot="content"]::-webkit-scrollbar {
-  width: 6px;
-}
-#my-alert [slot="content"]::-webkit-scrollbar-track {
-  background: transparent;
-}
-#my-alert [slot="content"]::-webkit-scrollbar-thumb {
-  background: var(--md-sys-color-outline-variant);
-  border-radius: 10px;
-}
 
-/* ==========================================================================
-   3. АДАПТИВНЫЙ СПИСОК <md-list> И <md-list-item>
-   ========================================================================== */
-.responsive-md-list {
-  width: 100% !important;
-  max-width: 100% !important;
-  background: transparent;
-  padding: 0;
-  box-sizing: border-box;
-}
 
-/* Переопределяем цвета текста и разделителей внутри Material List */
-.responsive-list-item {
-  width: 100% !important;
-  max-width: 100% !important;
-  box-sizing: border-box;
-  --md-list-item-label-text-color: var(--md-sys-color-on-surface);
-  /* Тонкая линия между пунктами списка */
-  border-bottom: 1px solid var(--md-sys-color-outline-variant); 
-}
 
-/* Убираем нижнюю линию у последнего пункта списка */
-.responsive-list-item:last-child {
-  border-bottom: none;
-}
 
-/* ==========================================================================
-   4. КОНТЕНТ ВНУТРИ <details> И АНИМАЦИЯ ШЕВРОНА
-   ========================================================================== */
-.custom-details {
+/*---------------------------------------------------------------------------------------------*/
+/*----------------------------------  Модалка эскизов  ----------------------------------------*/
+/*---------------------------------------------------------------------------------------------*/
+#draw-modal {
+    z-index: 1000;
+	background-color: var(--md-sys-color-surface-container);
+}
+.m3-draw-modal-list {
+	display: flex;
+	flex-direction: column;
+	gap: 8px;
+}
+.m3-draw-modal-item {
+	display: flex;
+	align-items: center;
+	gap: 12px;
+	padding: 10px 12px;
+	border-radius: 12px;
+	border: 1px solid var(--md-sys-color-outline-variant);
+	/* background: var(--md-sys-color-surface); */
+	cursor: pointer;
+}
+.m3-draw-modal-item--selected {
+	border: 2px var(--md-sys-color-primary);
+	background: var(--md-sys-color-primary-container);
+}
+.m3-draw-modal-item svg {
+	flex-shrink: 0;
+	color: var(--md-sys-color-on-surface);
+}
+.m3-draw-modal-item label {
+	flex: 1;
+	font-size: 14px;
+	font-weight: 500;
+	color: var(--md-sys-color-on-surface);
+}
+.m3-draw-modal-item--selected .m3-draw-modal-item-label {
+    color: var(--md-sys-color-on-primary-container);
+}
+.m3-draw-modal-custom-details {
   width: 100%;
   box-sizing: border-box;
 }
 
 /* Скрываем стандартный маркер-стрелку */
-.custom-details summary {
+.m3-draw-modal-custom-details summary {
   display: flex;
   list-style: none;
 }
-.custom-details summary::-webkit-details-marker {
+.m3-draw-modal-custom-details summary::-webkit-details-marker {
   display: none;
 }
-
-/* Оформление строки при клике */
-.details-summary {
-  cursor: pointer;
-  user-select: none;
-  font-weight: 500;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  width: 100%;
-  color: var(--md-sys-color-on-surface);
-  font-family: sans-serif;
-}
-
 /* Спокойный графитовый шеврон */
-.chevron-icon {
+.m3-draw-modal-chevron-icon {
   font-size: 24px;
   color: var(--md-sys-color-on-surface-variant);
   transition: transform 0.2s ease;
 }
-
 /* Вращение шеврона при открытии */
-.custom-details[open] .chevron-icon {
+.m3-draw-modal-custom-details[open] .m3-draw-modal-chevron-icon {
   transform: rotate(180deg);
   color: var(--md-sys-color-on-secondary-container); /* Делаем четче при открытии */
 }
-
-/* Контейнер для SVG — красим в мягкий светло-серый (ваша плашка) */
-.dialog-svg-container {
+/* Оформление строки при клике */
+.m3-draw-modal-details-summary {
+  cursor: pointer;
+  user-select: none;
+  /* font-weight: 500; */
   display: flex;
-  justify-content: center;
-  padding: 12px 0;
-  margin-top: 8px;
-  background: var(--md-sys-color-surface-container); /* #f0f4f9 */
-  border-radius: 8px;
-  box-sizing: border-box;
+  justify-content: space-between;
+  align-items: left;
+  width: 100%;
+  /* color: var(--md-sys-color-on-surface); */
+  /* font-family: sans-serif; */
 }
-
-/* Сама SVG картинка */
-.dialog-svg-container svg {
-  display: block;
-  outline: 1px solid var(--md-sys-color-outline-variant); /* Нежный серый контур */
-  background: var(--md-sys-color-background);             /* Чистый белый холст */
-  max-width: 100%;
-  height: auto;
-}
-
-/* Перекрашиваем рамку самого рисунка внутри SVG в строгий темно-серый */
-.dialog-svg-container svg rect [stroke] {
-  stroke: var(--md-sys-color-primary) !important; /* #1f1f1f */
-}
-
-
 
 
 
@@ -430,9 +388,9 @@ md-switch {
 
 
 /*---------------------------------------------------------------------------------------------*/
-/*------------------------------------  Draw Selector  ----------------------------------------*/
+/*------------------------------------  Draw Button  ------------------------------------------*/
 /*---------------------------------------------------------------------------------------------*/
-.m3-anim-selector,
+/* .m3-anim-selector,
 .m3-draw-selector {
 	display: flex;
 	width: 100%;
@@ -447,7 +405,24 @@ md-switch {
 	--md-outlined-field-container-shape-start-end: 8px;
 	--md-outlined-field-container-shape-end-start: 8px;
 	--md-outlined-field-container-shape-end-end: 8px;
-}
+} */
+/* Кнопка выбора контура */
+/* .m3-draw-picker-btn {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 12px 16px;
+    border-radius: 8px;
+    border: 1px solid var(--md-sys-color-outline);
+    background: var(--md-sys-color-surface-container);
+    cursor: pointer;
+    font-size: 14px;
+    color: var(--md-sys-color-on-surface);
+} */
+/* .m3-draw-picker-btn:hover {
+    background: var(--md-sys-color-surface-container-high);
+} */
 
 
 
@@ -520,7 +495,7 @@ md-slider {
 	bottom: 0;			
 	left: 0;			
 	right: 0;			
-	z-index: 1000;		
+	z-index: 100;		
 	height: 80px; /* ДОБАВЛЕНО: Фиксированная высота по гайдлайнам M3 */
 	background-color: var(--md-sys-color-surface);
 	border-top: 1px solid var(--md-sys-color-outline-variant);

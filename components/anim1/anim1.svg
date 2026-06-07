@@ -5,7 +5,7 @@
   <!-- Базовый тусклый контур (всегда виден как подсказка) -->
   <path class="base-path"
     d="M 67.96,12.93 L 279.96,12.93 L 214.79,76.54 L 132.96,76.54 Z"
-    fill="none" stroke="#ffffff" stroke-width="2" opacity="0.08"/>
+    fill="none" stroke="#ffffff" stroke-width="2" opacity="0.02"/>
 
   <!-- anim-01 / anim-02: контур целиком -->
   <path class="full-path"

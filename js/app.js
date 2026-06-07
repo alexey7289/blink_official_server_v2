@@ -26,7 +26,6 @@ document.addEventListener('DOMContentLoaded', () => {
 	const pages = document.querySelectorAll('[data-page]');
 	// Поля выбора анимации и эскиза
 	const effectSelector = document.getElementById('effect-selector');
-	const drawSelector = document.getElementById('draw-selector');
 
 	const animSpeedContainer = document.getElementById('anim-speed-container');
 	const softstartContainer = document.getElementById('softstart-container');
@@ -51,102 +50,101 @@ document.addEventListener('DOMContentLoaded', () => {
 	const widthInput  = document.getElementById('width-field');
 	const stepInput   = document.getElementById('step-field');
 	const saveDimensionsBtn = document.getElementById('save-dimensions-btn');
-	
 
+	// Получаем настройки эффектов из файла анимаций
+	let effectsMap = {};
 
+	// Получаем настройки эскизов 
+	const drawPickerBtn   = document.getElementById('draw-picker-btn');
+	const drawPickerLabel = document.getElementById('draw-picker-label');
+	const drawList        = document.getElementById('draw-list');
+	let drawsMap = [];
+	window.drawsMap = drawsMap;
+	let selectedDrawId = 'draw-01';
 
 	// ================================================================
 	// 1. БЛОК «СЧИТЫВАТЕЛЬ» (Загрузка настроек с ESP32 при старте)
 	// ================================================================
 
-	// Делаем ОДИН общий запрос к файлу конфигурации
-	fetch('./config/settings.json')
-		.then(response => {
-			if (!response.ok) {
-				throw new Error('ESP32 вернул ошибку или файл предустановок не найден');
+	// Показываем лоадер
+	const loader = document.getElementById('app-loader');
+
+	// Загружаем все три файла одновременно
+	Promise.all([
+		fetch('./config/settings.json').then(r => { if (!r.ok) throw new Error('settings.json не найден'); return r.json(); }),
+		fetch('./config/draws-map.json').then(r => r.json()),
+		fetch('./config/effect-map.json').then(r => r.json()),
+	]).then(([settings, drawsData, effectsData]) => {
+		console.log('Все файлы загружены.');
+
+		// Заполняем данные
+		drawsMap   = drawsData.draws;
+		effectsMap = effectsData;
+
+		// --- settings.json ---
+		if (powerBtn && settings['power'] !== undefined) {
+			powerBtn.selected = !settings['power'];
+			updatePowerBtn();
+		}
+		if (versionSpan && settings.version) {
+			const v = settings.version.startsWith('v') ? settings.version : `v${settings.version}`;
+			versionSpan.textContent = v;
+		}
+		if (wifiBtn && settings['is_online'] !== undefined) {
+			if (settings['is_online']) {
+				wifiBtn.innerHTML = '<md-icon slot="icon">android_wifi_3_bar</md-icon>Подключено';
+				wifiBtn.classList.remove('m3-wifi-status--disconnected');
+			} else {
+				wifiBtn.innerHTML = '<md-icon slot="icon">android_wifi_3_bar_off</md-icon>Отключено';
+				wifiBtn.classList.add('m3-wifi-status--disconnected');
 			}
-			return response.json();
-		})
-		.then(settings => {
-			console.log('Файл settings.json успешно загружен. Все найденные данные:', settings);
-
-			// Кнопка питания и ее состояние
-			if (powerBtn && settings['power'] !== undefined) {
-				powerBtn.selected = !settings['power'];
-				console.log(`Кнопка питания инициализирована. Состояние: ${settings['power'] ? 'ВКЛ' : 'ВЫКЛ'}`);
-				updatePowerBtn();
+		}
+		if (lengthInput) lengthInput.value = settings['length'];
+		if (widthInput)  widthInput.value  = settings['width'];
+		if (stepInput)   stepInput.value   = settings['step'];
+		if (typeof validateDimensionsAndCheckButton === 'function') {
+			validateDimensionsAndCheckButton();
+		}
+		m3Sliders.forEach(id => {
+			const slider = document.getElementById(`${id}-slider`);
+			const valueDisplay = document.getElementById(`${id}-value`);
+			if (slider && valueDisplay && settings[id] !== undefined) {
+				slider.value = settings[id];
+				valueDisplay.textContent = `${slider.value}${getUnit(id)}`;
 			}
-
-			// Обновление текстовой версии в логотипе
-			if (versionSpan) {
-				const formattedVersion = settings.version.startsWith('v') ? settings.version : `v${settings.version}`;
-				versionSpan.textContent = formattedVersion;
-				console.log(`Версия сайта в логотипе обновлена на: ${formattedVersion}`);
-			}
-
-			// Обновление индикатора Wi-fi из JSON
-			if (wifiBtn && settings['is_online'] !== undefined) {
-				if (settings['is_online'] === true) {
-					// Если ESP32 в сети — ставим иконку сигнала и текст "Подключено"
-					wifiBtn.innerHTML = '<md-icon slot="icon">android_wifi_3_bar</md-icon>Подключено';
-					wifiBtn.classList.remove('m3-wifi-status--disconnected');
-					console.log("[UI] -> Индикатор Wi-Fi: ПОДКЛЮЧЕНО (иконка: android_wifi_3_bar)");
-				} else {
-					// Если ESP32 не в сети — ставим перечеркнутую иконку и текст "Отключено"
-					wifiBtn.innerHTML = '<md-icon slot="icon">android_wifi_3_bar_off</md-icon>Отключено';
-					wifiBtn.classList.add('m3-wifi-status--disconnected');
-					console.log("[UI] -> Индикатор Wi-Fi: ОТКЛЮЧЕНО (иконка: android_wifi_3_bar_off)");
-				}
-			}
-
-			// Данные о размерах из settings.json файла
-			if (lengthInput) lengthInput.value = settings['length'];
-			if (widthInput)  widthInput.value  = settings['width'];
-			if (stepInput)   stepInput.value   = settings['step'];
-
-			// Функция расчета кратности
-			if (typeof validateDimensionsAndCheckButton === 'function') {
-				validateDimensionsAndCheckButton();
-			}
-
-			// Данные из сладеров
-			m3Sliders.forEach(id => {
-					const slider = document.getElementById(`${id}-slider`);
-					const valueDisplay = document.getElementById(`${id}-value`);
-
-					// Если слайдер есть на странице и этот ключ есть в JSON от ESP32
-					if (slider && valueDisplay && settings[id] !== undefined) {
-							slider.value = settings[id]; // Двигаем ползунок на нужную позицию
-							valueDisplay.textContent = `${slider.value}${getUnit(id)}`; // Обновляем текст
-					}
-			});
-
-			// Данные о напряжении питания
-			if (powerToggle && powerToggleText && settings['voltage'] !== undefined) {
-				const is12V = settings['voltage'] === 12;
-				powerToggle.selected = is12V;
-				powerToggleText.textContent = is12V ? '12V' : '5V';
-				console.log(`Напряжение инициализировано: ${powerToggleText.textContent}`);
-			}
-
-			// Инициализация типа светодиодов из settings.json
-			if (rgbSelector && settings['color_type'] !== undefined) {
-				rgbSelector.value = settings['color_type'];
-				console.log(`Тип светодиодов инициализирован: ${settings['color_type']}`);
-			}
-
-			// Инициализация эффекта из settings.json
-			if (effectSelector && settings['effect_id'] !== undefined) {
-				const effectValue = `anim-0${settings['effect_id']}`;
-				effectSelector.value = effectValue;
-				updateSliderVisibility(settings['effect_id']);
-				sendEffect(settings['effect_id']); // ← теперь сам дождётся загрузки object
-				console.log(`Эффект инициализирован: ${effectValue}`);
-			}
-		})
-		.catch(error => {
-			console.warn('Файл не найден на ПК. Используем дефолты из HTML:', error.message);
 		});
+		if (powerToggle && powerToggleText && settings['voltage'] !== undefined) {
+			const is12V = settings['voltage'] === 12;
+			powerToggle.selected = is12V;
+			powerToggleText.textContent = is12V ? '12V' : '5V';
+		}
+		if (rgbSelector && settings['color_type'] !== undefined) {
+			rgbSelector.value = settings['color_type'];
+		}
+
+		// --- draws-map + settings ---
+		if (settings['draw_id'] !== undefined) {
+			selectedDrawId = `draw-0${settings['draw_id']}`;
+		}
+		renderDrawList(); // теперь drawsMap и selectedDrawId оба готовы
+
+		const d = drawsMap.find(x => x.id === selectedDrawId);
+		if (d && drawPickerLabel) drawPickerLabel.textContent = d.label;
+
+		updateEffectsList(selectedDrawId);
+		sendDraw(parseInt(selectedDrawId.replace('draw-', '')));
+
+	}).catch(error => {
+		console.warn('Ошибка загрузки:', error.message);
+		renderDrawList(); // рендерим с дефолтами
+	}).finally(() => {
+		// Скрываем лоадер в любом случае
+		if (loader) {
+			loader.style.opacity = '0';
+			loader.style.transition = 'opacity 0.3s ease';
+			setTimeout(() => loader.style.display = 'none', 300);
+		}
+	});
 
 
 
@@ -306,6 +304,28 @@ document.addEventListener('DOMContentLoaded', () => {
 		if (animContainer) animContainer.style.opacity = showAnim ? '1' : '0.3';
 		if (softstartContainer) softstartContainer.style.opacity = showSoftstart ? '1' : '0.3';
 	}
+	// Функция обновления списка эффектов по выбранному эскизу
+	function updateEffectsList(drawValue) {
+		if (!effectsMap[drawValue] || !effectSelector) return;
+
+		const allowed = effectsMap[drawValue].effects;
+
+		// Перестраиваем список опций из JSON
+		effectSelector.innerHTML = allowed.map(e => `
+			<md-select-option value="${e.id}">
+				<div slot="headline">${e.label}</div>
+			</md-select-option>
+		`).join('');
+
+		// Восстанавливаем текущий эффект если он есть в списке
+		const currentId = effectSelector.value;
+		const match = allowed.find(e => e.id === currentId);
+		effectSelector.value = match ? currentId : allowed[0].id;
+
+		const newId = parseInt(effectSelector.value.replace('anim-', ''));
+		updateSliderVisibility(newId);
+		sendEffect(newId);
+	}
 	// Функция применения анимации к SVG-предпросмотру
 	function sendEffect(id) {
 		const svgObject = document.querySelector('object[data*="anim1.svg"]');
@@ -329,7 +349,48 @@ document.addEventListener('DOMContentLoaded', () => {
 		// fetch(`/set?effect_id=${id}`);
 		console.log(`Эффект отправлен на ESP32: ID=${id}`);
 	}
-
+	// Функция обновления SVG preview
+	function updateSvgPreview(drawId) {
+		const svgObject = document.querySelector('object[data*=".svg"]');
+		if (!svgObject) return;
+		svgObject.data = `./components/anim${drawId}/anim${drawId}.svg`;
+		console.log(`SVG предпросмотр сменён на: anim${drawId}.svg`);
+	}
+	// Функция рендера списка контуров в модалке
+	function renderDrawList() {
+		if (!drawList) return;
+		drawList.innerHTML = drawsMap.map(d => `
+			<md-list-item class="responsive-list-item">
+				<details class="m3-draw-modal-custom-details" name="schemas">
+					<summary class="m3-draw-modal-details-summary">
+						<md-radio name="draw-pick" value="${d.id}"
+							${selectedDrawId === d.id ? 'checked' : ''}
+							onclick="pickDraw('${d.id}')">
+						</md-radio>
+						<span>${d.label}</span>
+						<md-icon class="m3-draw-modal-chevron-icon">expand_more</md-icon>
+					</summary>
+					<div class="dialog-svg-container">
+						<svg width="200" height="120" viewBox="0 0 100 70"
+							fill="none" style="color:#1d1b20">
+							${d.svg}
+						</svg>
+					</div>
+				</details>
+			</md-list-item>
+		`).join('');
+	}	
+	// Функция выбора контура
+	function pickDraw(id) {
+		selectedDrawId = id;
+		const d = drawsMap.find(x => x.id === id);
+		if (d && drawPickerLabel) drawPickerLabel.textContent = d.label;
+		renderDrawList();
+		const numId = parseInt(id.replace('draw-', ''));
+		sendDraw(numId);
+		// диалог не закрываем — пользователь закрывает сам кнопкой "Закрыть"
+	}
+	window.pickDraw = pickDraw;
 
 
 
@@ -395,7 +456,6 @@ document.addEventListener('DOMContentLoaded', () => {
 	// Слушатель изменения поля эффектов и отправка его id на ESP32
 	[
 		{ el: effectSelector, prefix: 'anim-', label: 'Эффект', onChange: (id) => { updateSliderVisibility(id); sendEffect(id); } },
-		{ el: drawSelector,   prefix: 'draw-', label: 'Эскиз',  onChange: (id) => sendDraw(id) },
 	].forEach(({ el, prefix, label, onChange }) => {
 		if (!el) return;
 		el.addEventListener('change', () => {
@@ -404,11 +464,22 @@ document.addEventListener('DOMContentLoaded', () => {
 			onChange(id);
 		});
 	});
+	// Отправка новой картинки превью
 	function sendDraw(id) {
+		updateSvgPreview(id);
+		updateEffectsList(`draw-0${id}`);
+
+		const svgObject = document.querySelector('object[data*=".svg"]');
+		if (svgObject) {
+			svgObject.addEventListener('load', () => {
+				const currentEffectId = parseInt(effectSelector.value.replace('anim-', ''));
+				sendEffect(currentEffectId);
+			}, { once: true });
+		}
+
 		console.log(`Эскиз отправлен на ESP32: ID=${id}`);
 		// fetch(`/set?draw_id=${id}`);
 	}
-
 
 
 }); // Конец глобального обработчика DOMContentLoaded
