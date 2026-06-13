@@ -52,7 +52,7 @@
 	
 </head>
 <body>
-	
+
 	<!-- Экран загрузки -->
     <div id="app-loader" style="position:fixed;inset:0;background:#ffffff;
          display:flex;flex-direction:column;align-items:center;justify-content:center;
@@ -188,6 +188,7 @@
 		</div>
 
 		<div data-page="settings">
+
 			<!-- Блок выбора напряжения -->
 			<div class="m3-card-container">
 				<div class="m3-card-row">
@@ -246,8 +247,38 @@
 				</div>
 			</div>
 
-			<!-- Блок ввода размеров -->
+			<!-- Блок "Геометрия + Размеры" (привязан к draws-map.json) -->
 			<div class="m3-card-container">
+				
+				<!-- Заголовок -->
+				<div class="m3-card-row" style="margin: 5px;">
+					<md-filled-tonal-icon-button>
+						<md-icon>amp_stories</md-icon>
+					</md-filled-tonal-icon-button>
+					<div class="m3-card-text-block">
+						<div class="m3-card-text-block-title">Геометрия</div>
+						<div class="m3-card-text-block-subtitle">Контур и размеры рисунка</div>
+					</div>
+					<md-icon-button onclick="document.getElementById('help-draw-modal').show()">
+						<md-icon>help</md-icon>
+					</md-icon-button>
+					<!-- <md-icon-button href="https://t.me" target="_blank">
+						<md-icon>help</md-icon>
+					</md-icon-button> -->
+				</div>
+
+				<!-- Кнопка выбора контура -->
+				<div class="m3-card-row" style="margin-top: 5px; display: flex; justify-content: center;">
+					
+					<md-outlined-button id="draw-picker-btn"
+							onclick="document.getElementById('draw-modal').show()">
+						<span id="draw-picker-label">Загрузка...</span>
+						<md-icon slot="icon">expand_more</md-icon>
+					</md-outlined-button>
+				</div>
+
+				<md-divider></md-divider>
+
 				<div class="m3-card-row" style="margin: 5px;">
 					<!-- Иконка -->
 					<md-filled-tonal-icon-button>
@@ -258,10 +289,12 @@
 						<div class="m3-card-text-block-title">Размер</div>
 						<div class="m3-card-text-block-subtitle">Длина и ширина рисунка</div>
 					</div>
-					<md-icon-button href="https://t.me" target="_blank">
+					<!-- <md-icon-button href="https://t.me" target="_blank">
 						<md-icon>help</md-icon>
-					</md-icon-button>
+					</md-icon-button> -->
 				</div>
+
+				<!-- Основные размеры -->
 				<div class="m3-card-row">
 					<div class="m3-dimensions-fields-row">
 						<md-outlined-text-field
@@ -282,6 +315,15 @@
 							suffix-text="мм"
 							supporting-text=" "
 						></md-outlined-text-field>
+					</div>
+				</div>
+
+				<!-- Дополнительные размеры — появляются динамически из draws-map.json -->
+				<div id="extra-dims-container" style="display:none">
+					<div class="m3-card-row">
+						<div class="m3-dimensions-fields-row" id="extra-dims-fields">
+							<!-- заполняется JS -->
+						</div>
 					</div>
 				</div>
 
@@ -315,32 +357,13 @@
 						Сохранить
 					</md-filled-button>
 				</div>
+
+
+
 			</div>
 
-			<!-- Блок выбора схемы подсветки + анимации + предпросмотр -->
+			<!-- Блок выбора анимации + предпросмотр (привязан к effect-map.json)-->
 			<div class="m3-card-container">
-
-				<!-- Заголовок контура -->
-				<div class="m3-card-row">
-					<md-filled-tonal-icon-button>
-						<md-icon>amp_stories</md-icon>
-					</md-filled-tonal-icon-button>
-					<div class="m3-card-text-block">
-						<div class="m3-card-text-block-title">Контур геометрии</div>
-						<div class="m3-card-text-block-subtitle">Схема подсветки потолка</div>
-					</div>
-				</div>
-
-				<!-- Кнопка выбора контура -->
-				<div class="m3-card-row" style="margin-top: 5px; display: flex; justify-content: center;">
-					<md-filled-button id="draw-picker-btn"
-							onclick="document.getElementById('draw-modal').show()">
-						<span id="draw-picker-label">Загрузка...</span>
-						<md-icon slot="icon">expand_more</md-icon>
-					</md-filled-button>
-				</div>
-
-				<md-divider></md-divider>
 
 				<!-- Блок выбора анимации -->
 				<div class="m3-card-row">
@@ -355,7 +378,7 @@
 						<md-icon>help</md-icon>
 					</md-icon-button>
 				</div>
-
+				
 				<!-- Список анимаций -->
 				<div class="m3-card-row">
 					<div class="m3-anim-selector">
@@ -393,7 +416,7 @@
 
 	<!-- Navigation -->
 	<nav class="m3-nav-bar">
-		<button class="m3-nav-item m3-nav-item--active" data-tab="home">
+		<button class="m3-nav-item" data-tab="home">
 			<div class="m3-icon-wrapper">
 				<span class="material-symbols-outlined">home</span>
 			</div>
@@ -405,7 +428,7 @@
 			</div>
 			<span class="m3-label">Настройки</span>
 		</button>
-		<button class="m3-nav-item" data-tab="settings">
+		<button class="m3-nav-item m3-nav-item--active" data-tab="settings">
 			<div class="m3-icon-wrapper">
 				<span class="material-symbols-outlined">settings</span>
 			</div>
@@ -419,6 +442,23 @@
 		</button>
 	</nav>
 	
+	<md-dialog id="help-draw-modal" type="alert">
+		<div slot="headline">Работа с "Геометрией"</div>
+		<form slot="content" id="form-id" method="dialog">
+			<ul style="padding-left: 20px;">
+				<li>Выберите геометрию контура подсветки в выпадающем меню.</li>
+				<li>Установите размеры выбранной геометрии. <br>
+				<small>*в зависимости от геометрии могут понадобиться дополнительные размеры.</small></li>
+				<li>Введите шаг резки ленты (расчет количества пикселей произведется автоматически).</li>
+				<li>Если размеры введены корректно, нажмите "Сохранить" для отправки данных в контроллер.</li>
+				<li>Контроллер перезагрузится автоматически.</li>
+			</ul>
+		</form>
+		<div slot="actions">
+			<md-text-button form="form-id" value="OK">OK</md-text-button>
+		</div>
+	</md-dialog>
+
 	<!-- Модалка выбора эскиза -->
 	<md-dialog id="draw-modal" type="chooser">
 		<div slot="headline">Выберите контур</div>

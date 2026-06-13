@@ -387,16 +387,41 @@ md-switch {
 
 
 
+
+
+
+
+
+
+
+
 /*---------------------------------------------------------------------------------------------*/
-/*------------------------------------  Draw Button  ------------------------------------------*/
+/*---------------------------------  Animation Selector  --------------------------------------*/
 /*---------------------------------------------------------------------------------------------*/
-/* .m3-anim-selector,
-.m3-draw-selector {
+.m3-anim-selector {
 	display: flex;
 	width: 100%;
 	align-items: flex-start;
 }
-.m3-anim-selector md-outlined-select,
+.m3-anim-selector md-outlined-select {
+	width: 100%;
+    /* 1. Задаем высоту */
+	--md-outlined-select-text-field-container-shape: 8px;
+    --md-outlined-field-container-height: 80px;
+    
+    /* 2. Уменьшаем внутренние отступы, иначе контент вылезет за пределы 36px */
+    --md-outlined-field-top-space: 12px;
+    --md-outlined-field-bottom-space: 12px;
+    
+    /* 3. (Опционально) Если есть лейбл, уменьшаем его, чтобы он влезал */
+    --md-outlined-field-label-text-size: 12px;
+}
+
+
+
+
+
+/*.m3-anim-selector md-outlined-select,
 .m3-draw-selector md-outlined-select {
 	width: 100%;
 	--md-outlined-select-min-width: 100%;
