@@ -1,6 +1,6 @@
 {
     "power": true,
-    "version": "2.3.11",
+    "version": "2.3.12",
     "is_online": true,
 
     "dims-x": 100,
@@ -17,6 +17,4 @@
     "color_type": "GRB",
     "draw_id": 1,
     "effect_id": 2
-    
-
 }

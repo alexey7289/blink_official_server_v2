@@ -125,7 +125,7 @@ document.addEventListener('DOMContentLoaded', () => {
 		renderDrawList();
 		const d = drawsMap.find(x => x.id === selectedDrawId);
 		if (d && drawPickerLabel) drawPickerLabel.textContent = d.label;
-		updateEffectsList(selectedDrawId);
+		updateEffectsList(selectedDrawId, settings['effect_id']);
 		sendDraw(parseInt(selectedDrawId.replace('draw-', '')), settings);
 
 	}).catch(error => {
@@ -326,7 +326,7 @@ document.addEventListener('DOMContentLoaded', () => {
 	}
 
 	// Обновление списка эффектов при смене эскиза
-	function updateEffectsList(drawValue) {
+	function updateEffectsList(drawValue, effectId = null) {
 		if (!effectsMap[drawValue] || !effectSelector) return;
 		const allowed = effectsMap[drawValue].effects;
 		effectSelector.innerHTML = allowed.map(e => `
@@ -334,12 +334,17 @@ document.addEventListener('DOMContentLoaded', () => {
 				<div slot="headline">${e.label}</div>
 			</md-select-option>
 		`).join('');
-		const currentId = effectSelector.value;
-		const match = allowed.find(e => e.id === currentId);
-		effectSelector.value = match ? currentId : allowed[0].id;
-		const newId = parseInt(effectSelector.value.replace('anim-', ''));
-		updateSliderVisibility(newId);
-		sendEffect(newId);
+
+		const targetId = effectId ? `anim-0${effectId}` : null;
+		const match = targetId && allowed.find(e => e.id === targetId);
+
+		setTimeout(() => {
+			effectSelector.value = match ? targetId : allowed[0].id;
+			effectSelector.dispatchEvent(new Event('change'));
+			const newId = parseInt(effectSelector.value.replace('anim-', ''));
+			updateSliderVisibility(newId);
+			sendEffect(newId);
+		}, 150);
 	}
 
 	// Применение анимации к SVG предпросмотру
@@ -493,7 +498,7 @@ document.addEventListener('DOMContentLoaded', () => {
 	// Смена эскиза — обновляем SVG, эффекты и extra-dims
 	function sendDraw(id, initialValues = {}) {
 		updateSvgPreview(id);
-		updateEffectsList(`draw-0${id}`);
+		updateEffectsList(`draw-0${id}`, initialValues['effect_id']);
 		const draw = drawsMap.find(d => d.id === `draw-0${id}`);
 		if (draw) renderExtraDims(draw, initialValues);
 		const svgObject = document.querySelector('object[data*=".svg"]');
