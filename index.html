@@ -269,12 +269,13 @@
 
 				<!-- Кнопка выбора контура -->
 				<div class="m3-card-row" style="margin-top: 5px; display: flex; justify-content: center;">
-					
-					<md-outlined-button id="draw-picker-btn"
-							onclick="document.getElementById('draw-modal').show()">
-						<span id="draw-picker-label">Загрузка...</span>
-						<md-icon slot="icon">expand_more</md-icon>
-					</md-outlined-button>
+					<div class="m3-draw-selector">
+						<button class="m3-fake-select" id="draw-picker-btn"
+								onclick="document.getElementById('draw-modal').show()">
+							<span id="draw-picker-label">Загрузка...</span>
+							<md-icon slot="icon">expand_more</md-icon>
+						</button>
+					</div>
 				</div>
 
 				<md-divider></md-divider>
