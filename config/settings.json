@@ -15,6 +15,7 @@
         
     "voltage": 5,
     "color_type": "GRB",
-    "draw_id": 1,
+    "draw_id": 3,
     "effect_id": 2
+    
 }

@@ -325,7 +325,6 @@ document.addEventListener('DOMContentLoaded', () => {
 		if (softstartContainer) softstartContainer.style.opacity = showSoftstart ? '1' : '0.3';
 	}
 
-	// Обновление списка эффектов при смене эскиза
 	function updateEffectsList(drawValue, effectId = null) {
 		if (!effectsMap[drawValue] || !effectSelector) return;
 		const allowed = effectsMap[drawValue].effects;
@@ -340,7 +339,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
 		setTimeout(() => {
 			effectSelector.value = match ? targetId : allowed[0].id;
-			effectSelector.dispatchEvent(new Event('change'));
+			// убрали dispatchEvent отсюда
 			const newId = parseInt(effectSelector.value.replace('anim-', ''));
 			updateSliderVisibility(newId);
 			sendEffect(newId);
@@ -349,8 +348,10 @@ document.addEventListener('DOMContentLoaded', () => {
 
 	// Применение анимации к SVG предпросмотру
 	function sendEffect(id) {
+		if (isNaN(id)) return; // ← защита от NaN
 		const svgObject = document.querySelector('object[data*=".svg"]');
 		if (!svgObject) return;
+
 		function applyClass() {
 			const svg = svgObject.contentDocument && svgObject.contentDocument.querySelector('svg');
 			if (svg) {
@@ -358,6 +359,7 @@ document.addEventListener('DOMContentLoaded', () => {
 				console.log(`Эффект применён к SVG: anim-0${id}`);
 			}
 		}
+
 		if (svgObject.contentDocument && svgObject.contentDocument.querySelector('svg')) {
 			applyClass();
 		} else {
@@ -366,6 +368,7 @@ document.addEventListener('DOMContentLoaded', () => {
 		console.log(`Эффект отправлен на ESP32: ID=${id}`);
 		// fetch(`/set?effect_id=${id}`);
 	}
+
 
 	// Смена SVG предпросмотра
 	function updateSvgPreview(drawId) {
@@ -501,16 +504,21 @@ document.addEventListener('DOMContentLoaded', () => {
 		updateEffectsList(`draw-0${id}`, initialValues['effect_id']);
 		const draw = drawsMap.find(d => d.id === `draw-0${id}`);
 		if (draw) renderExtraDims(draw, initialValues);
-		const svgObject = document.querySelector('object[data*=".svg"]');
+
+		// Ждём загрузки SVG и установки effectSelector.value
+		/* const svgObject = document.querySelector('object[data*=".svg"]');
 		if (svgObject) {
 			svgObject.addEventListener('load', () => {
-				const currentEffectId = parseInt(effectSelector.value.replace('anim-', ''));
-				sendEffect(currentEffectId);
+				setTimeout(() => {
+					const val = effectSelector ? effectSelector.value : '';
+					const currentEffectId = parseInt(val.replace('anim-', ''));
+					if (!isNaN(currentEffectId)) sendEffect(currentEffectId);
+				}, 200);
 			}, { once: true });
-		}
+		} */
+
 		console.log(`Эскиз отправлен на ESP32: ID=${id}`);
 		// fetch(`/set?draw_id=${id}`);
 	}
-
 
 }); // Конец DOMContentLoaded
