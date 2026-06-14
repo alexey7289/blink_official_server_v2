@@ -20,6 +20,7 @@
 		animated_images,
 		bolt,
 		close,
+		content_copy,
 		contrast,
 		expand_more,
 		help,
@@ -407,8 +408,56 @@
 				</div>
 
 			</div>
-		</div>
 
+			<!-- Блок выбора количества каналов -->
+			<div class="m3-card-container">
+				<div class="m3-card-row">
+					<!-- Иконка-->
+					<md-filled-tonal-icon-button>
+						<md-icon>content_copy</md-icon>
+					</md-filled-tonal-icon-button>
+					<div class="m3-card-text-block">
+						<div class="m3-card-text-block-title">Кол-во каналов</div>
+						<div class="m3-card-text-block-subtitle">Для вывода анимации</div>
+					</div>
+					<md-icon-button>
+						<md-icon>help</md-icon>
+					</md-icon-button>
+				</div>
+				<div class="m3-card-row">
+					<form>
+						<div class="channel-qty-radio-btns">
+							<label for="cats-radio">Ch1</label>
+							<md-radio
+								value="1"
+								aria-label="First radio"
+								name="group"
+								touch-target="wrapper">
+							</md-radio>
+						</div>
+						<div class="channel-qty-radio-btns">
+							<label for="cats-radio">Ch1 + Ch2</label>
+							<md-radio
+								value="2"
+								aria-label="Second radio"
+								name="group"
+								touch-target="wrapper">
+							</md-radio>
+						</div>
+						<div class="channel-qty-radio-btns">
+							<label for="cats-radio">Ch1 + Ch2 + Ch3</label>
+							<md-radio
+								value="3"
+								aria-label="Third radio"
+								name="group"
+								touch-target="wrapper">
+							</md-radio>
+						</div>
+					</form>
+				</div>
+			</div>
+
+		</div>
 		
 		<div data-page="console">
 			<h2>Здесь пока ничего нет</h2>
@@ -444,6 +493,7 @@
 		</button>
 	</nav>
 	
+	<!-- Модалка подсказка по геометрии -->
 	<md-dialog id="help-draw-modal" type="alert">
 		<div slot="headline">Работа с "Геометрией"</div>
 		<form slot="content" id="form-id" method="dialog">

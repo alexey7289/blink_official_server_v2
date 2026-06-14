@@ -3,6 +3,9 @@
     "version": "2.3.13",
     "is_online": true,
 
+    "voltage": 5,
+    "color_type": "GRB",
+
     "dims-x": 100,
     "dims-y": 50,
     "dims-a": 20,
@@ -13,9 +16,8 @@
     "softstart-speed": 500,
     "max-brightness": 75,
         
-    "voltage": 5,
-    "color_type": "GRB",
     "draw_id": 3,
-    "effect_id": 2
-    
+    "effect_id": 2,
+
+    "channels_qty": 2
 }
