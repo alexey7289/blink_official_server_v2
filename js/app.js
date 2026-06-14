@@ -144,7 +144,7 @@ document.addEventListener('DOMContentLoaded', () => {
 	// 2. БЛОК «СЛУШАТЕЛИ»
 	// =============================================================================
 
-	// Активная страница при старте (поменяй на 'home' после отладки)
+	// Активная страница при старте
 	document.querySelector('[data-page="settings"]').classList.add('page--active');
 
 	// Навигация по табам
@@ -313,8 +313,8 @@ document.addEventListener('DOMContentLoaded', () => {
 	// Видимость слайдеров в зависимости от эффекта
 	function updateSliderVisibility(effectId) {
 		const id           = parseInt(effectId);
-		const showAnim     = id === 3 || id === 4;
-		const showSoftstart = id === 2 || id === 3 || id === 4;
+		const showAnim     = id === 3 || id === 4 || id === 5 || id === 6;
+		const showSoftstart = id === 2 || id === 3 || id === 4 || id === 5 || id === 6;
 		const animSlider      = document.getElementById('animation-speed-slider');
 		const softstartSlider = document.getElementById('softstart-speed-slider');
 		const animContainer      = document.getElementById('anim-speed-container');
