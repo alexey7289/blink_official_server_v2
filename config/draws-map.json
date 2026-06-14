@@ -8,7 +8,7 @@
         },
         {
             "id": "draw-02",
-            "label": "Углы",
+            "label": "Угол",
             "svg": "<polyline points='100,10 190,10 190,60' fill='none' stroke='currentColor' stroke-width='4'/><polyline points='100,110 10,110 10,60' fill='none' stroke='currentColor' stroke-width='4'/>",
             "extra-dims" : []
         },
