@@ -18,6 +18,7 @@
 		android_wifi_3_bar,
 		android_wifi_3_bar_off,
 		animated_images,
+		architecture,
 		bolt,
 		close,
 		content_copy,
@@ -34,6 +35,7 @@
 		settings,
 		speed,
 		straighten,
+		sync_problem,
 		terminal_2,
 		tune,
 		upload" />
@@ -420,12 +422,12 @@
 						<div class="m3-card-text-block-title">Кол-во каналов</div>
 						<div class="m3-card-text-block-subtitle">Для вывода анимации</div>
 					</div>
-					<md-icon-button>
+					<md-icon-button  onclick="document.getElementById('help-channels-qty-modal').show()">
 						<md-icon>help</md-icon>
 					</md-icon-button>
 				</div>
 				<div class="m3-card-row">
-					<form>
+					<form id="channels-qty-form">
 						<div class="channel-qty-radio-btns">
 							<label for="cats-radio">Ch1</label>
 							<md-radio
@@ -493,23 +495,94 @@
 		</button>
 	</nav>
 	
-	<!-- Модалка подсказка по геометрии -->
-	<md-dialog id="help-draw-modal" type="alert">
-		<div slot="headline">Работа с "Геометрией"</div>
-		<form slot="content" id="form-id" method="dialog">
-			<ul style="padding-left: 20px;">
-				<li>Выберите геометрию контура подсветки в выпадающем меню.</li>
-				<li>Установите размеры выбранной геометрии. <br>
-				<small>*в зависимости от геометрии могут понадобиться дополнительные размеры.</small></li>
-				<li>Введите шаг резки ленты (расчет количества пикселей произведется автоматически).</li>
-				<li>Если размеры введены корректно, нажмите "Сохранить" для отправки данных в контроллер.</li>
-				<li>Контроллер перезагрузится автоматически.</li>
-			</ul>
-		</form>
+	<!-- Модалка-подсказка по количеству используемых каналов -->
+	<md-dialog id="help-channels-qty-modal" type="alert">
+		<div slot="headline">Количество каналов</div>
+		<form slot="content" id="help-channels-form" method="dialog" style="display: flex; flex-direction: column; gap: 12px; line-height: 1.5;">
+			<!-- Главная мысль -->
+			<p style="margin: 0;">
+				Эта настройка позволяет <strong>дублировать сигнал</strong> с основного канала на дополнительные, если в вашем проекте используется несколько одинаковых элементов.
+			</p>
+			<!-- Инструкция -->
+			<p style="margin: 0;">
+				Просто выберите необходимое количество каналов в веб-интерфейсе.
+			</p>
+			<!-- Визуально выделенный пример (здесь текст тоже будет выровнен по ширине) -->
+			<div style="margin-top: 4px; padding: 10px 12px; background: rgba(0,0,0,0.04); border-left: 4px solid var(--md-sys-color-primary, #6750A4); border-radius: 4px;">
+				<span style="font-weight: 600; display: block; margin-bottom: 2px; font-size: 0.9em; text-transform: uppercase; color: var(--md-sys-color-primary, #6750A4); text-align: left;">Пример:</span>
+				<span style="font-size: 0.95em; color: var(--md-sys-color-on-surface-variant, #49454F);">
+					Вы установили две одинаковые конструкции типа «Угол». Переключите настройку в режим <strong>«Ch1+Ch2»</strong>, чтобы они работали абсолютно синхронно.
+				</span>
+			</div>
+		</form>		
 		<div slot="actions">
-			<md-text-button form="form-id" value="OK">OK</md-text-button>
+			<md-text-button form="help-channels-form" value="close">OK</md-text-button>
 		</div>
 	</md-dialog>
+
+<!-- Модалка-подсказка по работе с блоком "Геометрия" -->
+<md-dialog id="help-draw-modal" type="alert" style="--md-dialog-container-max-width: 480px;">
+	<div slot="headline" style="display: flex; align-items: center; gap: 8px;">
+		<!-- Добавили иконку в заголовок -->
+		<md-icon style="color: var(--md-sys-color-primary, #6750A4);">architecture</md-icon>
+		<span>Работа с «Геометрией»</span>
+	</div>
+	
+	<form slot="content" id="help-draw-form" method="dialog" style="display: flex; flex-direction: column; gap: 16px; line-height: 1.4;">
+		
+		<!-- Шаг 1 -->
+		<div style="display: flex; gap: 12px; align-items: flex-start;">
+			<div style="display: flex; align-items: center; justify-content: center; min-width: 24px; height: 24px; background: var(--md-sys-color-primary-container, #EADDFF); color: var(--md-sys-color-on-primary-container, #21005D); border-radius: 50%; font-size: 12px; font-weight: bold;">1</div>
+			<div style="font-size: 0.95em;">
+				Выберите <strong>геометрию контура</strong> подсветки в выпадающем меню.
+			</div>
+		</div>
+
+		<!-- Шаг 2 -->
+		<div style="display: flex; gap: 12px; align-items: flex-start;">
+			<div style="display: flex; align-items: center; justify-content: center; min-width: 24px; height: 24px; background: var(--md-sys-color-primary-container, #EADDFF); color: var(--md-sys-color-on-primary-container, #21005D); border-radius: 50%; font-size: 12px; font-weight: bold;">2</div>
+			<div style="font-size: 0.95em;">
+				Установите <strong>размеры</strong> выбранной геометрии.
+				<div style="margin-top: 4px; font-size: 0.85em; color: var(--md-sys-color-on-surface-variant, #49454F); font-style: italic; line-height: 1.2;">
+					*в зависимости от формы могут появиться дополнительные поля.
+				</div>
+			</div>
+		</div>
+
+		<!-- Шаг 3 -->
+		<div style="display: flex; gap: 12px; align-items: flex-start;">
+			<div style="display: flex; align-items: center; justify-content: center; min-width: 24px; height: 24px; background: var(--md-sys-color-primary-container, #EADDFF); color: var(--md-sys-color-on-primary-container, #21005D); border-radius: 50%; font-size: 12px; font-weight: bold;">3</div>
+			<div style="font-size: 0.95em;">
+				Введите <strong>шаг резки ленты</strong>. Расчет количества пикселей выполнится автоматически.
+			</div>
+		</div>
+
+		<!-- Шаг 4 -->
+		<div style="display: flex; gap: 12px; align-items: flex-start;">
+			<div style="display: flex; align-items: center; justify-content: center; min-width: 24px; height: 24px; background: var(--md-sys-color-primary-container, #EADDFF); color: var(--md-sys-color-on-primary-container, #21005D); border-radius: 50%; font-size: 12px; font-weight: bold;">4</div>
+			<div style="font-size: 0.95em;">
+				Если всё заполнено верно, нажмите кнопку <strong>«Сохранить»</strong> для отправки данных.
+			</div>
+		</div>
+
+		<!-- Тонкая разделительная линия -->
+		<hr style="border: 0; border-top: 1px solid var(--md-sys-color-outline-variant, #CAC4D0); margin: 4px 0;">
+
+		<!-- Важная инфо-плашка -->
+		<div style="display: flex; gap: 10px; padding: 10px 12px; background: rgba(255, 152, 0, 0.08); border-left: 4px solid #FF9800; border-radius: 4px; align-items: center;">
+			<md-icon style="color: #FF9800; font-size: 20px;">sync_problem</md-icon>
+			<span style="font-size: 0.9em; color: var(--md-sys-color-on-surface, #1D1B20); font-weight: 500;">
+				После сохранения контроллер перезагрузится автоматически!
+			</span>
+		</div>
+
+	</form>
+	
+	<div slot="actions">
+		<!-- Привязали кнопку закрытия к форме -->
+		<md-text-button form="help-draw-form" value="OK">OK</md-text-button>
+	</div>
+</md-dialog>
 
 	<!-- Модалка выбора эскиза -->
 	<md-dialog id="draw-modal" type="chooser">

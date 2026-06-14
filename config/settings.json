@@ -1,6 +1,6 @@
 {
     "power": true,
-    "version": "2.3.13",
+    "version": "2.3.14",
     "is_online": true,
 
     "voltage": 5,
@@ -19,5 +19,5 @@
     "draw_id": 3,
     "effect_id": 2,
 
-    "channels_qty": 2
+    "channels_qty": 1
 }
