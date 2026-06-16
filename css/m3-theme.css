@@ -59,6 +59,48 @@ body {
 
 
 
+/*---------------------------------------------------------------------------------------------*/
+/*--------------------------------- Меню быстрого доступа -------------------------------------*/
+/*---------------------------------------------------------------------------------------------*/
+.quick-setup-grid {
+	display: grid;
+	grid-template-columns: 1fr 1fr;
+	gap: 16px;
+	/* padding: 0 16px; */
+	width: 100%;
+	box-sizing: border-box;
+}
+.quick-setup-btn {
+	height: 120px;
+	width: 100%;
+	--md-filled-tonal-button-container-shape: 12px; /* Крупное скругление углов */
+	padding: 0;  
+	position: relative;
+    overflow: hidden;
+	display: flex;
+	flex-direction: column; /* Строки встают строго друг под другом */
+	align-items: flex-start;  /* Выравниваем все по левому краю */
+	justify-content: flex-start; /* Начинаем контент сверху */
+	padding: 12px; /* Делаем аккуратные внутренние отступы */
+	height: 100%;
+	box-sizing: border-box;
+
+	background-color: #8bee98;
+	border-radius: 12px;
+	cursor: pointer;
+}
+.quick-setup-btn-title {
+	font-size: 16px;
+	font-weight: 400;
+}
+.quick-setup-btn-subtitle {
+	font-size: 10px;
+	font-weight: 400;
+	letter-spacing: 0.2px;
+	opacity: 0.5;
+}
+
+
 
 
 

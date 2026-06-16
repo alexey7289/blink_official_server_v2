@@ -23,6 +23,7 @@
 		close,
 		content_copy,
 		contrast,
+		dashboard,
 		expand_more,
 		help,
 		home,
@@ -94,12 +95,60 @@
 	<main class="page-content">
 
 		<div data-page="home">
+			
 			<!-- Блок статуса Wi-fi -->
 			<div class="m3-card-container" style="display: flex; justify-content: center; align-items: center; background: transparent;">
 				<md-outlined-button id="wifi-status" class="m3-wifi-status">
 					<md-icon slot="icon">android_wifi_3_bar</md-icon>
 					Подключено
 				</md-outlined-button>
+			</div>
+
+			<!-- Блок быстрых режимов] -->
+			<div class="m3-card-container">
+				<div class="m3-card-row">
+					<!-- Иконка-->
+					<md-filled-tonal-icon-button>
+						<md-icon>dashboard</md-icon>
+					</md-filled-tonal-icon-button>
+					<!-- Текст и подтекст -->
+					<div class="m3-card-text-block">
+						<div class="m3-card-text-block-title">Быстрые режимы</div>
+						<div class="m3-card-text-block-subtitle">Описание быстрых режимов</div>
+					</div>
+				</div>
+
+				<div class="quick-setup-grid">
+					<div class="quick-setup-btn">
+						<md-ripple></md-ripple>
+						<md-filled-tonal-icon-button style="margin-left: auto; margin-bottom: auto;">
+							<md-icon>dashboard</md-icon>
+						</md-filled-tonal-icon-button>
+						<span class="quick-setup-btn-title">Вечер</span>
+						<span class="quick-setup-btn-subtitle">Теплое статичное свечение</span>
+					</div>
+					<div class="quick-setup-btn">
+						<md-ripple></md-ripple>
+						<md-filled-tonal-icon-button style="margin-left: auto; margin-bottom: auto;">
+							<md-icon>dashboard</md-icon>
+						</md-filled-tonal-icon-button>						<span class="quick-setup-btn-title">Кино</span>
+						<span class="quick-setup-btn-subtitle">Приглушенный фоновый свет</span><!-- Приглушенный синий или фоновый свет -->
+					</div>
+					<div class="quick-setup-btn">
+						<md-ripple></md-ripple>
+						<md-filled-tonal-icon-button style="margin-left: auto; margin-bottom: auto;">
+							<md-icon>dashboard</md-icon>
+						</md-filled-tonal-icon-button>						<span class="quick-setup-btn-title">Максимум</span>
+						<span class="quick-setup-btn-subtitle">100% яркость для уборки или чтения</span>
+					</div>
+					<div class="quick-setup-btn">
+						<md-ripple></md-ripple>
+						<md-filled-tonal-icon-button style="margin-left: auto; margin-bottom: auto;">
+							<md-icon>dashboard</md-icon>
+						</md-filled-tonal-icon-button>						<span class="quick-setup-btn-title">Динамика</span>
+						<span class="quick-setup-btn-subtitle">Запуск эффектной анимации</span>
+					</div>
+				</div>
 			</div>
 		</div>
 
@@ -266,9 +315,6 @@
 					<md-icon-button onclick="document.getElementById('help-draw-modal').show()">
 						<md-icon>help</md-icon>
 					</md-icon-button>
-					<!-- <md-icon-button href="https://t.me" target="_blank">
-						<md-icon>help</md-icon>
-					</md-icon-button> -->
 				</div>
 
 				<!-- Кнопка выбора контура -->
@@ -469,7 +515,7 @@
 
 	<!-- Navigation -->
 	<nav class="m3-nav-bar">
-		<button class="m3-nav-item" data-tab="home">
+		<button class="m3-nav-item m3-nav-item--active" data-tab="home">
 			<div class="m3-icon-wrapper">
 				<span class="material-symbols-outlined">home</span>
 			</div>
@@ -481,7 +527,7 @@
 			</div>
 			<span class="m3-label">Настройки</span>
 		</button>
-		<button class="m3-nav-item m3-nav-item--active" data-tab="settings">
+		<button class="m3-nav-item" data-tab="settings">
 			<div class="m3-icon-wrapper">
 				<span class="material-symbols-outlined">settings</span>
 			</div>
@@ -520,69 +566,69 @@
 		</div>
 	</md-dialog>
 
-<!-- Модалка-подсказка по работе с блоком "Геометрия" -->
-<md-dialog id="help-draw-modal" type="alert" style="--md-dialog-container-max-width: 480px;">
-	<div slot="headline" style="display: flex; align-items: center; gap: 8px;">
-		<!-- Добавили иконку в заголовок -->
-		<md-icon style="color: var(--md-sys-color-primary, #6750A4);">architecture</md-icon>
-		<span>Работа с «Геометрией»</span>
-	</div>
-	
-	<form slot="content" id="help-draw-form" method="dialog" style="display: flex; flex-direction: column; gap: 16px; line-height: 1.4;">
-		
-		<!-- Шаг 1 -->
-		<div style="display: flex; gap: 12px; align-items: flex-start;">
-			<div style="display: flex; align-items: center; justify-content: center; min-width: 24px; height: 24px; background: var(--md-sys-color-primary-container, #EADDFF); color: var(--md-sys-color-on-primary-container, #21005D); border-radius: 50%; font-size: 12px; font-weight: bold;">1</div>
-			<div style="font-size: 0.95em;">
-				Выберите <strong>геометрию контура</strong> подсветки в выпадающем меню.
-			</div>
+	<!-- Модалка-подсказка по работе с блоком "Геометрия" -->
+	<md-dialog id="help-draw-modal" type="alert" style="--md-dialog-container-max-width: 480px;">
+		<div slot="headline" style="display: flex; align-items: center; gap: 8px;">
+			<!-- Добавили иконку в заголовок -->
+			<md-icon style="color: var(--md-sys-color-primary, #6750A4);">architecture</md-icon>
+			<span>Работа с «Геометрией»</span>
 		</div>
-
-		<!-- Шаг 2 -->
-		<div style="display: flex; gap: 12px; align-items: flex-start;">
-			<div style="display: flex; align-items: center; justify-content: center; min-width: 24px; height: 24px; background: var(--md-sys-color-primary-container, #EADDFF); color: var(--md-sys-color-on-primary-container, #21005D); border-radius: 50%; font-size: 12px; font-weight: bold;">2</div>
-			<div style="font-size: 0.95em;">
-				Установите <strong>размеры</strong> выбранной геометрии.
-				<div style="margin-top: 4px; font-size: 0.85em; color: var(--md-sys-color-on-surface-variant, #49454F); font-style: italic; line-height: 1.2;">
-					*в зависимости от формы могут появиться дополнительные поля.
+		
+		<form slot="content" id="help-draw-form" method="dialog" style="display: flex; flex-direction: column; gap: 16px; line-height: 1.4;">
+			
+			<!-- Шаг 1 -->
+			<div style="display: flex; gap: 12px; align-items: flex-start;">
+				<div style="display: flex; align-items: center; justify-content: center; min-width: 24px; height: 24px; background: var(--md-sys-color-primary-container, #EADDFF); color: var(--md-sys-color-on-primary-container, #21005D); border-radius: 50%; font-size: 12px; font-weight: bold;">1</div>
+				<div style="font-size: 0.95em;">
+					Выберите <strong>геометрию контура</strong> подсветки в выпадающем меню.
 				</div>
 			</div>
-		</div>
 
-		<!-- Шаг 3 -->
-		<div style="display: flex; gap: 12px; align-items: flex-start;">
-			<div style="display: flex; align-items: center; justify-content: center; min-width: 24px; height: 24px; background: var(--md-sys-color-primary-container, #EADDFF); color: var(--md-sys-color-on-primary-container, #21005D); border-radius: 50%; font-size: 12px; font-weight: bold;">3</div>
-			<div style="font-size: 0.95em;">
-				Введите <strong>шаг резки ленты</strong>. Расчет количества пикселей выполнится автоматически.
+			<!-- Шаг 2 -->
+			<div style="display: flex; gap: 12px; align-items: flex-start;">
+				<div style="display: flex; align-items: center; justify-content: center; min-width: 24px; height: 24px; background: var(--md-sys-color-primary-container, #EADDFF); color: var(--md-sys-color-on-primary-container, #21005D); border-radius: 50%; font-size: 12px; font-weight: bold;">2</div>
+				<div style="font-size: 0.95em;">
+					Установите <strong>размеры</strong> выбранной геометрии.
+					<div style="margin-top: 4px; font-size: 0.85em; color: var(--md-sys-color-on-surface-variant, #49454F); font-style: italic; line-height: 1.2;">
+						*в зависимости от формы могут появиться дополнительные поля.
+					</div>
+				</div>
 			</div>
-		</div>
 
-		<!-- Шаг 4 -->
-		<div style="display: flex; gap: 12px; align-items: flex-start;">
-			<div style="display: flex; align-items: center; justify-content: center; min-width: 24px; height: 24px; background: var(--md-sys-color-primary-container, #EADDFF); color: var(--md-sys-color-on-primary-container, #21005D); border-radius: 50%; font-size: 12px; font-weight: bold;">4</div>
-			<div style="font-size: 0.95em;">
-				Если всё заполнено верно, нажмите кнопку <strong>«Сохранить»</strong> для отправки данных.
+			<!-- Шаг 3 -->
+			<div style="display: flex; gap: 12px; align-items: flex-start;">
+				<div style="display: flex; align-items: center; justify-content: center; min-width: 24px; height: 24px; background: var(--md-sys-color-primary-container, #EADDFF); color: var(--md-sys-color-on-primary-container, #21005D); border-radius: 50%; font-size: 12px; font-weight: bold;">3</div>
+				<div style="font-size: 0.95em;">
+					Введите <strong>шаг резки ленты</strong>. Расчет количества пикселей выполнится автоматически.
+				</div>
 			</div>
+
+			<!-- Шаг 4 -->
+			<div style="display: flex; gap: 12px; align-items: flex-start;">
+				<div style="display: flex; align-items: center; justify-content: center; min-width: 24px; height: 24px; background: var(--md-sys-color-primary-container, #EADDFF); color: var(--md-sys-color-on-primary-container, #21005D); border-radius: 50%; font-size: 12px; font-weight: bold;">4</div>
+				<div style="font-size: 0.95em;">
+					Если всё заполнено верно, нажмите кнопку <strong>«Сохранить»</strong> для отправки данных.
+				</div>
+			</div>
+
+			<!-- Тонкая разделительная линия -->
+			<hr style="border: 0; border-top: 1px solid var(--md-sys-color-outline-variant, #CAC4D0); margin: 4px 0;">
+
+			<!-- Важная инфо-плашка -->
+			<div style="display: flex; gap: 10px; padding: 10px 12px; background: rgba(255, 152, 0, 0.08); border-left: 4px solid #FF9800; border-radius: 4px; align-items: center;">
+				<md-icon style="color: #FF9800; font-size: 20px;">sync_problem</md-icon>
+				<span style="font-size: 0.9em; color: var(--md-sys-color-on-surface, #1D1B20); font-weight: 500;">
+					После сохранения контроллер перезагрузится автоматически!
+				</span>
+			</div>
+
+		</form>
+		
+		<div slot="actions">
+			<!-- Привязали кнопку закрытия к форме -->
+			<md-text-button form="help-draw-form" value="OK">OK</md-text-button>
 		</div>
-
-		<!-- Тонкая разделительная линия -->
-		<hr style="border: 0; border-top: 1px solid var(--md-sys-color-outline-variant, #CAC4D0); margin: 4px 0;">
-
-		<!-- Важная инфо-плашка -->
-		<div style="display: flex; gap: 10px; padding: 10px 12px; background: rgba(255, 152, 0, 0.08); border-left: 4px solid #FF9800; border-radius: 4px; align-items: center;">
-			<md-icon style="color: #FF9800; font-size: 20px;">sync_problem</md-icon>
-			<span style="font-size: 0.9em; color: var(--md-sys-color-on-surface, #1D1B20); font-weight: 500;">
-				После сохранения контроллер перезагрузится автоматически!
-			</span>
-		</div>
-
-	</form>
-	
-	<div slot="actions">
-		<!-- Привязали кнопку закрытия к форме -->
-		<md-text-button form="help-draw-form" value="OK">OK</md-text-button>
-	</div>
-</md-dialog>
+	</md-dialog>
 
 	<!-- Модалка выбора эскиза -->
 	<md-dialog id="draw-modal" type="chooser">

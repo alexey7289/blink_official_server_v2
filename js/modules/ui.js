@@ -27,7 +27,7 @@ export function updatePowerBtn() {
 // Навигация по табам
 export function initNavigation() {
 	// Активная страница при старте
-	document.querySelector('[data-page="settings"]').classList.add('page--active');
+	document.querySelector('[data-page="home"]').classList.add('page--active');
 
 	navItems.forEach(btn => {
 		btn.addEventListener('click', () => {

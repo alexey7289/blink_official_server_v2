@@ -14,7 +14,17 @@
         },
         {
             "id": "draw-03",
-            "label": "Кресты",
+            "label": "Крест",
+            "svg": "",
+            "extra-dims" : [
+               { "id": "a", "label": "Размер a", "suffix": "мм", "hint": "" },
+               { "id": "b", "label": "Размер b", "suffix": "мм", "hint": "" }
+
+            ]
+        },
+        {
+            "id": "draw-04",
+            "label": "Крест двойной",
             "svg": "",
             "extra-dims" : [
                { "id": "a", "label": "Размер a", "suffix": "мм", "hint": "" },
