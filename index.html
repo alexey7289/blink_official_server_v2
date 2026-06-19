@@ -19,10 +19,13 @@
 		android_wifi_3_bar_off,
 		animated_images,
 		architecture,
+		bedtime,
 		bolt,
+		clear_day,
 		close,
 		content_copy,
 		contrast,
+		dark_mode,
 		dashboard,
 		expand_more,
 		help,
@@ -31,6 +34,8 @@
 		lightbulb,
 		menu,
 		motion_blur,
+		movie,
+		nightlife,
 		palette,
 		preview,
 		settings,
@@ -39,7 +44,8 @@
 		sync_problem,
 		terminal_2,
 		tune,
-		upload" />
+		upload,
+		wb_sunny" />
 
 	<script type="importmap">
 		{
@@ -83,10 +89,16 @@
 				<div class="m3-logo-sub">by Krismas</div>
 			</div>
 		</div>
-		<div class="m3-bar-section m3-bar-section--right">
+		<!-- <div class="m3-bar-section m3-bar-section--right">
 			<md-icon-button toggle id="power-btn">
 			<md-icon>lightbulb</md-icon>
 			<md-icon slot="selected">light_off</md-icon>
+			</md-icon-button>
+		</div> -->
+		<div class="m3-bar-section m3-bar-section--right">
+			<md-icon-button toggle id="theme-toggle-btn">
+				<md-icon>dark_mode</md-icon>
+				<md-icon slot="selected">wb_sunny</md-icon>
 			</md-icon-button>
 		</div>
 	</header>
@@ -122,7 +134,7 @@
 					<div class="quick-setup-btn">
 						<md-ripple></md-ripple>
 						<md-filled-tonal-icon-button style="margin-left: auto; margin-bottom: auto;">
-							<md-icon>dashboard</md-icon>
+							<md-icon>bedtime</md-icon>
 						</md-filled-tonal-icon-button>
 						<span class="quick-setup-btn-title">Вечер</span>
 						<span class="quick-setup-btn-subtitle">Теплое статичное свечение</span>
@@ -130,22 +142,25 @@
 					<div class="quick-setup-btn">
 						<md-ripple></md-ripple>
 						<md-filled-tonal-icon-button style="margin-left: auto; margin-bottom: auto;">
-							<md-icon>dashboard</md-icon>
-						</md-filled-tonal-icon-button>						<span class="quick-setup-btn-title">Кино</span>
-						<span class="quick-setup-btn-subtitle">Приглушенный фоновый свет</span><!-- Приглушенный синий или фоновый свет -->
+							<md-icon>movie</md-icon>
+						</md-filled-tonal-icon-button>
+						<span class="quick-setup-btn-title">Кино</span>
+						<span class="quick-setup-btn-subtitle">Приглушенный синий фоновый свет</span><!-- Приглушенный синий или фоновый свет -->
 					</div>
 					<div class="quick-setup-btn">
 						<md-ripple></md-ripple>
 						<md-filled-tonal-icon-button style="margin-left: auto; margin-bottom: auto;">
-							<md-icon>dashboard</md-icon>
-						</md-filled-tonal-icon-button>						<span class="quick-setup-btn-title">Максимум</span>
+							<md-icon>clear_day</md-icon>
+						</md-filled-tonal-icon-button>
+						<span class="quick-setup-btn-title">Максимум</span>
 						<span class="quick-setup-btn-subtitle">100% яркость для уборки или чтения</span>
 					</div>
 					<div class="quick-setup-btn">
 						<md-ripple></md-ripple>
 						<md-filled-tonal-icon-button style="margin-left: auto; margin-bottom: auto;">
-							<md-icon>dashboard</md-icon>
-						</md-filled-tonal-icon-button>						<span class="quick-setup-btn-title">Динамика</span>
+							<md-icon>nightlife</md-icon>
+						</md-filled-tonal-icon-button>
+						<span class="quick-setup-btn-title">Динамика</span>
 						<span class="quick-setup-btn-subtitle">Запуск эффектной анимации</span>
 					</div>
 				</div>

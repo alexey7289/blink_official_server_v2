@@ -11,6 +11,9 @@ export const mainContent        = document.querySelector('main');
 export const navItems           = document.querySelectorAll('.m3-nav-item[data-tab]');
 export const pages              = document.querySelectorAll('[data-page]');
 
+// Темная тема
+export const themeToggleBtn = document.getElementById('theme-toggle-btn');
+
 // Анимация
 export const effectSelector     = document.getElementById('effect-selector');
 export const animSpeedContainer = document.getElementById('anim-speed-container');

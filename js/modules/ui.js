@@ -6,6 +6,8 @@
 import { powerBtn, mainContent, navItems, pages, channelsForm } from './state.js';
 // ИМПОРТИРУЕМ ФУНКЦИЮ ОТПРАВКИ ИЗ ЛОАДЕРА:
 import { saveChannelsQty } from './loader.js';
+// ИМПОРТ УПРАЛЕНИЯ ТЕМАМИ СТРАНИЦЫ
+import { themeToggleBtn } from './state.js';
 
 // Управление питанием
 export function updatePowerBtn() {
@@ -23,6 +25,32 @@ export function updatePowerBtn() {
 		console.log('[UI] -> Питание ВКЛ');
 	}
 }
+
+// Управление включения/выключения темной темы
+export function initTheme() {
+	// Восстанавливаем тему из localStorage
+	const savedTheme = localStorage.getItem('theme');
+	if (savedTheme === 'dark') {
+		document.documentElement.setAttribute('data-theme', 'dark');
+		if (themeToggleBtn) themeToggleBtn.selected = true;
+	}
+
+	if (themeToggleBtn) {
+		themeToggleBtn.addEventListener('click', () => {
+			const isDark = themeToggleBtn.selected;
+			if (isDark) {
+				document.documentElement.setAttribute('data-theme', 'dark');
+				localStorage.setItem('theme', 'dark');
+			} else {
+				document.documentElement.removeAttribute('data-theme');
+				localStorage.setItem('theme', 'light');
+			}
+		});
+	}
+}
+
+
+
 
 // Навигация по табам
 export function initNavigation() {

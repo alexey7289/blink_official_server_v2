@@ -24,14 +24,36 @@
 	--md-sys-color-surface-container-high: #e8e8e8;
 	--md-sys-color-primary-container: #e8e8e8;
 	--md-sys-color-on-primary-container: #1f1f1f;
-
 }
+/* Тёмная тема */
+[data-theme="dark"] {
+    --md-sys-color-background: #1a1a1a;
+    --md-sys-color-surface: #1a1a1a;
+    --md-sys-color-surface-container: #2a2a2a;
+    --md-sys-color-on-surface: #e8e8e8;
+    --md-sys-color-on-surface-variant: #b0b0b0;
+    --md-sys-color-outline-variant: #3a3a3a;
+    --md-sys-color-secondary-container: #3a3a3a;
+    --md-sys-color-on-secondary-container: #e8e8e8;
+    --md-sys-color-primary: #e8e8e8;
+
+    --md-list-container-color: #2a2a2a;
+
+    --md-sys-color-surface-container-low: #232323;
+    --md-sys-color-outline: #4a4a4a;
+    --md-sys-color-surface-container-high: #333333;
+    --md-sys-color-primary-container: #333333;
+    --md-sys-color-on-primary-container: #e8e8e8;
+}
+
+
 
 body {
 	margin: 0;
 	font-family: 'Roboto', sans-serif;
 	background-color: var(--md-sys-color-background);
 	color: var(--md-sys-color-on-surface);
+	transition: background-color 0.3s ease, color 0.3s ease;
 }
 
 .page-content {
@@ -71,7 +93,7 @@ body {
 	box-sizing: border-box;
 }
 .quick-setup-btn {
-	height: 120px;
+	height: 220px;
 	width: 100%;
 	--md-filled-tonal-button-container-shape: 12px; /* Крупное скругление углов */
 	padding: 0;  
@@ -85,7 +107,8 @@ body {
 	height: 100%;
 	box-sizing: border-box;
 
-	background-color: #8bee98;
+	border: 1px solid var(--md-sys-color-outline-variant);
+	/* background-color: #8bee98; */
 	border-radius: 12px;
 	cursor: pointer;
 }
