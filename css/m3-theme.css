@@ -1,30 +1,52 @@
 :root {
-	/* Идеально белый фон всей страницы */
-	--md-sys-color-background: #ffffff;
-	/* Цвет шапки (чистый белый, как в Gemini) */
-	--md-sys-color-surface: #ffffff;  
-	/* Мягкий светло-серый цвет для карточек-плашек */
-	--md-sys-color-surface-container: #f0f4f9;  
-	/* Цвет текста (глубокий темно-серый, почти черный) */
-	--md-sys-color-on-surface: #1f1f1f;
-	--md-sys-color-on-surface-variant: #4a4a4a;	
-	/* Цвет разделительной линии под шапкой (очень нежный серый) */
-	--md-sys-color-outline-variant: #e3e3e3;
-	/* Спокойный дымчато-серый контейнер для выделения активной вкладки */
-	--md-sys-color-secondary-container: #e1e3e5;
-	/* Активная иконка становится четкой, глубокой и графитовой */
+	/* === 1. ГРАФИТОВЫЕ АКЦЕНТЫ (Слайдеры, переключатели, активные кнопки) === */
+	--md-sys-color-primary: #1f1f1f; /* Глубокий антрацитовый/угольный цвет для ползунков и активных обводок */
+	--md-sys-color-on-primary: #ffffff; /* Цвет текста и иконок на элементах с цветом Primary (чистый белый) */
+	
+	/* Спокойный дымчато-серый контейнер для фонов активных кнопок и вкладок навигации */
+	--md-sys-color-primary-container: #e3e3e3; 
+	--md-sys-color-secondary-container: #e3e3e5;
+	
+	/* Текст и активные иконки внутри серых контейнеров (четкий графит) */
+	--md-sys-color-on-primary-container: #1f1f1f;
 	--md-sys-color-on-secondary-container: #1f1f1f;
-	/* Задаем строгий темно-серый цвет для всех Outlined элементов */
-	--md-sys-color-primary: #1f1f1f;
 
+	/* Вторичные и третичные акценты (в монохроме остаются строгими серыми) */
+	--md-sys-color-secondary: #4a4a4a;
+	--md-sys-color-on-secondary: #ffffff;
+	--md-sys-color-tertiary: #5f5f5f;
+	--md-sys-color-on-tertiary: #ffffff;
+
+	/* Цвет для ошибок (единственный цветной акцент, который по гайдлайнам оставляют для безопасности) */
+	--md-sys-color-error: #ba1a1a;
+
+	/* === 2. НЕЙТРАЛЬНЫЕ ФОНЫ И КАРТОЧКИ === */
+	/* Идеально белый фон всей страницы и шапки */
+	--md-sys-color-background: #ffffff;
+	--md-sys-color-surface: #ffffff;
+
+	/* Иерархия серых плашек (от легкого тумана к плотной тени) */
+	--md-sys-color-surface-container-low: #f5f5f5;   /* Легкий серый фон */
+	--md-sys-color-surface-container: #f0f4f9;       /* Ваш любимый базовый мягкий серый */
+	--md-sys-color-surface-container-high: #e8e8e8;  /* Плотный серый для выделения */
+	
+	/* Специфический цвет для списков Material Web */
 	--md-list-container-color: #f0f4f9;
 
-	--md-sys-color-surface-container-low: #f5f5f5;
+	/* === 3. ТЕКСТ, ГРАНИЦЫ И РАЗДЕЛИТЕЛИ === */
+	/* Глубокий черный графит для основного текста */
+	--md-sys-color-on-surface: #1f1f1f;
+	/* Сбалансированный серый для подписей и подсказок */
+	--md-sys-color-on-surface-variant: #5f5f5f;	
+	
+	/* Цвет рамок полей ввода (Outlined элементов) */
 	--md-sys-color-outline: #c4c4c4;
-	--md-sys-color-surface-container-high: #e8e8e8;
-	--md-sys-color-primary-container: #e8e8e8;
-	--md-sys-color-on-primary-container: #1f1f1f;
+	/* Тончайшая нежная линия разделителей */
+	--md-sys-color-outline-variant: #e3e3e3;
 }
+
+
+
 /* Тёмная тема */
 [data-theme="dark"] {
     --md-sys-color-background: #1a1a1a;
@@ -77,6 +99,10 @@ body {
 }
 
 
+
+
+
+
 /*---------------------------------------------------------------------------------------------*/
 /*--------------------------------- Кнопка ВКЛ/ВЫКЛ сервера -----------------------------------*/
 /*---------------------------------------------------------------------------------------------*/
@@ -85,8 +111,6 @@ body {
 	bottom: 90px;
 	right: 16px;
 	z-index: 1000;
-    /*border-radius: 50%;
-    box-shadow: 0 2px 8px rgba(0,0,0,0.15); */
 }
 
 
