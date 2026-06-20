@@ -14,13 +14,31 @@ export const pages              = document.querySelectorAll('[data-page]');
 // Темная тема
 export const themeToggleBtn = document.getElementById('theme-toggle-btn');
 
+// Переменные слайдеров потребляемой мощности
+export const homeBrightnessSlider = document.getElementById('home-brightness-slider');
+export const homePowerValue       = document.getElementById('home-power-value');
+export let currentDimsX  = 0;
+export let currentDimsY  = 0;
+export let currentStep   = 0;
+export let currentDrawId = 1;
+export let currentVoltage = 5;
+export function setCurrentDims(x, y, step, drawId, voltage) {
+    currentDimsX   = x;
+    currentDimsY   = y;
+    currentStep    = step;
+    currentDrawId  = drawId;
+    currentVoltage = voltage;
+}
+
 // Анимация
 export const effectSelector     = document.getElementById('effect-selector');
 export const animSpeedContainer = document.getElementById('anim-speed-container');
 export const softstartContainer = document.getElementById('softstart-container');
 
 // Статус и настройки
-export const wifiBtn            = document.getElementById('wifi-status');
+export const wifiIcon           = document.getElementById('wifi-status-icon');
+export const wifiTitle          = document.getElementById('wifi-status-title');
+export const wifiIp             = document.getElementById('wifi-controller-ip');
 export const powerToggle        = document.getElementById('power-toggle');
 export const powerToggleText    = document.getElementById('power-toggle-text');
 export const rgbSelector        = document.getElementById('rgb-selector');
@@ -55,6 +73,8 @@ export let selectedDrawId   = 'draw-01';
 export let isSaved          = false;
 export let channelsQty      = 2;
 export let isPowerOn        = true;
+
+
 
 // Сеттеры для изменяемого состояния
 export function setEffectsMap(val)    { effectsMap    = val; }

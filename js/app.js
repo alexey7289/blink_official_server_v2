@@ -8,6 +8,7 @@
      effects.js — эффекты анимации, слайдеры
      draw.js    — эскизы, модальное окно
      loader.js  — загрузка JSON конфигов
+	 power.js   — расчёт энергопотребления ленты
    ================================================================ */
 
 import {
@@ -24,6 +25,9 @@ import { updatePowerBtn, initNavigation, initChannelsEvents, initTheme, initPowe
 import { validateDimensionsAndCheckButton, resetSaveBtn, renderExtraDims } from './modules/dims.js';
 import { updateSliderVisibility, sendEffect }          from './modules/effects.js';
 import { loadAllConfigs }                              from './modules/loader.js';
+import { initBrightnessSync } from './modules/power.js';
+
+
 
 document.addEventListener('DOMContentLoaded', () => {
 	console.log('Страница загружена. Инициализация модулей.');
@@ -33,6 +37,12 @@ document.addEventListener('DOMContentLoaded', () => {
 	initTheme();
 	initChannelsEvents();
 	initPowerBtn();
+
+
+	// Расчет мощности ленты
+	initBrightnessSync();
+
+
 
 	// Загружаем все конфиги
 	loadAllConfigs(drawPickerLabel);

@@ -1,9 +1,9 @@
 // ================================================================
-// loader.js — Загрузка конфигов и初始化 данных
+// loader.js — Загрузка конфигов и данных
 // ================================================================
 
 import {
-	versionSpan, powerBtn, wifiBtn,
+	versionSpan, powerBtn, wifiIcon, wifiTitle, wifiIp,
 	powerToggle, powerToggleText, rgbSelector,
 	lengthInput, widthInput, stepInput,
 	m3Sliders, getUnit, loader,
@@ -18,6 +18,13 @@ import { validateDimensionsAndCheckButton } from './dims.js';
 import { renderDrawList, sendDraw, initPickDraw } from './draw.js';
 import { updateEffectsList }  from './effects.js';
 
+// Слайдер расчета мощности ленты
+import { setCurrentDims, homeBrightnessSlider } from './state.js';
+import { updateHomePowerDisplay } from './power.js';
+
+
+
+
 export function loadAllConfigs(drawPickerLabel) {
 	Promise.all([
 		fetch('./config/settings.json').then(r => { if (!r.ok) throw new Error('settings.json не найден'); return r.json(); }),
@@ -31,6 +38,24 @@ export function loadAllConfigs(drawPickerLabel) {
 		setDrawsMap(drawsMap);
 		setEffectsMap(effectsMap);
 
+
+
+		// Расчет мощности ленты
+		setCurrentDims(
+			settings['dims-x'] || 0,
+			settings['dims-y'] || 0,
+			settings['step']   || 1,
+			settings['draw_id'] || 1,
+			settings['voltage'] || 5
+		);
+
+		if (homeBrightnessSlider && settings['max-brightness'] != null) {
+			homeBrightnessSlider.value = settings['max-brightness'];
+		}
+		updateHomePowerDisplay();
+
+
+
 		// Питание
 		if (settings['isPower'] !== undefined) {
 			setIsPowerOn(settings['isPower']);
@@ -42,15 +67,30 @@ export function loadAllConfigs(drawPickerLabel) {
 			versionSpan.textContent = v;
 		}
 		// Wi-Fi статус
-		if (wifiBtn && settings['isOnline'] !== undefined) {
+		if (wifiIcon && settings['isOnline'] !== undefined) {
 			if (settings['isOnline']) {
-				wifiBtn.innerHTML = '<md-icon slot="icon">android_wifi_3_bar</md-icon>Подключено';
-				wifiBtn.classList.remove('m3-wifi-status--disconnected');
+				wifiIcon.innerHTML = 'android_wifi_3_bar';
+				if (wifiTitle) {
+					wifiTitle.textContent = 'Контроллер "В сети"';
+				}
+				//wifiIcon.classList.remove('m3-wifi-status--disconnected');
 			} else {
-				wifiBtn.innerHTML = '<md-icon slot="icon">android_wifi_3_bar_off</md-icon>Отключено';
-				wifiBtn.classList.add('m3-wifi-status--disconnected');
+				wifiIcon.innerHTML = 'android_wifi_3_bar_off';
+				if (wifiTitle) {
+					wifiTitle.textContent = 'Контроллер "Не в сети"';
+				}
+				//wifiIcon.classList.add('m3-wifi-status--disconnected');
 			}
 		}
+		// IP контроллера
+		if (wifiIp && settings['controllerIp'] !== undefined) {
+			if (settings['isOnline']) {
+				wifiIp.textContent = `IP контроллера: ${settings['controllerIp']}`;
+			} else {
+				wifiIp.textContent = 'IP контроллера: ---';
+			}
+		}
+
 		// Поля размеров
 		if (lengthInput && settings['dims-x'] != null) lengthInput.value = settings['dims-x'];
 		if (widthInput  && settings['dims-y'] != null) widthInput.value  = settings['dims-y'];
