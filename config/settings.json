@@ -1,7 +1,9 @@
 {
-    "power": true,
-    "version": "2.3.15",
-    "is_online": true,
+    "version": "2.3.16",
+
+    "isDark": true,
+    "isPower": false,
+    "isOnline": false,
 
     "voltage": 5,
     "color_type": "GRB",
@@ -16,8 +18,8 @@
     "softstart-speed": 500,
     "max-brightness": 75,
         
-    "draw_id": 3,
-    "effect_id": 2,
+    "draw_id": 1,
+    "effect_id": 1,
 
     "channels_qty": 1
 }

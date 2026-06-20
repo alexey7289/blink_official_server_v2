@@ -54,6 +54,7 @@ export let drawsMap         = [];
 export let selectedDrawId   = 'draw-01';
 export let isSaved          = false;
 export let channelsQty      = 2;
+export let isPowerOn        = true;
 
 // Сеттеры для изменяемого состояния
 export function setEffectsMap(val)    { effectsMap    = val; }
@@ -61,5 +62,5 @@ export function setDrawsMap(val)      { drawsMap      = val; }
 export function setSelectedDrawId(val){ selectedDrawId = val; }
 export function setIsSaved(val)       { isSaved       = val; }
 export function setChannelsQty(val)   { channelsQty   = val; }
-
+export function setIsPowerOn(val)     { isPowerOn = val; }
 

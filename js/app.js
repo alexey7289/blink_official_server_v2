@@ -20,7 +20,7 @@ import {
 	isSaved, setIsSaved
 } from './modules/state.js';
 
-import { updatePowerBtn, initNavigation, initChannelsEvents, initTheme }             from './modules/ui.js';
+import { updatePowerBtn, initNavigation, initChannelsEvents, initTheme, initPowerBtn }             from './modules/ui.js';
 import { validateDimensionsAndCheckButton, resetSaveBtn, renderExtraDims } from './modules/dims.js';
 import { updateSliderVisibility, sendEffect }          from './modules/effects.js';
 import { loadAllConfigs }                              from './modules/loader.js';
@@ -32,6 +32,7 @@ document.addEventListener('DOMContentLoaded', () => {
 	initNavigation();
 	initTheme();
 	initChannelsEvents();
+	initPowerBtn();
 
 	// Загружаем все конфиги
 	loadAllConfigs(drawPickerLabel);

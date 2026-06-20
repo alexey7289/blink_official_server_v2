@@ -3,7 +3,7 @@
 // ================================================================
 
 // ИМПОРТИРУЕМ ФОРМУ РАДИО-КНОПОК ИЗ СТЕЙТА:
-import { powerBtn, mainContent, navItems, pages, channelsForm } from './state.js';
+import { powerBtn, mainContent, navItems, pages, channelsForm, isPowerOn, setIsPowerOn } from './state.js';
 // ИМПОРТИРУЕМ ФУНКЦИЮ ОТПРАВКИ ИЗ ЛОАДЕРА:
 import { saveChannelsQty } from './loader.js';
 // ИМПОРТ УПРАЛЕНИЯ ТЕМАМИ СТРАНИЦЫ
@@ -12,18 +12,40 @@ import { themeToggleBtn } from './state.js';
 // Управление питанием
 export function updatePowerBtn() {
 	if (!powerBtn || !mainContent) return;
-	const isPowerOff = powerBtn.selected;
-	if (isPowerOff) {
+	const navBar = document.querySelector('.m3-nav-bar');
+
+	if (!isPowerOn) {
+		// Питание ВЫКЛ
 		mainContent.style.opacity       = '0.15';
 		mainContent.style.pointerEvents = 'none';
 		mainContent.style.userSelect    = 'none';
+		if (navBar) {
+			navBar.style.opacity       = '0.15';
+			navBar.style.pointerEvents = 'none';
+		}
+		powerBtn.innerHTML = `<md-icon slot="icon">light_off</md-icon>`;
 		console.log('[UI] -> Питание ВЫКЛ');
 	} else {
+		// Питание ВКЛ
 		mainContent.style.opacity       = '1';
 		mainContent.style.pointerEvents = 'auto';
 		mainContent.style.userSelect    = 'auto';
+		if (navBar) {
+			navBar.style.opacity       = '1';
+			navBar.style.pointerEvents = 'auto';
+		}
+		powerBtn.innerHTML = `<md-icon slot="icon">lightbulb</md-icon>`;
 		console.log('[UI] -> Питание ВКЛ');
 	}
+}
+
+// Переключение питания по клику на FAB
+export function initPowerBtn() {
+	if (!powerBtn) return;
+	powerBtn.addEventListener('click', () => {
+		setIsPowerOn(!isPowerOn);
+		updatePowerBtn();
+	});
 }
 
 // Управление включения/выключения темной темы

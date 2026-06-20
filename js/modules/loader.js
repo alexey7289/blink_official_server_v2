@@ -9,7 +9,9 @@ import {
 	m3Sliders, getUnit, loader,
 	setDrawsMap, setEffectsMap, setSelectedDrawId,
 	// ИМПОРТИРУЕМ НАШИ НОВЫЕ ПЕРЕМЕННЫЕ И СЕТТЕР:
-	setChannelsQty, channelsRadios 
+	setChannelsQty, channelsRadios,
+	// Управление кнопкой питания
+	setIsPowerOn
 } from './state.js';
 import { updatePowerBtn }     from './ui.js';
 import { validateDimensionsAndCheckButton } from './dims.js';
@@ -30,8 +32,8 @@ export function loadAllConfigs(drawPickerLabel) {
 		setEffectsMap(effectsMap);
 
 		// Питание
-		if (powerBtn && settings['power'] !== undefined) {
-			powerBtn.selected = !settings['power'];
+		if (settings['isPower'] !== undefined) {
+			setIsPowerOn(settings['isPower']);
 			updatePowerBtn();
 		}
 		// Версия
@@ -40,8 +42,8 @@ export function loadAllConfigs(drawPickerLabel) {
 			versionSpan.textContent = v;
 		}
 		// Wi-Fi статус
-		if (wifiBtn && settings['is_online'] !== undefined) {
-			if (settings['is_online']) {
+		if (wifiBtn && settings['isOnline'] !== undefined) {
+			if (settings['isOnline']) {
 				wifiBtn.innerHTML = '<md-icon slot="icon">android_wifi_3_bar</md-icon>Подключено';
 				wifiBtn.classList.remove('m3-wifi-status--disconnected');
 			} else {

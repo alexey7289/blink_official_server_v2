@@ -89,12 +89,6 @@
 				<div class="m3-logo-sub">by Krismas</div>
 			</div>
 		</div>
-		<!-- <div class="m3-bar-section m3-bar-section--right">
-			<md-icon-button toggle id="power-btn">
-			<md-icon>lightbulb</md-icon>
-			<md-icon slot="selected">light_off</md-icon>
-			</md-icon-button>
-		</div> -->
 		<div class="m3-bar-section m3-bar-section--right">
 			<md-icon-button toggle id="theme-toggle-btn">
 				<md-icon>dark_mode</md-icon>
@@ -555,6 +549,13 @@
 			<span class="m3-label">Консоль</span>
 		</button>
 	</nav>
+
+	<div class="m3-floating-power-btn">
+		<md-fab lowered id="power-btn" aria-label="Power">
+			<!-- <md-icon>lightbulb</md-icon> -->
+			<md-icon slot="icon">lightbulb</md-icon>
+		</md-fab>
+	</div>
 	
 	<!-- Модалка-подсказка по количеству используемых каналов -->
 	<md-dialog id="help-channels-qty-modal" type="alert">
