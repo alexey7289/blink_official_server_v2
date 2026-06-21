@@ -552,6 +552,9 @@
 		
 		<div data-page="console">
 			<h2>Здесь пока ничего нет</h2>
+			<div class="m3-card-container">
+
+			</div>
 		</div>
 
 	</main>
@@ -570,6 +573,11 @@
 			</div>
 			<span class="m3-label">Настройки</span>
 		</button>
+		<!-- <button class="m3-nav-item-power">
+			<div class="m3-icon-wrapper-power">
+				<span class="material-symbols-outlined">lightbulb</span>
+			</div> -->
+		</button>
 		<button class="m3-nav-item" data-tab="settings">
 			<div class="m3-icon-wrapper">
 				<span class="material-symbols-outlined">settings</span>
@@ -584,13 +592,17 @@
 		</button>
 	</nav>
 
+	<!-- Power OFF button -->
 	<div class="m3-floating-power-btn">
-		<md-fab variant="secondary" lowered id="power-btn" aria-label="Power">
+		<md-fab lowered id="power-btn" aria-label="Power" >
 			<!-- <md-icon>lightbulb</md-icon> -->
 			<md-icon slot="icon">lightbulb</md-icon>
 		</md-fab>
 	</div>
 	
+
+
+
 	<!-- Модалка-подсказка по количеству используемых каналов -->
 	<md-dialog id="help-channels-qty-modal" type="alert">
 		<div slot="headline">Количество каналов</div>
@@ -680,6 +692,37 @@
 		</div>
 	</md-dialog>
 
+	<!-- Модалка login/pass -->
+	<md-dialog class="contacts" ?quick=${quick} ?no-focus-trap=${noFocusTrap}>
+		<span slot="headline">
+			<md-icon-button form="form" value="close" aria-label="Close dialog">
+				<md-icon>close</md-icon>
+			</md-icon-button>
+			<span class="headline">Create new contact</span>
+		</span>
+			<form id="form" slot="content" method="dialog" class="contact-content">
+			<div class="contact-row">
+				<md-filled-text-field
+				autofocus
+				label="First Name"></md-filled-text-field>
+				<md-filled-text-field label="Last Name"></md-filled-text-field>
+			</div>
+			<div class="contact-row">
+				<md-filled-text-field label="Company"></md-filled-text-field>
+				<md-filled-text-field label="Job Title"></md-filled-text-field>
+			</div>
+			<md-filled-text-field label="Email"></md-filled-text-field>
+			<md-filled-text-field label="Phone"></md-filled-text-field>
+			</form>
+			<div slot="actions">
+			<md-text-button form="form" value="reset" type="reset"
+				>Reset</md-text-button
+			>
+			<div style="flex: 1"></div>
+			<md-text-button form="form" value="cancel">Cancel</md-text-button>
+			<md-text-button form="form" value="save">Save</md-text-button>
+			</div>
+		</md-dialog>
 	<!-- Модалка выбора эскиза -->
 	<md-dialog id="draw-modal" type="chooser">
 		<div slot="headline">Выберите контур</div>
@@ -692,6 +735,9 @@
 			<md-text-button form="draw-form" value="cancel">Закрыть</md-text-button>
 		</div>
 	</md-dialog>
+
+
+
 
 	<!-- Скрипт -->
 	<script type="module" src="./js/app.js"></script>
