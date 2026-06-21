@@ -27,6 +27,7 @@
 		contrast,
 		dark_mode,
 		dashboard,
+		engineering,
 		expand_more,
 		help,
 		home,
@@ -101,7 +102,6 @@
 	<main class="page-content">
 
 		<div data-page="home">
-			
 			<!-- Блок статуса Wi-fi -->
 			<div class="m3-card-container">
 				<div class="m3-card-row">
@@ -116,6 +116,30 @@
 					</div>
 				</div>
 			</div>
+
+			<!-- Блок потребляемой мощности -->
+			<div class="m3-card-container">
+				<!-- <div class="slider-header">
+					<h2 class="slider-title">Потребляемая мощность</h2>
+				</div> -->
+				<div class="slider-main">
+					<div class="slider-speed-icon">
+						<md-filled-tonal-icon-button>
+							<md-icon>bolt</md-icon>
+						</md-filled-tonal-icon-button>
+					</div>
+					<div class="slider-data">
+						<div class="slider-row">
+							<div class="slider-subtitle">Текущая нагрузка</div>
+							<div class="slider-value" id="home-power-value">0.0 А</div>
+						</div>
+						<div class="slider-row">
+							<md-slider id="home-brightness-slider" min="0" max="100" value="10" step="5"></md-slider>
+						</div>
+					</div>
+				</div>
+			</div>
+
 
 			<!-- Блок быстрых режимов -->
 			<div class="m3-card-container">
@@ -169,30 +193,6 @@
 					</div>
 				</div>
 			</div>
-
-			<!-- Блок потребляемой мощности -->
-			<div class="m3-card-container">
-				<!-- <div class="slider-header">
-					<h2 class="slider-title">Потребляемая мощность</h2>
-				</div> -->
-				<div class="slider-main">
-					<div class="slider-speed-icon">
-						<md-filled-tonal-icon-button>
-							<md-icon>bolt</md-icon>
-						</md-filled-tonal-icon-button>
-					</div>
-					<div class="slider-data">
-						<div class="slider-row">
-							<div class="slider-subtitle">Текущая нагрузка</div>
-							<div class="slider-value" id="home-power-value">0.0 А</div>
-						</div>
-						<div class="slider-row">
-							<md-slider id="home-brightness-slider" min="0" max="100" value="10" step="5"></md-slider>
-						</div>
-					</div>
-				</div>
-			</div>
-
 		</div>
 
 		<div data-page="tune">
@@ -551,9 +551,22 @@
 		</div>
 		
 		<div data-page="console">
-			<h2>Здесь пока ничего нет</h2>
+			<!-- <h2>Здесь пока ничего нет</h2> -->
 			<div class="m3-card-container">
-
+				<div class="m3-card-row">
+					<!-- Иконка-->
+					<md-filled-tonal-icon-button>
+						<md-icon>engineering</md-icon>
+					</md-filled-tonal-icon-button>
+					<!-- Текст и подтекст -->
+					<div class="m3-card-text-block">
+						<div class="m3-card-text-block-title">Консоль</div>
+						<div class="m3-card-text-block-subtitle">Панель отладки</div>
+					</div>
+					<md-icon-button onclick="document.getElementById('console-modal').show()">
+						<md-icon>expand_more</md-icon>
+					</md-icon-button>
+				</div>
 			</div>
 		</div>
 
@@ -693,36 +706,25 @@
 	</md-dialog>
 
 	<!-- Модалка login/pass -->
-	<md-dialog class="contacts" ?quick=${quick} ?no-focus-trap=${noFocusTrap}>
+	<md-dialog id="console-modal" class="contacts" quick>
 		<span slot="headline">
-			<md-icon-button form="form" value="close" aria-label="Close dialog">
-				<md-icon>close</md-icon>
-			</md-icon-button>
-			<span class="headline">Create new contact</span>
+			<span>Авторизоваться</span>
 		</span>
 			<form id="form" slot="content" method="dialog" class="contact-content">
-			<div class="contact-row">
-				<md-filled-text-field
-				autofocus
-				label="First Name"></md-filled-text-field>
-				<md-filled-text-field label="Last Name"></md-filled-text-field>
-			</div>
-			<div class="contact-row">
-				<md-filled-text-field label="Company"></md-filled-text-field>
-				<md-filled-text-field label="Job Title"></md-filled-text-field>
-			</div>
-			<md-filled-text-field label="Email"></md-filled-text-field>
-			<md-filled-text-field label="Phone"></md-filled-text-field>
+				<div class="contact-row">
+					<md-outlined-text-field autofocus label="Логин"></md-outlined-text-field>
+				</div>
+				<div class="contact-row" style="padding-top: 24px;">
+					<md-outlined-text-field label="Пароль"></md-outlined-text-field>
+				</div>
 			</form>
 			<div slot="actions">
-			<md-text-button form="form" value="reset" type="reset"
-				>Reset</md-text-button
-			>
-			<div style="flex: 1"></div>
-			<md-text-button form="form" value="cancel">Cancel</md-text-button>
-			<md-text-button form="form" value="save">Save</md-text-button>
+				<div style="flex: 1"></div>
+				<md-text-button form="form" value="save">Отмена</md-text-button>
+				<md-text-button form="form" value="close">Войти</md-text-button>
 			</div>
-		</md-dialog>
+	</md-dialog>
+
 	<!-- Модалка выбора эскиза -->
 	<md-dialog id="draw-modal" type="chooser">
 		<div slot="headline">Выберите контур</div>
