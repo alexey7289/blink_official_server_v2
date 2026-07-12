@@ -1,0 +1,67 @@
+{
+	"draws": [
+		{
+			"id": "draw-01",
+			"label": "Прямоугольник",
+			"svg": "<rect x='10' y='10' width='170' height='90' fill='none' stroke='currentColor' stroke-width='3'/><line x1='10' y1='105' x2='10' y2='115' fill='none' stroke='currentColor' stroke-width='0.5'/><line x1='10' y1='110' x2='80' y2='110' fill='none' stroke='currentColor' stroke-width='0.5'/><line x1='180' y1='105' x2='180' y2='115' fill='none' stroke='currentColor' stroke-width='0.5'/><line x1='180' y1='110' x2='110' y2='110' fill='none' stroke='currentColor' stroke-width='0.5'/><text x='95' y='110' text-anchor='middle' dominant-baseline='middle' font-size='10' fill='currentColor'>X</text><line x1='185' y1='100' x2='195' y2='100' fill='none' stroke='currentColor' stroke-width='0.5'/><line x1='185' y1='10' x2='195' y2='10' fill='none' stroke='currentColor' stroke-width='0.5'/><line x1='190' y1='100' x2='190' y2='70' fill='none' stroke='currentColor' stroke-width='0.5'/><line x1='190' y1='10' x2='190' y2='40' fill='none' stroke='currentColor' stroke-width='0.5'/><text x='190' y='55' text-anchor='middle' dominant-baseline='middle' font-size='10' transform='rotate(270, 190, 55)' fill='currentColor'>Y</text>",
+			"perspective": "./components/anim/anim1.svg",
+			"extra-dims": [],
+			"effects": [
+				{ "id": "anim-01", "label": "Быстрое включение" },
+				{ "id": "anim-02", "label": "Плавное включение" },
+				{ "id": "anim-03", "label": "Бегущий огонь" },
+				{ "id": "anim-04", "label": "Бегущий огонь с хвостом" },
+				{ "id": "anim-05", "label": "Встречный бегущий огонь" },
+				{ "id": "anim-06", "label": "Волна яркости" }
+			]
+		},
+		{
+			"id": "draw-02",
+			"label": "Угол",
+			"svg": "<polyline points='52.5,100 180,100 180,55' fill='none' stroke='currentColor' stroke-width='3'/><line x1='52.5' y1='105' x2='52.5' y2='115' fill='none' stroke='currentColor' stroke-width='0.5'/><line x1='52.5' y1='110' x2='100' y2='110' fill='none' stroke='currentColor' stroke-width='0.5'/><line x1='180' y1='105' x2='180' y2='115' fill='none' stroke='currentColor' stroke-width='0.5'/><line x1='180' y1='110' x2='130' y2='110' fill='none' stroke='currentColor' stroke-width='0.5'/><text x='115' y='110' text-anchor='middle' dominant-baseline='middle' font-size='10' fill='currentColor'>X</text><line x1='185' y1='100' x2='195' y2='100' fill='none' stroke='currentColor' stroke-width='0.5'/><line x1='185' y1='55' x2='195' y2='55' fill='none' stroke='currentColor' stroke-width='0.5'/><line x1='190' y1='100' x2='190' y2='90' fill='none' stroke='currentColor' stroke-width='0.5'/><line x1='190' y1='55' x2='190' y2='67' fill='none' stroke='currentColor' stroke-width='0.5'/><text x='167' y='55' text-anchor='middle' dominant-baseline='middle' font-size='10' transform='rotate(270, 190, 55)' fill='currentColor'>Y</text>",
+			"perspective": "./components/anim/anim2.svg",
+			"extra-dims": [],
+			"effects": [
+				{ "id": "anim-01", "label": "Быстрое включение" },
+				{ "id": "anim-02", "label": "Плавное включение" },
+				{ "id": "anim-03", "label": "Бегущий огонь" },
+				{ "id": "anim-04", "label": "Бегущий огонь с хвостом" },
+				{ "id": "anim-05", "label": "Встречный бегущий огонь" }
+			]
+		},
+		{
+			"id": "draw-03",
+			"label": "Крест",
+			"svg": "<line x1='52.5' y1='75' x2='170' y2='75' stroke='currentColor' stroke-width='3'/><line x1='155' y1='45' x2='155' y2='90' stroke='currentColor' stroke-width='3'/><line x1='52.5' y1='90' x2='52.5' y2='100' stroke='currentColor' stroke-width='0.5'/><line x1='52.5' y1='105' x2='52.5' y2='115' stroke='currentColor' stroke-width='0.5'/><line x1='52.5' y1='110' x2='99' y2='110' stroke='currentColor' stroke-width='0.5'/><line x1='122' y1='110' x2='170' y2='110' stroke='currentColor' stroke-width='0.5'/><line x1='155' y1='93' x2='155' y2='100' stroke='currentColor' stroke-width='0.5'/><line x1='170' y1='105' x2='170' y2='115' stroke='currentColor' stroke-width='0.5'/><line x1='52.5' y1='95' x2='95' y2='95' stroke='currentColor' stroke-width='0.5'/><line x1='113' y1='95' x2='155' y2='95' stroke='currentColor' stroke-width='0.5'/><line x1='170' y1='45' x2='180' y2='45' stroke='currentColor' stroke-width='0.5'/><line x1='185' y1='45' x2='195' y2='45' stroke='currentColor' stroke-width='0.5'/><line x1='173' y1='75' x2='180' y2='75' stroke='currentColor' stroke-width='0.5'/><line x1='185' y1='90' x2='195' y2='90' stroke='currentColor' stroke-width='0.5'/><line x1='175' y1='45' x2='175' y2='53' stroke='currentColor' stroke-width='0.5'/><line x1='175' y1='67' x2='175' y2='75' stroke='currentColor' stroke-width='0.5'/><line x1='190' y1='45' x2='190' y2='56' stroke='currentColor' stroke-width='0.5'/><line x1='190' y1='80' x2='190' y2='90' stroke='currentColor' stroke-width='0.5'/><text x='104' y='95' text-anchor='middle' dominant-baseline='middle' font-size='10' fill='currentColor'>a</text><text x='110' y='110' text-anchor='middle' dominant-baseline='middle' font-size='10' fill='currentColor'>X</text><text x='190' y='67.5' text-anchor='middle' dominant-baseline='middle' font-size='10' transform='rotate(270 190 67.5)' fill='currentColor'>Y</text><text x='175' y='60' text-anchor='middle' dominant-baseline='middle' font-size='10' transform='rotate(270 175 60)' fill='currentColor'>b</text>",
+			"perspective": "./components/anim/anim3.svg",
+			"extra-dims": [
+			   { "id": "a", "label": "Размер, a", "suffix": "мм", "hint": "" },
+			   { "id": "b", "label": "Размер, b", "suffix": "мм", "hint": "" }
+			],
+			"effects": [
+				{ "id": "anim-01", "label": "Быстрое включение" },
+				{ "id": "anim-02", "label": "Плавное включение" },
+				{ "id": "anim-03", "label": "Бегущий огонь" },
+				{ "id": "anim-04", "label": "Бегущий огонь с хвостом" },
+				{ "id": "anim-05", "label": "Встречный бегущий огонь" }
+			]
+		},
+		{
+			"id": "draw-04",
+			"label": "Квадрат в квадрате",
+			"svg": "<polyline points='101.5,45 90,45 90,95 175,95 175,45 117,45' stroke='currentColor' stroke-width='3'/><polyline points='95.5,70 109.5,70 109.5,16.5 24.5,16.5 24.5,70 84.5,70' opacity='0.1' stroke='currentColor' stroke-width='3'/><line x1='90' y1='105' x2='90' y2='115' stroke='currentColor' stroke-width='0.5'/><line x1='90' y1='110' x2='121.5' y2='110' stroke='currentColor' stroke-width='0.5'/><line x1='175' y1='105' x2='175' y2='115' stroke='currentColor' stroke-width='0.5'/><line x1='175' y1='110' x2='143' y2='110' stroke='currentColor' stroke-width='0.5'/><line x1='185' y1='95' x2='195' y2='95' stroke='currentColor' stroke-width='0.5'/><line x1='190' y1='95' x2='190' y2='80' stroke='currentColor' stroke-width='0.5'/><line x1='190' y1='61' x2='190' y2='45' stroke='currentColor' stroke-width='0.5'/><line x1='185' y1='45' x2='195' y2='45' stroke='currentColor' stroke-width='0.5'/><line x1='175' y1='40' x2='175' y2='30' stroke='currentColor' stroke-width='0.5'/><line x1='175' y1='35' x2='154' y2='35' stroke='currentColor' stroke-width='0.5'/><line x1='137' y1='35' x2='117' y2='35' stroke='currentColor' stroke-width='0.5'/><line x1='117' y1='40' x2='117' y2='30' stroke='currentColor' stroke-width='0.5'/><line x1='101.5' y1='30' x2='101.5' y2='40' stroke='currentColor' stroke-width='0.5'/><line x1='90' y1='40' x2='90' y2='30' stroke='currentColor' stroke-width='0.5'/><line x1='101.5' y1='35' x2='74.5' y2='35' stroke='currentColor' stroke-width='0.5'/><text x='132.5' y='110' text-anchor='middle' dominant-baseline='middle' font-size='10' fill='currentColor'>X</text><text x='145.5' y='34.5' text-anchor='middle' dominant-baseline='middle' font-size='10' fill='currentColor'>a</text><text x='82' y='29' text-anchor='middle' dominant-baseline='middle' font-size='10' fill='currentColor'>b</text><text x='190' y='70' text-anchor='middle' dominant-baseline='middle' font-size='10' transform='rotate(270 190 70)' fill='currentColor'>Y</text>",
+			"perspective": "./components/anim/anim4.svg",
+			"extra-dims": [
+			   { "id": "a", "label": "Размер, a", "suffix": "мм", "hint": "" },
+			   { "id": "b", "label": "Размер, b", "suffix": "мм", "hint": "" }
+			],
+			"effects": [
+				{ "id": "anim-01", "label": "Быстрое включение" },
+				{ "id": "anim-02", "label": "Плавное включение" },
+				{ "id": "anim-03", "label": "Бегущий огонь" },
+				{ "id": "anim-04", "label": "Бегущий огонь с хвостом" },
+				{ "id": "anim-05", "label": "Встречный бегущий огонь" }
+			]
+		}
+	]
+}

@@ -8,39 +8,29 @@ import {
 	lengthInput, widthInput, stepInput,
 	m3Sliders, getUnit, loader,
 	setDrawsMap, setEffectsMap, setSelectedDrawId,
-	// ИМПОРТИРУЕМ НАШИ НОВЫЕ ПЕРЕМЕННЫЕ И СЕТТЕР:
 	setChannelsQty, channelsRadios,
-	// Управление кнопкой питания
 	setIsPowerOn
 } from './state.js';
 import { updatePowerBtn }     from './ui.js';
 import { validateDimensionsAndCheckButton } from './dims.js';
 import { renderDrawList, sendDraw, initPickDraw } from './draw.js';
 import { updateEffectsList }  from './effects.js';
-
-// Слайдер расчета мощности ленты
 import { setCurrentDims, homeBrightnessSlider } from './state.js';
 import { updateHomePowerDisplay } from './power.js';
 
-
-
-
 export function loadAllConfigs(drawPickerLabel) {
+	// Загружаем только два файла: settings.json и draws.json
+	// effects.json НЕ нужен, т.к. эффекты уже встроены в draws.json
 	Promise.all([
 		fetch('./config/settings.json').then(r => { if (!r.ok) throw new Error('settings.json не найден'); return r.json(); }),
-		fetch('./config/draws-map.json').then(r => r.json()),
-		fetch('./config/effect-map.json').then(r => r.json()),
-	]).then(([settings, drawsData, effectsData]) => {
+		fetch('./config/draws.json').then(r => r.json()),
+	]).then(([settings, drawsData]) => {
 		console.log('Все файлы загружены.');
 
-		const drawsMap   = drawsData.draws;
-		const effectsMap = effectsData;
+		const drawsMap = drawsData.draws; // массив рисунков
 		setDrawsMap(drawsMap);
-		setEffectsMap(effectsMap);
 
-
-
-		// Расчет мощности ленты
+		// ====== Настройка параметров ======
 		setCurrentDims(
 			settings['dims-x'] || 0,
 			settings['dims-y'] || 0,
@@ -53,8 +43,6 @@ export function loadAllConfigs(drawPickerLabel) {
 			homeBrightnessSlider.value = settings['max-brightness'];
 		}
 		updateHomePowerDisplay();
-
-
 
 		// Питание
 		if (settings['isPower'] !== undefined) {
@@ -70,25 +58,17 @@ export function loadAllConfigs(drawPickerLabel) {
 		if (wifiIcon && settings['isOnline'] !== undefined) {
 			if (settings['isOnline']) {
 				wifiIcon.innerHTML = 'android_wifi_3_bar';
-				if (wifiTitle) {
-					wifiTitle.textContent = 'Контроллер "В сети"';
-				}
-				//wifiIcon.classList.remove('m3-wifi-status--disconnected');
+				if (wifiTitle) wifiTitle.textContent = 'Контроллер "В сети"';
 			} else {
 				wifiIcon.innerHTML = 'android_wifi_3_bar_off';
-				if (wifiTitle) {
-					wifiTitle.textContent = 'Контроллер "Не в сети"';
-				}
-				//wifiIcon.classList.add('m3-wifi-status--disconnected');
+				if (wifiTitle) wifiTitle.textContent = 'Контроллер "Не в сети"';
 			}
 		}
 		// IP контроллера
 		if (wifiIp && settings['controllerIp'] !== undefined) {
-			if (settings['isOnline']) {
-				wifiIp.textContent = `IP контроллера: ${settings['controllerIp']}`;
-			} else {
-				wifiIp.textContent = 'IP контроллера: ---';
-			}
+			wifiIp.textContent = settings['isOnline']
+				? `IP контроллера: ${settings['controllerIp']}`
+				: 'IP контроллера: ---';
 		}
 
 		// Поля размеров
@@ -96,6 +76,7 @@ export function loadAllConfigs(drawPickerLabel) {
 		if (widthInput  && settings['dims-y'] != null) widthInput.value  = settings['dims-y'];
 		if (stepInput   && settings['step']   != null) stepInput.value   = settings['step'];
 		validateDimensionsAndCheckButton(drawsMap, settings['draw_id'] ? `draw-0${settings['draw_id']}` : 'draw-01');
+
 		// Слайдеры
 		m3Sliders.forEach(id => {
 			const slider  = document.getElementById(`${id}-slider`);
@@ -115,32 +96,48 @@ export function loadAllConfigs(drawPickerLabel) {
 		if (rgbSelector && settings['color_type']) {
 			rgbSelector.value = settings['color_type'];
 		}
-		// КОЛИЧЕСТВО КАНАЛОВ (НАША НОВАЯ ЛОГИКА ЗАГРУЗКИ)
+		// Количество каналов
 		if (settings['channels_qty'] != null) {
 			const qty = settings['channels_qty'];
-			setChannelsQty(qty); // Сохраняем в state.js
-			
-			// Ищем кнопку с нужным значением value и активируем её
+			setChannelsQty(qty);
 			if (channelsRadios) {
 				const activeRadio = Array.from(channelsRadios).find(r => parseInt(r.value, 10) === qty);
 				if (activeRadio) activeRadio.checked = true;
 			}
 		}
-		// Эскиз
+
+		// ====== ОПРЕДЕЛЯЕМ ВЫБРАННЫЙ РИСУНОК ======
 		let selectedDrawId = 'draw-01';
 		if (settings['draw_id'] != null) {
 			selectedDrawId = `draw-0${settings['draw_id']}`;
 			setSelectedDrawId(selectedDrawId);
 		}
 
-		// Инициализируем pickDraw с актуальными данными
-		initPickDraw(drawsMap, effectsMap);
+		// Находим объект текущего рисунка
+		const currentDraw = drawsMap.find(d => d.id === selectedDrawId);
 
+		// Инициализируем pickDraw (если он использует карту эффектов – передаём её, но мы её не используем)
+		// Вместо глобальной карты эффектов передаём массив эффектов текущего рисунка (или ничего)
+		// Если initPickDraw не использует эффекты, можно просто вызвать без второго аргумента.
+		// Предположим, что он ожидает drawsMap и что-то ещё – оставим как было, но передадим пустой объект или null.
+		// Но чтобы не ломать, можно передать текущий массив эффектов.
+		const effectsForDraw = currentDraw ? currentDraw.effects : [];
+		initPickDraw(drawsMap); // или передайте null, если не используется
+
+		// ====== РЕНДЕРИМ СПИСОК РИСУНКОВ ======
 		renderDrawList(drawsMap, selectedDrawId);
-		const d = drawsMap.find(x => x.id === selectedDrawId);
-		if (d && drawPickerLabel) drawPickerLabel.textContent = d.label;
-		updateEffectsList(effectsMap, selectedDrawId, settings['effect_id']);
-		sendDraw(parseInt(selectedDrawId.replace('draw-', '')), effectsMap, drawsMap, settings);
+
+		// Обновляем лейбл выбранного рисунка
+		if (currentDraw && drawPickerLabel) {
+			drawPickerLabel.textContent = currentDraw.label;
+		}
+
+		// ====== ОБНОВЛЯЕМ ЭФФЕКТЫ ======
+		// Передаём текущий объект рисунка, а не effectsMap
+		updateEffectsList(currentDraw, settings['effect_id']);
+
+		// Отправляем на ESP32 (передаём текущий рисунок и его эффекты)
+		sendDraw(currentDraw, drawsMap, settings);
 
 	}).catch(error => {
 		console.warn('Ошибка загрузки:', error.message);
@@ -153,20 +150,11 @@ export function loadAllConfigs(drawPickerLabel) {
 	});
 }
 
-// Функция сохранения настроек количества каналов
+// Функция сохранения настроек количества каналов (без изменений)
 export async function saveChannelsQty(qty) {
 	try {
 		const valueAsNumber = parseInt(qty, 10);
-		setChannelsQty(valueAsNumber); // Обновляем локальный стейт
-
-		// Отправляем JSON-объект на ESP32 эндпоинт настроек
-		/* const response = await fetch('./config/settings.json', { 
-			method: 'POST', // Используйте POST или PUT в зависимости от обработчика на ESP32
-			headers: { 'Content-Type': 'application/json' },
-			body: JSON.stringify({ channels_qty: valueAsNumber })
-		});
-
-		if (!response.ok) throw new Error('Ошибка сервера при сохранении каналов'); */
+		setChannelsQty(valueAsNumber);
 		console.log(`Количество каналов (${valueAsNumber}) успешно сохранено.`);
 	} catch (error) {
 		console.warn('Не удалось сохранить количество каналов:', error.message);

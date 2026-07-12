@@ -2,19 +2,19 @@
 // draw.js — Логика эскизов и модального окна выбора
 // ================================================================
 
-import { drawList, drawPickerLabel, selectedDrawId, setSelectedDrawId } from './state.js';
+import { drawList, drawPickerLabel, setSelectedDrawId } from './state.js';
 import { renderExtraDims } from './dims.js';
 import { updateEffectsList } from './effects.js';
 
-// Смена SVG предпросмотра
-export function updateSvgPreview(drawId) {
+// Смена SVG предпросмотра (принимает объект draw)
+export function updateSvgPreview(draw) {
 	const svgObject = document.querySelector('object[data*=".svg"]');
 	if (!svgObject) return;
-	svgObject.data = `./components/anim${drawId}/anim${drawId}.svg`;
-	console.log(`SVG предпросмотр сменён на: anim${drawId}.svg`);
+	svgObject.data = draw.perspective;
+	console.log(`SVG предпросмотр сменён на: ${draw.perspective}`);
 }
 
-// Рендер списка эскизов в модалке
+// Рендер списка эскизов в модалке (без изменений)
 export function renderDrawList(drawsMap, currentSelectedDrawId) {
 	if (!drawList) return;
 	drawList.innerHTML = drawsMap.map(d => `
@@ -29,7 +29,7 @@ export function renderDrawList(drawsMap, currentSelectedDrawId) {
 					<md-icon class="m3-draw-modal-chevron-icon">expand_more</md-icon>
 				</summary>
 				<div class="dialog-svg-container">
-					<svg width="200" height="120" viewBox="0 0 100 70"
+					<svg viewBox="0 0 200 120"
 						fill="none" style="color:#1d1b20">
 						${d.svg}
 					</svg>
@@ -39,24 +39,23 @@ export function renderDrawList(drawsMap, currentSelectedDrawId) {
 	`).join('');
 }
 
-// Смена эскиза — обновляем SVG, эффекты и extra-dims
-export function sendDraw(id, effectsMap, drawsMap, initialValues = {}) {
-	updateSvgPreview(id);
-	updateEffectsList(effectsMap, `draw-0${id}`, initialValues['effect_id']);
-	const draw = drawsMap.find(d => d.id === `draw-0${id}`);
-	if (draw) renderExtraDims(draw, initialValues);
-	console.log(`Эскиз отправлен на ESP32: ID=${id}`);
-	// fetch(`/set?draw_id=${id}`);
+// Смена эскиза — теперь принимает объект draw, а не id
+export function sendDraw(draw, drawsMap, initialValues = {}) {
+	updateSvgPreview(draw);                     // передаём объект
+	updateEffectsList(draw, initialValues['effect_id']); // передаём объект
+	renderExtraDims(draw, initialValues);
+	console.log(`Эскиз отправлен на ESP32: ID=${draw.id}`);
+	// fetch(`/set?draw_id=${draw.id}`);
 }
 
-// Выбор эскиза из модалки (глобальная — вызывается из onclick в HTML)
-export function initPickDraw(drawsMap, effectsMap) {
+// Выбор эскиза из модалки (глобальная)
+export function initPickDraw(drawsMap) {
 	window.pickDraw = function(id) {
+		const draw = drawsMap.find(d => d.id === id);
+		if (!draw) return;
 		setSelectedDrawId(id);
-		const d = drawsMap.find(x => x.id === id);
-		if (d && drawPickerLabel) drawPickerLabel.textContent = d.label;
+		if (drawPickerLabel) drawPickerLabel.textContent = draw.label;
 		renderDrawList(drawsMap, id);
-		const numId = parseInt(id.replace('draw-', ''));
-		sendDraw(numId, effectsMap, drawsMap);
+		sendDraw(draw, drawsMap); // передаём объект
 	};
 }

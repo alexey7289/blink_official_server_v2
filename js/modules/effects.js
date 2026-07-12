@@ -20,9 +20,9 @@ export function updateSliderVisibility(effectId) {
 }
 
 // Обновление списка эффектов при смене эскиза
-export function updateEffectsList(effectsMap, drawValue, effectId = null) {
-	if (!effectsMap[drawValue] || !effectSelector) return;
-	const allowed = effectsMap[drawValue].effects;
+export function updateEffectsList(draw, effectId = null) {
+    if (!draw || !draw.effects || !effectSelector) return;
+    const allowed = draw.effects;
 
 	effectSelector.innerHTML = allowed.map(e => `
 		<md-select-option value="${e.id}">
@@ -47,14 +47,19 @@ export function sendEffect(id) {
 	const svgObject = document.querySelector('object[data*=".svg"]');
 	if (!svgObject) return;
 
-	function applyClass() {
-		const svg = svgObject.contentDocument && svgObject.contentDocument.querySelector('svg');
-		if (svg) {
-			svg.className.baseVal = `anim-0${id}`;
-			console.log(`Эффект применён к SVG: anim-0${id}`);
-		}
-	}
+function applyClass() {
+    const svg = svgObject.contentDocument && svgObject.contentDocument.querySelector('svg');
+    if (svg) {
+        // Очищаем все пустые атрибуты transform
+        svg.querySelectorAll('[transform=""]').forEach(el => el.removeAttribute('transform'));
+        svg.querySelectorAll('[transform=" "]').forEach(el => el.removeAttribute('transform'));
+        // Также убираем style="transform: ;"
+        svg.querySelectorAll('[style*="transform:;"]').forEach(el => el.removeAttribute('style'));
 
+        svg.className.baseVal = `anim-0${id}`;
+        console.log(`Эффект применён к SVG: anim-0${id}`);
+    }
+}
 	if (svgObject.contentDocument && svgObject.contentDocument.querySelector('svg')) {
 		applyClass();
 	} else {

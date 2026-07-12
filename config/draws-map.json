@@ -1,36 +1,36 @@
 {
-    "draws": [
-        {
-            "id": "draw-01",
-            "label": "Прямоугольник",
-            "svg": "<rect x='10' y='10' width='180' height='100' fill='none' stroke='currentColor' stroke-width='4'/>",
-            "extra-dims" : []
-        },
-        {
-            "id": "draw-02",
-            "label": "Угол",
-            "svg": "<polyline points='100,10 190,10 190,60' fill='none' stroke='currentColor' stroke-width='4'/><polyline points='100,110 10,110 10,60' fill='none' stroke='currentColor' stroke-width='4'/>",
-            "extra-dims" : []
-        },
-        {
-            "id": "draw-03",
-            "label": "Крест",
-            "svg": "",
-            "extra-dims" : [
-               { "id": "a", "label": "Размер a", "suffix": "мм", "hint": "" },
-               { "id": "b", "label": "Размер b", "suffix": "мм", "hint": "" }
+	"draws": [
+		{
+			"id": "draw-01",
+			"label": "Прямоугольник",
+			"svg": "<rect x='10' y='10' width='180' height='100' fill='none' stroke='currentColor' stroke-width='4'/>",
+			"extra-dims" : []
+		},
+		{
+			"id": "draw-02",
+			"label": "Угол",
+			"svg": "<polyline points='100,10 190,10 190,60' fill='none' stroke='currentColor' stroke-width='4'/><polyline points='100,110 10,110 10,60' fill='none' stroke='currentColor' stroke-width='4'/>",
+			"extra-dims" : []
+		},
+		{
+			"id": "draw-03",
+			"label": "Крест",
+			"svg": "",
+			"extra-dims" : [
+			   { "id": "a", "label": "Размер a", "suffix": "мм", "hint": "" },
+			   { "id": "b", "label": "Размер b", "suffix": "мм", "hint": "" }
 
-            ]
-        },
-        {
-            "id": "draw-04",
-            "label": "Крест двойной",
-            "svg": "",
-            "extra-dims" : [
-               { "id": "a", "label": "Размер a", "suffix": "мм", "hint": "" },
-               { "id": "b", "label": "Размер b", "suffix": "мм", "hint": "" }
+			]
+		},
+		{
+			"id": "draw-04",
+			"label": "Крест двойной",
+			"svg": "",
+			"extra-dims" : [
+			   { "id": "a", "label": "Размер a", "suffix": "мм", "hint": "" },
+			   { "id": "b", "label": "Размер b", "suffix": "мм", "hint": "" }
 
-            ]
-        }
-    ]
+			]
+		}
+	]
 }

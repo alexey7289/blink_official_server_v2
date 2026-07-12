@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<?xml-stylesheet type="text/css" href="./anim2.css" ?>
+<svg viewBox="0 0 350 175" xmlns="http://www.w3.org/2000/svg">
+
+	<!-- ЛИНИЯ 1: старт (111.07,59.3) → (74.47,18.18) → (126.16,18.18) | длина 107px -->
+	<path class="base-path"
+		d="M 111.07,59.3 L 74.47,18.18 L 126.16,18.18"
+		fill="none" stroke="#ffffff" stroke-width="2" opacity="0.02"/>
+	<path class="full-path line-1"
+		d="M 111.07,59.3 L 74.47,18.18 L 126.16,18.18"
+		fill="none" stroke="#ffffff" stroke-width="3"/>
+	<path class="glow-path line-1"
+		d="M 111.07,59.3 L 74.47,18.18 L 126.16,18.18"
+		fill="none" stroke="#ffffff" stroke-width="3"/>
+	<path class="tail-path line-1"
+		d="M 111.07,59.3 L 74.47,18.18 L 126.16,18.18"
+		fill="none" stroke="#ffffff" stroke-width="3" stroke-linecap="round"
+		stroke-dasharray="0 107" stroke-dashoffset="0"/>
+	<path class="pixel-path line-1"
+		d="M 111.07,59.3 L 74.47,18.18 L 126.16,18.18"
+		fill="none" stroke="#ffffff" stroke-width="6" stroke-linecap="round"
+		stroke-dasharray="6 107" stroke-dashoffset="0"/>
+
+	<!-- ЛИНИЯ 2: старт (253.52,40.46) → (221.58,76.46) → (196.87,76.46) | длина 73px -->
+	<path class="base-path"
+		d="M 253.52,40.46 L 221.58,76.46 L 196.87,76.46"
+		fill="none" stroke="#ffffff" stroke-width="2" opacity="0.08"/>
+	<path class="full-path line-2"
+		d="M 253.52,40.46 L 221.58,76.46 L 196.87,76.46"
+		fill="none" stroke="#ffffff" stroke-width="3"/>
+	<path class="glow-path line-2"
+		d="M 253.52,40.46 L 221.58,76.46 L 196.87,76.46"
+		fill="none" stroke="#ffffff" stroke-width="3"/>
+	<path class="tail-path line-2"
+		d="M 253.52,40.46 L 221.58,76.46 L 196.87,76.46"
+		fill="none" stroke="#ffffff" stroke-width="3" stroke-linecap="round"
+		stroke-dasharray="0 73" stroke-dashoffset="0"/>
+	<path class="pixel-path line-2"
+		d="M 253.52,40.46 L 221.58,76.46 L 196.87,76.46"
+		fill="none" stroke="#ffffff" stroke-width="6" stroke-linecap="round"
+		stroke-dasharray="6 73" stroke-dashoffset="0"/>
+
+</svg>
